@@ -9,11 +9,13 @@ export class LessonCompletionService {
   /**
    * Executes atomic, transactional lesson completion with all prerequisite checks and idempotency.
    */
-  static async completeLesson(userId: string, lessonId: string) {
+  static async completeLesson(userId: string, lessonIdOrSlug: string) {
     return prisma.$transaction(async (tx) => {
       // 1. Fetch lesson with sections and quiz
-      const lesson = await tx.lesson.findUnique({
-        where: { id: lessonId },
+      const lesson = await tx.lesson.findFirst({
+        where: {
+          OR: [{ id: lessonIdOrSlug }, { slug: lessonIdOrSlug }],
+        },
         include: {
           sections: { orderBy: { order: 'asc' } },
           quiz: true,
@@ -24,6 +26,8 @@ export class LessonCompletionService {
       if (!lesson) {
         throw AppError.notFound('LESSON_NOT_FOUND', 'Lesson not found');
       }
+
+      const lessonId = lesson.id;
 
       // 2. Fetch current user progress
       const progress = await tx.lessonProgress.findUnique({

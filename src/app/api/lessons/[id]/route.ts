@@ -5,12 +5,12 @@ import { apiSuccess, apiError } from '@/lib/api-response';
 
 export async function GET(
   _req: NextRequest,
-  context: { params: Promise<{ slug: string }> }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     const user = await requireAuthUser();
-    const { slug } = await context.params;
-    const lessonData = await CurriculumService.getLessonBySlug(user.id, slug);
+    const { id: lessonIdOrSlug } = await context.params;
+    const lessonData = await CurriculumService.getLessonBySlug(user.id, lessonIdOrSlug);
 
     return apiSuccess(lessonData);
   } catch (error) {

@@ -34,7 +34,10 @@ export class CurriculumRepository {
 
   static async getLessonBySlug(slug: string) {
     return prisma.lesson.findFirst({
-      where: { slug, published: true },
+      where: {
+        OR: [{ slug }, { id: slug }],
+        published: true,
+      },
       include: {
         module: {
           include: {
@@ -67,8 +70,10 @@ export class CurriculumRepository {
   }
 
   static async getLessonById(lessonId: string) {
-    return prisma.lesson.findUnique({
-      where: { id: lessonId },
+    return prisma.lesson.findFirst({
+      where: {
+        OR: [{ id: lessonId }, { slug: lessonId }],
+      },
       include: {
         sections: {
           orderBy: { order: 'asc' },
