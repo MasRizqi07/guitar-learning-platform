@@ -132,25 +132,25 @@ Pengguna yang belum pernah memainkan gitar harus tetap memahami cara menggunakan
 
 ---
 
-# 5. Non-Goals
+# 5. Non-Goals & Feature Inclusions
 
-Untuk menjaga scope MVP, versi pertama tidak mencakup:
+### Implemented Learning Utilities (Delivered in Core MVP):
+- **Interactive Guitar Tuner (`/tuner`):** Web Audio API autocorrelation microphone pitch detection, cent deviation meter, and 6 standard acoustic reference tones with continuous loop mode.
+- **Interactive Fretboard Explorer (`/library`):** 15-fret interactive neck with scale filters (C Major, A Minor Pentatonic, E Minor Pentatonic, A Blues) and click-to-pluck real-time audio synthesis.
 
-- live tutoring,
-- video call dengan instructor,
+### Explicitly Excluded Non-Goals (Preserved Feature Freeze):
+Untuk menjaga stabilitas sistem dan integritas core learning path, fitur-fitur berikut tidak termasuk dalam scope:
+- live tutoring & video call dengan instructor,
 - marketplace guru musik,
-- real-time AI audio analysis,
-- automatic chord recognition,
-- automatic pitch detection,
-- leaderboard global,
-- social community,
+- automatic chord polyphonic AI recognition (microphone listening for full chords),
+- leaderboard global & social community feeds,
 - multiplayer practice,
-- user-generated courses,
-- full song streaming,
+- user-generated content / marketplace courses,
+- full song commercial audio streaming,
 - music licensing platform,
-- advanced guitar tablature editor.
+- advanced guitar tablature interactive editor.
 
-Fitur tersebut dapat dipertimbangkan setelah core learning loop terbukti bekerja.
+Fitur tersebut tidak akan ditambahkan untuk menjaga reliabilitas dan performa platform.
 
 ---
 

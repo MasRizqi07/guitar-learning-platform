@@ -247,36 +247,52 @@ The Prisma schema defines 22 models and 13 enums:
 
 ## 9. Testing Strategy & Quality Gates
 
-The test suite validates pure domain algorithms, transactional service boundaries, and the complete end-to-end golden path.
+The platform maintains a strict distinction between **Pure Unit Tests**, **Database Service Integration Tests**, and **Real Playwright Browser End-to-End Tests**:
 
-### Run Unit & Integration Tests
+```text
+                                 ┌──────────────────────────────┐
+                                 │   Playwright Browser E2E     │ (3 tests in Chromium)
+                                 ├──────────────────────────────┤
+                                 │ Database Service Integration │ (42 tests in Vitest)
+                                 ├──────────────────────────────┤
+                                 │   Pure Domain & Math Unit    │ (33 tests in Vitest)
+                                 └──────────────────────────────┘
+```
+
+### 1. Run Vitest Unit & Integration Tests (75 Tests)
 
 ```bash
 npm test
 ```
 
-### Test Coverage Summary
-
 - `tests/unit/domain.test.ts`: 21 tests covering quiz scoring, streak calendar calculations, level formulas, lesson availability state machines, and anti-cheat duration thresholds.
+- `tests/unit/audio-math.test.ts`: 12 tests validating fret frequency formula ($f = f_0 \times 2^{\text{fret}/12}$), octave calculation, cent deviations, and autocorrelation pitch detection against synthetic signals.
 - `tests/integration/auth-onboarding.test.ts`: 4 tests for password hashing, multi-user isolation, and onboarding placement.
 - `tests/integration/curriculum.test.ts`: 5 tests for roadmap loading, dynamic locking, and section progress tracking.
 - `tests/integration/practice-quiz.test.ts`: 5 tests for anti-cheat validation, answer leakage prevention, and server scoring.
 - `tests/integration/lesson-completion.test.ts`: 5 tests for atomic transactional completion and idempotency.
-- `tests/integration/golden-path.test.ts`: 13 comprehensive end-to-end tests covering the entire user lifecycle.
+- `tests/integration/security-idor.test.ts`: 10 tests verifying IDOR cross-user protection, quiz answer sanitization, practice anti-cheat boundary enforcement, and XP idempotency.
+- `tests/integration/golden-path.test.ts`: 13 tests exercising the end-to-end backend service lifecycle.
 
-**Result: 53 tests passing across 6 test suites.**
+**Result: 75/75 Vitest tests passing across 8 test suites.**
 
-### Typecheck & Lint
+### 2. Run Real Playwright Browser End-to-End Tests (3 Tests)
 
 ```bash
-npm run lint
-npx tsc --noEmit
+npm run test:e2e
 ```
 
-### Production Build
+- `tests/e2e/golden-path.spec.ts`: Executes true browser user journey: Landing $\rightarrow$ Register $\rightarrow$ Stepper Onboarding (Steps 1–7) $\rightarrow$ Dashboard $\rightarrow$ Roadmap $\rightarrow$ Lesson 1 sections $\rightarrow$ Quiz submission $\rightarrow$ Results & progress persistence $\rightarrow$ Sign out $\rightarrow$ Sign in verification.
+- `tests/e2e/tuner.spec.ts`: Verifies Tuner UI, 6 reference tones plucking, loop playback, microphone error fallback, and Interactive Fretboard scale filter switches in the browser.
+
+**Result: 3/3 Playwright browser tests passing in Chromium.**
+
+### 3. Typecheck, Lint, and Production Build
 
 ```bash
-npm run build
+npm run lint         # ESLint (0 errors, 0 warnings)
+npx tsc --noEmit     # TypeScript Strict Typecheck (0 errors)
+npm run build        # Next.js 16 Production Build (All 26 routes compiled cleanly)
 ```
 
 ---

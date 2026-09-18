@@ -65,6 +65,11 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [result, setResult] = useState<QuizResultData | null>(null);
+  const [lessonCompletion, setLessonCompletion] = useState<{
+    alreadyCompleted: boolean;
+    xpAwarded: number;
+    unlockedAchievements: string[];
+  } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -141,6 +146,21 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
       const body = await res.json();
       if (!res.ok) throw new Error(body.error?.message || 'Failed to submit quiz');
       setResult(body.data);
+
+      // If quiz passed, automatically complete the lesson and award lesson XP/achievements
+      if (body.data.passed && startData.quiz.lesson?.id) {
+        try {
+          const compRes = await fetch(`/api/lessons/${startData.quiz.lesson.id}/complete`, {
+            method: 'POST',
+          });
+          const compJson = await compRes.json();
+          if (compRes.ok && compJson.data) {
+            setLessonCompletion(compJson.data);
+          }
+        } catch (e) {
+          console.error('Lesson completion call failed:', e);
+        }
+      }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Failed to submit answers');
     } finally {
@@ -210,21 +230,35 @@ export default function QuizPage({ params }: { params: Promise<{ id: string }> }
             </p>
           </div>
 
-          {result.passed && result.xpAwarded > 0 && (
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 font-bold text-xs border border-amber-500/40">
-              <Sparkles className="w-3.5 h-3.5" /> +{result.xpAwarded} XP Earned
+          {result.passed && (
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              {result.xpAwarded > 0 && (
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 font-bold text-xs border border-amber-500/40">
+                  <Sparkles className="w-3.5 h-3.5" /> +{result.xpAwarded} Quiz XP
+                </div>
+              )}
+              {lessonCompletion && lessonCompletion.xpAwarded > 0 && (
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-bold text-xs border border-emerald-500/40">
+                  <CheckCircle2 className="w-3.5 h-3.5" /> +{lessonCompletion.xpAwarded} Lesson XP
+                </div>
+              )}
+              {lessonCompletion && lessonCompletion.unlockedAchievements?.length > 0 && (
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-500/20 text-purple-300 font-bold text-xs border border-purple-500/40">
+                  🏆 Unlocked: {lessonCompletion.unlockedAchievements.join(', ')}
+                </div>
+              )}
             </div>
           )}
 
-          <div className="flex justify-center gap-3 pt-2">
+          <div className="flex flex-wrap justify-center gap-3 pt-2">
             {!result.passed && (
               <Button onClick={handleRetry} variant="secondary" className="gap-2">
                 <RotateCcw className="w-4 h-4" /> Retry Quiz
               </Button>
             )}
-            <Link href={`/lessons/${quiz.lesson.slug}`}>
-              <Button className="gap-1.5 font-bold">
-                Continue Learning <ArrowRight className="w-4 h-4" />
+            <Link href="/learn">
+              <Button className="gap-1.5 font-bold bg-amber-500 hover:bg-amber-400 text-slate-950">
+                Continue to Roadmap <ArrowRight className="w-4 h-4" />
               </Button>
             </Link>
           </div>

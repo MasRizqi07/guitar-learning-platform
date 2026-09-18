@@ -128,37 +128,24 @@ Database
 PostgreSQL
 
 ORM
-Prisma
+Prisma 6.19
 
 Authentication
-Auth.js
+Custom Secure Session Architecture (bcryptjs password hashing + HMAC-SHA256 signed session tokens + HTTP-only SameSite cookies)
+
+Audio & Pitch Processing
+Web Audio API (dual-oscillator Karplus-Strong style string acoustic synthesis, metronome tone generator, and time-domain autocorrelation microphone pitch detection)
 
 Testing
-Vitest
-React Testing Library
-Playwright
+Vitest 4.1 (Unit and Database Integration Testing)
+Playwright 1.63 (Chromium End-to-End Browser Testing)
 
 Deployment
-Vercel
-
-Database Hosting
-Neon PostgreSQL
-or
-Supabase PostgreSQL
-
-Media Storage
-Cloudinary
-or
-Supabase Storage
-
-Monitoring
-Sentry
-
-Product Analytics
-PostHog
+Vercel / Node.js Standalone
+PostgreSQL 16+ (Local / Neon / Supabase)
 ```
 
-Tidak perlu Redis pada MVP kecuali ditemukan bottleneck konkret.
+Tidak perlu Redis pada MVP karena database indexing dan query transaction boundaries terbukti stabil.
 
 ---
 

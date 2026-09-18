@@ -121,6 +121,28 @@ export default function LessonPage({ params }: { params: Promise<{ slug: string 
     }
   };
 
+  const [isCompleting, setIsCompleting] = useState(false);
+
+  const handleCompleteLesson = async () => {
+    if (!data) return;
+    setIsCompleting(true);
+    try {
+      const res = await fetch(`/api/lessons/${data.lesson.id}/complete`, {
+        method: 'POST',
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        throw new Error(json.error?.message || 'Failed to complete lesson');
+      }
+      router.push('/learn');
+      router.refresh();
+    } catch (err: unknown) {
+      alert(err instanceof Error ? err.message : 'Failed to complete lesson');
+    } finally {
+      setIsCompleting(false);
+    }
+  };
+
   const handlePrevSection = () => {
     if (currentSectionIndex > 0) {
       setCurrentSectionIndex((prev) => prev - 1);
@@ -298,10 +320,11 @@ export default function LessonPage({ params }: { params: Promise<{ slug: string 
               </Link>
             ) : (
               <Button
-                onClick={() => router.push('/learn')}
+                onClick={handleCompleteLesson}
+                disabled={isCompleting}
                 className="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold gap-2"
               >
-                <CheckCircle2 className="w-4 h-4" /> Complete Lesson
+                <CheckCircle2 className="w-4 h-4" /> {isCompleting ? 'Completing...' : 'Complete Lesson'}
               </Button>
             )}
           </div>
