@@ -1,36 +1,308 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎸 Guitar Learning Platform for Beginners
 
-## Getting Started
+A full-stack, production-ready web application engineered to guide novice guitar players through a structured, progressive learning roadmap:
 
-First, run the development server:
+$$\text{Learn} \longrightarrow \text{Practice} \longrightarrow \text{Quiz} \longrightarrow \text{Progress} \longrightarrow \text{Continue}$$
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Built with a **Modular Monolith** architecture using **Next.js 16 (App Router)**, **TypeScript (Strict Mode)**, **Tailwind CSS v4**, **PostgreSQL 18**, **Prisma 6**, and **Web Audio API acoustic guitar string tone synthesis**.
+
+---
+
+## 📖 Table of Contents
+
+- [1. Executive Summary](#1-executive-summary)
+- [2. Product Principles & Architecture](#2-product-principles--architecture)
+- [3. Tech Stack](#3-tech-stack)
+- [4. Database & Domain Models](#4-database--domain-models)
+- [5. Core Features & User Journey](#5-core-features--user-journey)
+- [6. Security & Anti-Cheat Invariants](#6-security--anti-cheat-invariants)
+- [7. Local Development Setup](#7-local-development-setup)
+- [8. Database Migration & Seeding](#8-database-migration--seeding)
+- [9. Testing Strategy & Quality Gates](#9-testing-strategy--quality-gates)
+- [10. Production Deployment Guide](#10-production-deployment-guide)
+
+---
+
+## 1. Executive Summary
+
+Beginner guitar learners face significant hurdles: scattered YouTube tutorials, lack of a structured curriculum, difficulty practicing consistently, and uncertainty about what lesson should come next.
+
+This platform solves this by providing:
+1. **One Clear Next Action:** The authenticated dashboard immediately directs the learner to their next logical lesson or daily practice target.
+2. **30 Deterministic Lessons Across 6 Modules:** From holding a pick and guitar anatomy to essential open chords, chord transitions, rhythm & strumming, music theory, and a capstone full-song playthrough.
+3. **Focus Practice Room with Web Audio API:** Dual-oscillator acoustic guitar string tone synthesis and metronome pulses without external media dependencies.
+4. **Server-Authoritative Progression:** Progress percentages, quiz evaluations, XP ledger entries, streak updates, and achievement unlocks are computed exclusively on the server.
+5. **Multi-Platform UI:** Designed for mobile, tablet, and desktop with dark mode `#0E1014` and warm amber `#F59E0B` accents conforming to WCAG 2.2 AA accessibility guidelines.
+
+---
+
+## 2. Product Principles & Architecture
+
+The application adopts a **Modular Monolith** structure with strict layer separation:
+
+```text
+┌─────────────────────────────────────────────────────────┐
+│        Presentation Layer (React Server & Client)        │
+│          App Router, Tailwind CSS v4, Lucide Icons       │
+└────────────────────────────┬────────────────────────────┘
+                             │
+┌────────────────────────────▼────────────────────────────┐
+│      Application Layer (Use Cases & Route Handlers)     │
+│       Session verification, Zod parsing, API Responses  │
+└────────────────────────────┬────────────────────────────┘
+                             │
+┌────────────────────────────▼────────────────────────────┐
+│        Domain Layer (Pure Business Logic Engines)        │
+│    Quiz Evaluator, Streak Engine, Level & XP, Anti-Cheat │
+└────────────────────────────┬────────────────────────────┘
+                             │
+┌────────────────────────────▼────────────────────────────┐
+│        Repository Layer (Prisma Data Access Bounds)      │
+│      Atomic transactions, Unique constraints, Indexes    │
+└────────────────────────────┬────────────────────────────┘
+                             │
+┌────────────────────────────▼────────────────────────────┐
+│                  PostgreSQL 18 Database                  │
+└─────────────────────────────────────────────────────────┘
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Directory Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+guitar-learning-platform/
+├── prisma/
+│   ├── schema.prisma              # 22 models, 13 enums, composite unique keys & indexes
+│   ├── migrations/                # Versioned SQL migration history
+│   └── seed.ts                    # Deterministic, re-runnable seed script
+├── src/
+│   ├── app/                       # Next.js App Router
+│   │   ├── (app)/                 # Protected shell (Sidebar + BottomNav)
+│   │   │   ├── dashboard/page.tsx # "One Clear Next Action" Priority Dashboard
+│   │   │   ├── learn/page.tsx     # 6-Module Curriculum Roadmap
+│   │   │   ├── lessons/[slug]/    # Section-by-section interactive lesson reader
+│   │   │   ├── practice/page.tsx  # Focus practice room with metronome & chord timer
+│   │   │   ├── library/page.tsx   # Interactive SVG Chord Library with audio playback
+│   │   │   ├── progress/page.tsx  # Verified analytics, streaks, XP ledger
+│   │   │   └── profile/page.tsx   # Timezone settings & daily practice target
+│   │   ├── (auth)/                # Login & Registration with encrypted session cookies
+│   │   ├── (onboarding)/          # Stepper onboarding & skill placement
+│   │   ├── api/                   # 18 Server-Authoritative REST Route Handlers
+│   │   └── page.tsx               # Public landing page with core loop presentation
+│   ├── components/
+│   │   ├── guitar/ChordDiagram.tsx# Accessible SVG interactive chord fingering diagrams
+│   │   └── ui/                    # Button, Card, Badge, Input, ProgressBar primitives
+│   ├── domain/                    # Pure, zero-dependency business calculation modules
+│   ├── lib/                       # Prisma client singleton, Auth cryptography, Web Audio API
+│   ├── repositories/              # Isolated Prisma data access layer
+│   ├── services/                  # Orchestration layer with database transaction bounds
+│   └── validations/               # Zod validation schemas
+└── tests/
+    ├── unit/domain.test.ts        # Pure domain logic unit tests (21 tests)
+    └── integration/               # Database integration tests & Golden Path (32 tests)
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 3. Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+| Layer | Technology | Details |
+|---|---|---|
+| **Framework** | Next.js 16.3.5 | App Router with Turbopack |
+| **Language** | TypeScript 5.8 | Strict mode enabled |
+| **Database** | PostgreSQL 18.4 | Local trust / Neon / Supabase |
+| **ORM** | Prisma 6.19.3 | Type-safe query engine & migrations |
+| **Styling** | Tailwind CSS v4 | Curated dark neutral aesthetic (`#0E1014`) |
+| **Audio** | Web Audio API | Dual-oscillator acoustic plucked tone synthesis |
+| **Validation** | Zod 3.24 | Schema validation for all external payloads |
+| **Testing** | Vitest 4.1 | Fast unit and database integration testing |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 4. Database & Domain Models
 
-## Deploy on Vercel
+The Prisma schema defines 22 models and 13 enums:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Authentication & User:** `User`, `Profile`, `OnboardingProfile`, `LearningGoal`, `UserLearningGoal`
+- **Curriculum:** `Course`, `Module`, `Lesson`, `LessonSection`, `LessonProgress`
+- **Practice Room:** `PracticeSession`, `PracticeSessionChord`
+- **Quiz Engine:** `Quiz`, `Question`, `AnswerOption`, `QuizAttempt`, `QuizAttemptAnswer`
+- **Library:** `Chord` (with structured JSON fingering and string voicings)
+- **Gamification & Audit:** `XPTransaction` (idempotent ledger), `Achievement`, `UserAchievement`, `LearningActivity`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Key Invariants & Constraints
+
+- `User.email`: Unique
+- `LessonProgress`: Unique on `(userId, lessonId)`
+- `Module`: Unique on `(courseId, slug)` and `(courseId, order)`
+- `Lesson`: Unique on `(moduleId, slug)` and `(moduleId, order)`
+- `QuizAttemptAnswer`: Unique on `(quizAttemptId, questionId)`
+- `XPTransaction`: Unique on `idempotencyKey`
+- `UserAchievement`: Unique on `(userId, achievementId)`
+
+---
+
+## 5. Core Features & User Journey
+
+### 1. Registration & Stepper Onboarding
+- Learner selects guitar type (`ACOUSTIC`, `ELECTRIC`, `CLASSICAL`), experience level, daily practice goal (`10`, `15`, `30`, `45`, `60` min), and goals.
+- Adaptive placement assessment assigns starting level: `BEGINNER_1`, `BEGINNER_2`, `BEGINNER_3`, or `INTERMEDIATE_1`.
+
+### 2. Action-Oriented Dashboard
+- Displays **One Clear Next Action** banner (e.g. "Next up: Lesson 1 - Introduction to Guitar").
+- Tracks daily practice progress bar (`X / 15 mins today`).
+- Highlights current streak and XP level progression.
+
+### 3. Curriculum & Dynamic Availability Locking
+- 30 progressive lessons across 6 modules.
+- Lessons are dynamically locked based on prerequisite completion or placement level.
+- Interactive section reader tracks progress through text, warnings, practice prompts, and summaries.
+
+### 4. Focus Practice Room
+- Built-in acoustic guitar synthesizer and metronome.
+- Anti-cheat duration verification (Lesson practice $\ge 60\text{s}$, Chord practice $\ge 120\text{s}$, Daily practice $\ge 300\text{s}$).
+- Learner difficulty feedback: `EASY`, `OKAY`, `DIFFICULT`.
+
+### 5. Secure Quiz Engine
+- Questions never expose `isCorrect` to the browser before submission.
+- The server evaluates submitted answer options and computes percentage score ($S = \frac{\text{correct}}{\text{total}} \times 100$).
+- Passing threshold is strictly enforced at 60%.
+
+### 6. Transactional Lesson Completion
+- Executed inside an atomic database transaction.
+- Verifies authentication, lesson existence, required sections viewed, valid practice completed, and passing quiz score.
+- Awards +20 XP idempotently, updates calendar-day streak in user's timezone, evaluates achievements (`FIRST_STEP`, `FIRST_CHORD`, etc.), and unlocks the next lesson.
+
+### 7. Interactive Chord Library & Fretboard Explorer
+- 10 foundational chords seeded: C Major, G Major, D Major, A Major, E Major, A Minor, E Minor, D Minor, F Major, B7.
+- Searchable by name or constituent notes; filterable by Major, Minor, Seventh.
+- SVG chord diagram rendering with real-time plucked audio preview and 1-click practice launch.
+- **Interactive 15-Fret Fretboard Explorer:** Visual neck with scale overlays (C Major, A Minor Pentatonic, E Minor Pentatonic, A Blues Scale), root highlighting, and click-to-pluck real-time audio.
+
+### 8. Interactive Guitar Tuner (`/tuner`)
+- **Microphone Pitch Detection:** Built-in Web Audio API autocorrelation frequency detector that analyzes open string vibration, displays real-time Hz, nearest string target, and cent offset with a visual needle gauge.
+- **Acoustic Reference Tones:** Clean synthesized acoustic plucked tones for all 6 standard strings (E2, A2, D3, G3, B3, E4) with continuous repeat mode to allow tuning by ear.
+- **Beginner Tuning Guidance:** Peg turning direction advice, anti-backlash string tension locking, and daily tuning best practices.
+
+---
+
+## 6. Security & Anti-Cheat Invariants
+
+- **Multi-Tenant Isolation:** `userId` is always extracted from the cryptographically verified session token; client-supplied `userId` parameters in bodies or query parameters are ignored.
+- **Client Zero-Trust:** Lesson completion, XP awards, quiz scores, and streak calculations cannot be dictated by the browser.
+- **Idempotency Protection:** XP transactions enforce unique idempotency keys (e.g. `lesson-completed:{userId}:{lessonId}`); retries or duplicate network requests will never duplicate XP.
+- **Secure Cookies:** Session tokens are stored in `httpOnly`, `sameSite=lax`, `secure` (in production) cookies.
+
+---
+
+## 7. Local Development Setup
+
+### Prerequisites
+
+- **Node.js:** `v20.x` or later (tested on Node `v26.7.0`)
+- **PostgreSQL:** `16+` (tested on PostgreSQL 18.4 on port `5433`)
+- **npm:** `10+`
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone <repo-url>
+   cd guitar-learning-platform
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Configure Environment Variables:**
+   Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+   Configure your database connection:
+   ```env
+   DATABASE_URL="postgresql://postgres:postgres@localhost:5432/guitar_learning_db?schema=public"
+   AUTH_SECRET="development-32-character-random-secret-key"
+   AUTH_URL="http://localhost:3000"
+   NEXT_PUBLIC_APP_URL="http://localhost:3000"
+   ```
+
+---
+
+## 8. Database Migration & Seeding
+
+1. **Apply Prisma migrations:**
+   ```bash
+   npx prisma migrate deploy
+   ```
+
+2. **Seed deterministic curriculum & chords:**
+   ```bash
+   npx prisma db seed
+   ```
+   *(The seed script is idempotent using upserts and can safely be run repeatedly).*
+
+---
+
+## 9. Testing Strategy & Quality Gates
+
+The test suite validates pure domain algorithms, transactional service boundaries, and the complete end-to-end golden path.
+
+### Run Unit & Integration Tests
+
+```bash
+npm test
+```
+
+### Test Coverage Summary
+
+- `tests/unit/domain.test.ts`: 21 tests covering quiz scoring, streak calendar calculations, level formulas, lesson availability state machines, and anti-cheat duration thresholds.
+- `tests/integration/auth-onboarding.test.ts`: 4 tests for password hashing, multi-user isolation, and onboarding placement.
+- `tests/integration/curriculum.test.ts`: 5 tests for roadmap loading, dynamic locking, and section progress tracking.
+- `tests/integration/practice-quiz.test.ts`: 5 tests for anti-cheat validation, answer leakage prevention, and server scoring.
+- `tests/integration/lesson-completion.test.ts`: 5 tests for atomic transactional completion and idempotency.
+- `tests/integration/golden-path.test.ts`: 13 comprehensive end-to-end tests covering the entire user lifecycle.
+
+**Result: 53 tests passing across 6 test suites.**
+
+### Typecheck & Lint
+
+```bash
+npm run lint
+npx tsc --noEmit
+```
+
+### Production Build
+
+```bash
+npm run build
+```
+
+---
+
+## 10. Production Deployment Guide
+
+### Deploying to Vercel
+
+1. Push your repository to GitHub / GitLab.
+2. Import the project into [Vercel](https://vercel.com).
+3. Set the Environment Variables in the Vercel Dashboard:
+   - `DATABASE_URL`: Connection string from Neon, Supabase, or AWS RDS with connection pooling.
+   - `AUTH_SECRET`: Random 32-character secret generated via `openssl rand -base64 32`.
+   - `AUTH_URL`: Your production domain (e.g. `https://guitar-platform.vercel.app`).
+   - `NEXT_PUBLIC_APP_URL`: Your production domain.
+4. Set the Build Command:
+   ```bash
+   prisma migrate deploy && next build
+   ```
+5. Deploy and run the database seed once:
+   ```bash
+   npx prisma db seed
+   ```
+
+---
+
+## 📄 License
+
+MIT © Guitar Learning Platform Team.

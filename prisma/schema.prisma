@@ -1,0 +1,471 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  USER
+  ADMIN
+}
+
+enum ExperienceLevel {
+  ABSOLUTE_BEGINNER
+  BEGINNER
+  BASIC_PLAYER
+  INTERMEDIATE
+}
+
+enum GuitarType {
+  ACOUSTIC
+  ELECTRIC
+  CLASSICAL
+  NO_GUITAR
+}
+
+enum RecommendedLevel {
+  BEGINNER_1
+  BEGINNER_2
+  BEGINNER_3
+  INTERMEDIATE_1
+}
+
+enum LessonProgressStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum LessonSectionType {
+  TEXT
+  VIDEO
+  IMAGE
+  CHORD
+  TIP
+  WARNING
+  PRACTICE
+  SUMMARY
+}
+
+enum PracticeType {
+  DAILY
+  CHORD
+  CHORD_TRANSITION
+  STRUMMING
+  LESSON
+}
+
+enum PracticeDifficulty {
+  EASY
+  OKAY
+  DIFFICULT
+}
+
+enum QuestionType {
+  MULTIPLE_CHOICE
+  TRUE_FALSE
+  CHORD_IDENTIFICATION
+}
+
+enum ChordType {
+  MAJOR
+  MINOR
+  SEVENTH
+  MAJOR_SEVENTH
+  MINOR_SEVENTH
+  SUSPENDED
+}
+
+enum XPTransactionType {
+  LESSON_COMPLETED
+  QUIZ_COMPLETED
+  PERFECT_QUIZ
+  PRACTICE_COMPLETED
+  DAILY_GOAL
+  ACHIEVEMENT
+  ADMIN_ADJUSTMENT
+}
+
+enum AchievementConditionType {
+  LESSONS_COMPLETED
+  PRACTICE_SECONDS
+  CURRENT_STREAK
+  QUIZZES_COMPLETED
+  PERFECT_QUIZZES
+}
+
+enum ActivityType {
+  LESSON_STARTED
+  LESSON_COMPLETED
+  PRACTICE_COMPLETED
+  QUIZ_COMPLETED
+  ACHIEVEMENT_UNLOCKED
+  DAILY_GOAL_COMPLETED
+}
+
+model User {
+  id            String    @id @default(uuid())
+  name          String
+  email         String    @unique
+  emailVerified DateTime?
+  passwordHash  String?
+  role          UserRole  @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  profile            Profile?
+  onboardingProfile  OnboardingProfile?
+  userLearningGoals  UserLearningGoal[]
+  lessonProgress     LessonProgress[]
+  practiceSessions   PracticeSession[]
+  quizAttempts       QuizAttempt[]
+  xpTransactions     XPTransaction[]
+  userAchievements   UserAchievement[]
+  learningActivities LearningActivity[]
+
+  @@index([email])
+  @@index([createdAt])
+}
+
+model Profile {
+  id             String    @id @default(uuid())
+  userId         String    @unique
+  avatarUrl      String?
+  currentLevel   Int       @default(1)
+  totalXP        Int       @default(0)
+  currentStreak  Int       @default(0)
+  longestStreak  Int       @default(0)
+  lastActiveDate DateTime?
+  timezone       String    @default("Asia/Jakarta")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model OnboardingProfile {
+  id               String           @id @default(uuid())
+  userId           String           @unique
+  experienceLevel  ExperienceLevel
+  guitarType       GuitarType
+  dailyGoalMinutes Int              @default(15)
+  assessmentScore  Int?
+  recommendedLevel RecommendedLevel @default(BEGINNER_1)
+  completed        Boolean          @default(false)
+  completedAt      DateTime?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model LearningGoal {
+  id          String @id @default(uuid())
+  code        String @unique
+  name        String
+  description String
+
+  userLearningGoals UserLearningGoal[]
+}
+
+model UserLearningGoal {
+  id             String @id @default(uuid())
+  userId         String
+  learningGoalId String
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  learningGoal LearningGoal @relation(fields: [learningGoalId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, learningGoalId])
+  @@index([userId])
+}
+
+model Course {
+  id           String   @id @default(uuid())
+  title        String
+  slug         String   @unique
+  description  String
+  difficulty   String   @default("BEGINNER")
+  thumbnailUrl String?
+  order        Int      @unique
+  published    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  modules Module[]
+}
+
+model Module {
+  id               String   @id @default(uuid())
+  courseId         String
+  title            String
+  slug             String
+  description      String
+  order            Int
+  estimatedMinutes Int      @default(30)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  course  Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons Lesson[]
+
+  @@unique([courseId, slug])
+  @@unique([courseId, order])
+  @@index([courseId])
+  @@index([courseId, order])
+}
+
+model Lesson {
+  id               String   @id @default(uuid())
+  moduleId         String
+  title            String
+  slug             String
+  description      String
+  difficulty       String   @default("BEGINNER")
+  estimatedMinutes Int      @default(10)
+  xpReward         Int      @default(20)
+  order            Int
+  published        Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  module           Module            @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  sections         LessonSection[]
+  lessonProgress   LessonProgress[]
+  practiceSessions PracticeSession[]
+  quiz             Quiz?
+
+  @@unique([moduleId, slug])
+  @@unique([moduleId, order])
+  @@index([moduleId])
+  @@index([moduleId, order])
+  @@index([published])
+}
+
+model LessonSection {
+  id        String            @id @default(uuid())
+  lessonId  String
+  type      LessonSectionType
+  title     String
+  content   String            @db.Text
+  mediaUrl  String?
+  metadata  Json?
+  required  Boolean           @default(true)
+  order     Int
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([lessonId, order])
+  @@index([lessonId])
+}
+
+model LessonProgress {
+  id                  String               @id @default(uuid())
+  userId              String
+  lessonId            String
+  status              LessonProgressStatus @default(NOT_STARTED)
+  currentSectionOrder Int                  @default(1)
+  progressPercentage  Int                  @default(0)
+  startedAt           DateTime?
+  lastAccessedAt      DateTime             @default(now())
+  completedAt         DateTime?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId])
+  @@index([userId])
+  @@index([userId, status])
+  @@index([lessonId])
+}
+
+model PracticeSession {
+  id                 String              @id @default(uuid())
+  userId             String
+  lessonId           String?
+  practiceType       PracticeType
+  difficultyFeedback PracticeDifficulty?
+  durationSeconds    Int
+  startedAt          DateTime            @default(now())
+  completedAt        DateTime?
+  isValid            Boolean             @default(false)
+  createdAt          DateTime            @default(now())
+
+  user          User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson        Lesson?                @relation(fields: [lessonId], references: [id], onDelete: SetNull)
+  sessionChords PracticeSessionChord[]
+
+  @@index([userId, completedAt])
+  @@index([userId, practiceType])
+  @@index([lessonId])
+}
+
+model PracticeSessionChord {
+  id                String @id @default(uuid())
+  practiceSessionId String
+  chordId           String
+
+  practiceSession PracticeSession @relation(fields: [practiceSessionId], references: [id], onDelete: Cascade)
+  chord           Chord           @relation(fields: [chordId], references: [id], onDelete: Cascade)
+
+  @@unique([practiceSessionId, chordId])
+}
+
+model Chord {
+  id          String    @id @default(uuid())
+  name        String
+  slug        String    @unique
+  type        ChordType
+  difficulty  String    @default("BEGINNER")
+  notes       Json
+  diagramData Json
+  description String    @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  sessionChords PracticeSessionChord[]
+
+  @@index([type])
+}
+
+model Quiz {
+  id           String   @id @default(uuid())
+  lessonId     String   @unique
+  title        String
+  description  String
+  passingScore Int      @default(60)
+  xpReward     Int      @default(10)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  lesson    Lesson        @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  questions Question[]
+  attempts  QuizAttempt[]
+}
+
+model Question {
+  id          String       @id @default(uuid())
+  quizId      String
+  type        QuestionType
+  prompt      String
+  explanation String?      @db.Text
+  order       Int
+
+  quiz           Quiz                @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  options        AnswerOption[]
+  attemptAnswers QuizAttemptAnswer[]
+
+  @@unique([quizId, order])
+  @@index([quizId])
+}
+
+model AnswerOption {
+  id         String  @id @default(uuid())
+  questionId String
+  text       String
+  isCorrect  Boolean @default(false)
+  order      Int
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
+}
+
+model QuizAttempt {
+  id             String    @id @default(uuid())
+  userId         String
+  quizId         String
+  score          Int       @default(0)
+  correctAnswers Int       @default(0)
+  totalQuestions Int       @default(0)
+  passed         Boolean   @default(false)
+  startedAt      DateTime  @default(now())
+  completedAt    DateTime?
+  createdAt      DateTime  @default(now())
+
+  user    User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quiz    Quiz                @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  answers QuizAttemptAnswer[]
+
+  @@index([userId, quizId])
+  @@index([userId, completedAt])
+}
+
+model QuizAttemptAnswer {
+  id                     String   @id @default(uuid())
+  quizAttemptId          String
+  questionId             String
+  selectedAnswerOptionId String
+  isCorrect              Boolean
+  createdAt              DateTime @default(now())
+
+  quizAttempt QuizAttempt @relation(fields: [quizAttemptId], references: [id], onDelete: Cascade)
+  question    Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([quizAttemptId, questionId])
+}
+
+model XPTransaction {
+  id             String            @id @default(uuid())
+  userId         String
+  type           XPTransactionType
+  amount         Int
+  referenceType  String?
+  referenceId    String?
+  idempotencyKey String            @unique
+  createdAt      DateTime          @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([idempotencyKey])
+}
+
+model Achievement {
+  id             String                   @id @default(uuid())
+  code           String                   @unique
+  name           String
+  description    String
+  icon           String
+  conditionType  AchievementConditionType
+  conditionValue Int
+  xpReward       Int                      @default(50)
+  active         Boolean                  @default(true)
+
+  userAchievements UserAchievement[]
+}
+
+model UserAchievement {
+  id            String   @id @default(uuid())
+  userId        String
+  achievementId String
+  unlockedAt    DateTime @default(now())
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievement Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, achievementId])
+  @@index([userId])
+  @@index([achievementId])
+}
+
+model LearningActivity {
+  id         String       @id @default(uuid())
+  userId     String
+  type       ActivityType
+  entityType String
+  entityId   String
+  metadata   Json?
+  createdAt  DateTime     @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
