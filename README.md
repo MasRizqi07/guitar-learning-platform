@@ -253,13 +253,13 @@ The platform maintains a strict distinction between **Pure Unit Tests**, **Datab
                                  ┌──────────────────────────────┐
                                  │   Playwright Browser E2E     │ (3 tests in Chromium)
                                  ├──────────────────────────────┤
-                                 │ Database Service Integration │ (42 tests in Vitest)
+                                 │ Database Service Integration │ (43 tests in Vitest)
                                  ├──────────────────────────────┤
                                  │   Pure Domain & Math Unit    │ (33 tests in Vitest)
                                  └──────────────────────────────┘
 ```
 
-### 1. Run Vitest Unit & Integration Tests (75 Tests)
+### 1. Run Vitest Unit & Integration Tests (76 Tests)
 
 ```bash
 npm test
@@ -273,13 +273,18 @@ npm test
 - `tests/integration/lesson-completion.test.ts`: 5 tests for atomic transactional completion and idempotency.
 - `tests/integration/security-idor.test.ts`: 10 tests verifying IDOR cross-user protection, quiz answer sanitization, practice anti-cheat boundary enforcement, and XP idempotency.
 - `tests/integration/golden-path.test.ts`: 13 tests exercising the end-to-end backend service lifecycle.
+- `tests/integration/health.test.ts`: 1 test verifying active database connection ping via `/api/health`.
 
-**Result: 75/75 Vitest tests passing across 8 test suites.**
+**Result: 76/76 Vitest tests passing across 9 test suites.**
 
 ### 2. Run Real Playwright Browser End-to-End Tests (3 Tests)
 
 ```bash
+# Local browser testing
 npm run test:e2e
+
+# Target staging or live production URL
+PLAYWRIGHT_TEST_BASE_URL=https://your-production-url.vercel.app npm run test:e2e:prod
 ```
 
 - `tests/e2e/golden-path.spec.ts`: Executes true browser user journey: Landing $\rightarrow$ Register $\rightarrow$ Stepper Onboarding (Steps 1–7) $\rightarrow$ Dashboard $\rightarrow$ Roadmap $\rightarrow$ Lesson 1 sections $\rightarrow$ Quiz submission $\rightarrow$ Results & progress persistence $\rightarrow$ Sign out $\rightarrow$ Sign in verification.
@@ -292,28 +297,30 @@ npm run test:e2e
 ```bash
 npm run lint         # ESLint (0 errors, 0 warnings)
 npx tsc --noEmit     # TypeScript Strict Typecheck (0 errors)
-npm run build        # Next.js 16 Production Build (All 26 routes compiled cleanly)
+npm run build        # Next.js 16 Production Build (27 routes compiled cleanly)
 ```
 
 ---
 
-## 10. Production Deployment Guide
+## 10. Production Deployment & Operational Documentation
 
-### Deploying to Vercel
+Comprehensive operational documentation has been established:
+- 📖 [DEPLOYMENT.md](file:///d:/MY%20CODE/guitar-learning-platform/DEPLOYMENT.md): Detailed guide for Vercel, Neon/Supabase PostgreSQL connection pooling, migrations, and seeding.
+- 🛡️ [SECURITY.md](file:///d:/MY%20CODE/guitar-learning-platform/SECURITY.md): Threat modeling, session token cryptography, anti-cheat invariants, and response headers.
+- 📋 [RUNBOOK.md](file:///d:/MY%20CODE/guitar-learning-platform/RUNBOOK.md): Site Reliability Engineering incident response matrix, connection pool triage, and recovery workflows.
+
+### Quick Deploy to Vercel
 
 1. Push your repository to GitHub / GitLab.
 2. Import the project into [Vercel](https://vercel.com).
 3. Set the Environment Variables in the Vercel Dashboard:
-   - `DATABASE_URL`: Connection string from Neon, Supabase, or AWS RDS with connection pooling.
+   - `DATABASE_URL`: Pooled connection string from Neon or Supabase.
    - `AUTH_SECRET`: Random 32-character secret generated via `openssl rand -base64 32`.
-   - `AUTH_URL`: Your production domain (e.g. `https://guitar-platform.vercel.app`).
-   - `NEXT_PUBLIC_APP_URL`: Your production domain.
-4. Set the Build Command:
+   - `AUTH_URL`: Your canonical production domain (e.g. `https://your-project.vercel.app`).
+   - `NEXT_PUBLIC_APP_URL`: Your canonical production domain.
+4. Deploy and execute production migrations and seeding:
    ```bash
-   prisma migrate deploy && next build
-   ```
-5. Deploy and run the database seed once:
-   ```bash
+   npx prisma migrate deploy
    npx prisma db seed
    ```
 
