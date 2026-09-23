@@ -71,7 +71,8 @@ Configure the following variables in the **Vercel Project Settings -> Environmen
 
 | Variable | Description | Example / Generation |
 |---|---|---|
-| `DATABASE_URL` | Pooled PostgreSQL connection string | `postgresql://...neon.tech/neondb?sslmode=require&pgbouncer=true` |
+| `DATABASE_URL` | Pooled PostgreSQL connection string (runtime) | `postgresql://...neon.tech/neondb?sslmode=require&pgbouncer=true` |
+| `DIRECT_URL` | Direct PostgreSQL connection string (migrations) | `postgresql://...neon.tech/neondb?sslmode=require` |
 | `AUTH_SECRET` | 32+ character random secret for HMAC SHA-256 session token signing | Generate via `openssl rand -base64 32` |
 | `AUTH_URL` | Canonical production URL (HTTPS) | `https://guitar.yourdomain.com` (or `https://your-project.vercel.app`) |
 | `NEXT_PUBLIC_APP_URL`| Public canonical URL for browser links | `https://guitar.yourdomain.com` |
@@ -149,14 +150,10 @@ Verify that the deployment is live and communicating with PostgreSQL:
 ```bash
 curl -i https://your-production-url.vercel.app/api/health
 ```
-Expected response:
+Expected response (HTTP 200 without exposing internal infrastructure details):
 ```json
 {
-  "status": "ok",
-  "database": "connected",
-  "timestamp": "2026-09-23T...",
-  "uptime": 42,
-  "environment": "production"
+  "status": "ok"
 }
 ```
 

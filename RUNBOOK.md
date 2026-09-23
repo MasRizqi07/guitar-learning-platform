@@ -20,7 +20,7 @@ This runbook provides on-call engineers and operators with triage steps, diagnos
 ### Scenario A: Database Connection Pool Exhaustion (`P1001`, `P2024`)
 - **Symptoms:** API endpoints returning HTTP 500 or 503; logs reporting `PrismaClientInitializationError` or `Can't reach database server at...`.
 - **Diagnosis:**
-  1. Check `/api/health` — if returning `{ status: "error", database: "disconnected" }`, database connectivity is lost.
+  1. Check `/api/health` — if returning `{ status: "error" }` or HTTP 503, database connectivity is lost.
   2. Inspect database active connections in Neon / Supabase dashboard.
   3. Verify whether serverless functions are exhausting connection slots.
 - **Remediation:**
@@ -84,7 +84,7 @@ Neon and Supabase provide automated daily snapshots and point-in-time recovery (
 ## 4. Verification Checklists
 
 ### Post-Incident Recovery Verification
-- [ ] `/api/health` returns HTTP 200 OK with `database: "connected"`.
+- [ ] `/api/health` returns HTTP 200 OK with `{"status":"ok"}`.
 - [ ] Landing page (`/`), Dashboard (`/dashboard`), and Learn (`/learn`) load with zero console errors.
 - [ ] Test user can log in and view active streak and XP totals.
 - [ ] Practice timer and Tuner plucks render and emit sound cleanly.
