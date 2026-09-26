@@ -90,3 +90,42 @@ if (!['SUPPORT', 'CONTENT_EDITOR', 'ADMIN', 'OWNER'].includes(normalizeRole(acto
 ```
 
 Any unauthorized request (such as a standard `LEARNER` attempting to access `/admin`) is immediately redirected to `/dashboard` before any sensitive backoffice templates or data queries are executed.
+
+---
+
+## 5. Curriculum Content Management (CMS) Workspace (Phase C)
+
+The platform includes a production Content Management System allowing authorized staff (`CONTENT_EDITOR`, `ADMIN`, `OWNER`) to manage curriculum without code changes:
+
+```text
+/admin
+├── Content Overview (/admin/content)
+│   ├── Real-time publishing metrics (Draft, In Review, Scheduled, Published, Archived)
+│   └── Quick access cards for Courses, Modules, Lessons, Quizzes, Chords, and Achievements
+│
+├── Course Management (/admin/courses)
+│   ├── Create, edit, and archive courses
+│   └── Manage slugs, difficulty, order, and thumbnail URLs
+│
+├── Module Management (/admin/modules)
+│   ├── Create, edit, and reorder modules within courses
+│   └── Collision-free transactional reordering
+│
+├── Lesson CMS (/admin/lessons)
+│   ├── Multi-section lesson authoring (Text, Video, Image, Chord, Tip, Warning, Practice, Summary)
+│   ├── Draft & Review editorial workflows
+│   ├── Staff-only learner preview (`/admin/lessons/[id]/preview`)
+│   └── Monotonically incremented revision history & safe snapshot restoration (`/admin/lessons/[id]/revisions`)
+│
+├── Quiz CMS (/admin/quizzes)
+│   ├── Create and edit lesson quizzes, questions, and answer options
+│   └── Invariant: `QUESTION_IN_USE` protects historical learner attempts from deletion
+│
+├── Chord Library (/admin/chords)
+│   ├── Interactive visual diagram editing with real-time ChordDiagram previews
+│   └── Fret, finger, string, and note data validation
+│
+└── Gamification & Achievements (/admin/achievements)
+    ├── Manage badges, XP rewards, and unlocking condition criteria
+    └── Stable code identifier enforcement
+```

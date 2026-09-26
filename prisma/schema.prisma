@@ -78,6 +78,14 @@ enum PracticeDifficulty {
   DIFFICULT
 }
 
+enum ContentStatus {
+  DRAFT
+  IN_REVIEW
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
 enum QuestionType {
   MULTIPLE_CHOICE
   TRUE_FALSE
@@ -164,6 +172,13 @@ model User {
   passwordResetTokens     PasswordResetToken[]
   securityEvents          SecurityEvent[]
   adminAuditLogs          AdminAuditLog[]
+  createdCourses          Course[]                 @relation("CourseCreatedBy")
+  updatedCourses          Course[]                 @relation("CourseUpdatedBy")
+  publishedCourses        Course[]                 @relation("CoursePublishedBy")
+  createdLessons          Lesson[]                 @relation("LessonCreatedBy")
+  updatedLessons          Lesson[]                 @relation("LessonUpdatedBy")
+  publishedLessons        Lesson[]                 @relation("LessonPublishedBy")
+  createdLessonRevisions  LessonRevision[]         @relation("LessonRevisionCreatedBy")
 
   @@index([email])
   @@index([role])
@@ -226,30 +241,44 @@ model UserLearningGoal {
 }
 
 model Course {
-  id           String   @id @default(uuid())
-  title        String
-  slug         String   @unique
-  description  String
-  difficulty   String   @default("BEGINNER")
-  thumbnailUrl String?
-  order        Int      @unique
-  published    Boolean  @default(true)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id                   String        @id @default(uuid())
+  title                String
+  slug                 String        @unique
+  description          String
+  difficulty           String        @default("BEGINNER")
+  thumbnailUrl         String?
+  order                Int           @unique
+  published            Boolean       @default(true)
+  status               ContentStatus @default(PUBLISHED)
+  createdById          String?
+  updatedById          String?
+  publishedById        String?
+  submittedForReviewAt DateTime?
+  publishedAt          DateTime?
+  scheduledFor         DateTime?
+  archivedAt           DateTime?
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
 
-  modules Module[]
+  modules     Module[]
+  createdBy   User?    @relation("CourseCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  updatedBy   User?    @relation("CourseUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+  publishedBy User?    @relation("CoursePublishedBy", fields: [publishedById], references: [id], onDelete: SetNull)
+
+  @@index([status])
 }
 
 model Module {
-  id               String   @id @default(uuid())
+  id               String        @id @default(uuid())
   courseId         String
   title            String
   slug             String
   description      String
   order            Int
-  estimatedMinutes Int      @default(30)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  status           ContentStatus @default(PUBLISHED)
+  estimatedMinutes Int           @default(30)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
 
   course  Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
   lessons Lesson[]
@@ -258,33 +287,47 @@ model Module {
   @@unique([courseId, order])
   @@index([courseId])
   @@index([courseId, order])
+  @@index([status])
 }
 
 model Lesson {
-  id               String   @id @default(uuid())
-  moduleId         String
-  title            String
-  slug             String
-  description      String
-  difficulty       String   @default("BEGINNER")
-  estimatedMinutes Int      @default(10)
-  xpReward         Int      @default(20)
-  order            Int
-  published        Boolean  @default(true)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id                   String            @id @default(uuid())
+  moduleId             String
+  title                String
+  slug                 String
+  description          String
+  difficulty           String            @default("BEGINNER")
+  estimatedMinutes     Int               @default(10)
+  xpReward             Int               @default(20)
+  order                Int
+  published            Boolean           @default(true)
+  status               ContentStatus     @default(PUBLISHED)
+  createdById          String?
+  updatedById          String?
+  publishedById        String?
+  submittedForReviewAt DateTime?
+  publishedAt          DateTime?
+  scheduledFor         DateTime?
+  archivedAt           DateTime?
+  createdAt            DateTime          @default(now())
+  updatedAt            DateTime          @updatedAt
 
   module           Module            @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   sections         LessonSection[]
   lessonProgress   LessonProgress[]
   practiceSessions PracticeSession[]
   quiz             Quiz?
+  revisions        LessonRevision[]
+  createdBy        User?             @relation("LessonCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  updatedBy        User?             @relation("LessonUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+  publishedBy      User?             @relation("LessonPublishedBy", fields: [publishedById], references: [id], onDelete: SetNull)
 
   @@unique([moduleId, slug])
   @@unique([moduleId, order])
   @@index([moduleId])
   @@index([moduleId, order])
   @@index([published])
+  @@index([status])
 }
 
 model LessonSection {
@@ -361,20 +404,22 @@ model PracticeSessionChord {
 }
 
 model Chord {
-  id          String    @id @default(uuid())
+  id          String        @id @default(uuid())
   name        String
-  slug        String    @unique
+  slug        String        @unique
   type        ChordType
-  difficulty  String    @default("BEGINNER")
+  difficulty  String        @default("BEGINNER")
   notes       Json
   diagramData Json
-  description String    @db.Text
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  description String        @db.Text
+  status      ContentStatus @default(PUBLISHED)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 
   sessionChords PracticeSessionChord[]
 
   @@index([type])
+  @@index([status])
 }
 
 model Quiz {
@@ -449,9 +494,25 @@ model QuizAttemptAnswer {
   createdAt              DateTime @default(now())
 
   quizAttempt QuizAttempt @relation(fields: [quizAttemptId], references: [id], onDelete: Cascade)
-  question    Question    @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  question    Question    @relation(fields: [questionId], references: [id], onDelete: Restrict)
 
   @@unique([quizAttemptId, questionId])
+}
+
+model LessonRevision {
+  id          String    @id @default(uuid())
+  lessonId    String
+  version     Int
+  snapshot    Json
+  createdById String?
+  createdAt   DateTime  @default(now())
+  publishedAt DateTime?
+
+  lesson    Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  createdBy User?  @relation("LessonRevisionCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@unique([lessonId, version])
+  @@index([lessonId, createdAt])
 }
 
 model XPTransaction {

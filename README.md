@@ -120,14 +120,14 @@ guitar-learning-platform/
 
 ## 4. Database & Domain Models
 
-The Prisma schema defines 22 models and 13 enums:
+The Prisma schema defines 23 models and 14 enums:
 
-- **Authentication & User:** `User`, `Profile`, `OnboardingProfile`, `LearningGoal`, `UserLearningGoal`
-- **Curriculum:** `Course`, `Module`, `Lesson`, `LessonSection`, `LessonProgress`
+- **Authentication & User:** `User`, `Profile`, `OnboardingProfile`, `LearningGoal`, `UserLearningGoal`, `Session`, `VerificationToken`, `PasswordResetToken`, `SecurityEvent`
+- **Curriculum & CMS:** `Course`, `Module`, `Lesson`, `LessonSection`, `LessonProgress`, `LessonRevision` (immutable monotonically versioned snapshots)
 - **Practice Room:** `PracticeSession`, `PracticeSessionChord`
 - **Quiz Engine:** `Quiz`, `Question`, `AnswerOption`, `QuizAttempt`, `QuizAttemptAnswer`
 - **Library:** `Chord` (with structured JSON fingering and string voicings)
-- **Gamification & Audit:** `XPTransaction` (idempotent ledger), `Achievement`, `UserAchievement`, `LearningActivity`
+- **Gamification & Audit:** `XPTransaction` (idempotent ledger), `Achievement`, `UserAchievement`, `LearningActivity`, `AdminAuditLog` (append-only privileged audit trail)
 
 ### Key Invariants & Constraints
 
@@ -135,7 +135,9 @@ The Prisma schema defines 22 models and 13 enums:
 - `LessonProgress`: Unique on `(userId, lessonId)`
 - `Module`: Unique on `(courseId, slug)` and `(courseId, order)`
 - `Lesson`: Unique on `(moduleId, slug)` and `(moduleId, order)`
-- `QuizAttemptAnswer`: Unique on `(quizAttemptId, questionId)`
+- `LessonSection`: Unique on `(lessonId, order)`
+- `LessonRevision`: Unique on `(lessonId, version)`
+- `QuizAttemptAnswer`: Unique on `(quizAttemptId, questionId)`, with `onDelete: Restrict` on `questionId` to protect historical learner attempt data
 - `XPTransaction`: Unique on `idempotencyKey`
 - `UserAchievement`: Unique on `(userId, achievementId)`
 
@@ -259,7 +261,7 @@ The platform maintains a strict distinction between **Pure Unit Tests**, **Datab
                                  └──────────────────────────────┘
 ```
 
-### 1. Run Vitest Unit & Integration Tests (119 Tests)
+### 1. Run Vitest Unit & Integration Tests (140 Tests)
 
 ```bash
 npm test
@@ -276,10 +278,11 @@ npm test
 - `tests/integration/health.test.ts`: 1 test verifying active database connection ping via `/api/health`.
 - `tests/integration/auth-security-v2.test.ts`: 16 tests covering Phase A account security (persistent token hashing, revocable multi-device sessions, verification tokens, password resets, rate limiting).
 - `tests/integration/admin-rbac-v2.test.ts`: 27 tests covering Phase B administrative isolation (RBAC boundary, user suspension, session invalidation, role management, `LAST_OWNER_PROTECTED` invariants, and secret-scrubbed audit logs).
+- `tests/integration/content-cms-v2.test.ts`: 21 tests covering Phase C Content Management System (Course, Module, Lesson, Section, Quiz, Chord, Achievement CMS, status lifecycle machine, publishing validations, monotonic lesson revision snapshots, safety restore, and question deletion foreign-key constraints).
 
-**Result: 119/119 Vitest tests passing across 11 test suites.**
+**Result: 140/140 Vitest tests passing across 12 test suites.**
 
-### 2. Run Real Playwright Browser End-to-End Tests (4 Tests)
+### 2. Run Real Playwright Browser End-to-End Tests (6 Tests)
 
 ```bash
 # Local browser testing
@@ -289,11 +292,14 @@ npm run test:e2e
 PLAYWRIGHT_TEST_BASE_URL=https://your-production-url.vercel.app npm run test:e2e:prod
 ```
 
+- `tests/e2e/admin-rbac.spec.ts`: Exercises owner administration: Owner Login $\rightarrow$ Access `/admin` $\rightarrow$ Search User in Directory $\rightarrow$ Inspect User Detail $\rightarrow$ Suspend Account with Reason $\rightarrow$ Verify Sessions Revoked $\rightarrow$ Unsuspend Account $\rightarrow$ Change User Role $\rightarrow$ Inspect Immutable Audit Log.
+- `tests/e2e/content-cms.spec.ts`:
+  - **Flow 1 (Critical CMS Flow):** `CONTENT_EDITOR` Login $\rightarrow$ Content Overview $\rightarrow$ Create Draft Lesson $\rightarrow$ Add Required Section $\rightarrow$ Staff Preview $\rightarrow$ Submit Review $\rightarrow$ Self-Approval Block $\rightarrow$ Admin Login $\rightarrow$ Review & Publish $\rightarrow$ Learner Login $\rightarrow$ Published Lesson Accessible.
+  - **Flow 2 (Revision History & Safety Restore):** Admin Edits Published Lesson $\rightarrow$ Saves Metadata $\rightarrow$ Generates Revision Snapshot $\rightarrow$ Restores v1 $\rightarrow$ Lesson Reverts to DRAFT $\rightarrow$ Safety Backup Snapshot Created.
 - `tests/e2e/golden-path.spec.ts`: Executes true browser user journey: Landing $\rightarrow$ Register $\rightarrow$ Stepper Onboarding (Steps 1–7) $\rightarrow$ Dashboard $\rightarrow$ Roadmap $\rightarrow$ Lesson 1 sections $\rightarrow$ Quiz submission $\rightarrow$ Results & progress persistence $\rightarrow$ Sign out $\rightarrow$ Sign in verification.
 - `tests/e2e/tuner.spec.ts`: Verifies Tuner UI, 6 reference tones plucking, loop playback, microphone error fallback, and Interactive Fretboard scale filter switches in the browser.
-- `tests/e2e/admin-rbac.spec.ts`: Exercises owner administration: Owner Login $\rightarrow$ Access `/admin` $\rightarrow$ Search User in Directory $\rightarrow$ Inspect User Detail $\rightarrow$ Suspend Account with Reason $\rightarrow$ Verify Sessions Revoked $\rightarrow$ Unsuspend Account $\rightarrow$ Change User Role $\rightarrow$ Inspect Immutable Audit Log.
 
-**Result: 4/4 Playwright browser tests passing in Chromium.**
+**Result: 6/6 Playwright browser tests passing in Chromium.**
 
 ### 3. Backoffice & Platform Owner Bootstrap
 
@@ -306,13 +312,14 @@ npm run admin:bootstrap-owner -- --email=owner@example.com
 Refer to:
 - [`docs/RBAC.md`](docs/RBAC.md) — Comprehensive 5-role permission matrix, operational boundaries, and security invariants.
 - [`docs/ADMIN_OPERATIONS.md`](docs/ADMIN_OPERATIONS.md) — Operational runbook for user directory search, suspension lifecycles, and audit inspection.
+- [`docs/CONTENT_OPERATIONS.md`](docs/CONTENT_OPERATIONS.md) — Operational guide for curriculum authoring, section editing, draft/review/publish lifecycles, revision restores, and safe quiz management.
 
 ### 4. Typecheck, Lint, and Production Build
 
 ```bash
 npm run lint         # ESLint (0 errors, 0 warnings)
 npx tsc --noEmit     # TypeScript Strict Typecheck (0 errors)
-npm run build        # Next.js 16 Production Build (45 routes compiled cleanly)
+npm run build        # Next.js 16 Production Build (45+ routes compiled cleanly)
 ```
 
 ---

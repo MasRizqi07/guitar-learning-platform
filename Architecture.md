@@ -2440,4 +2440,75 @@ Phase B introduces a hardened operational backoffice enabling authorized staff t
 ### 19.3 Append-Only Audit Trail
 - Model: `AdminAuditLog`
 - Guarantees: Strictly append-only; application service layer provides no update or delete operations.
-- Privacy Hardening: IP addresses are stored as SHA-256 digests (`ipHash`); all sensitive payload keys (`password`, `token`, `secret`, `cookie`, `jwt`) are sanitized prior to persistence.
+- Privacy Hardening: IP addresses are stored as SHA-256 digests (`ipHash`); all sensitive payload keys (`password`, `token`, `secret`, `cookie`, `jwt`) are sanitized prior to persistence.
+
+---
+
+# 20. Phase C — Production Content Management System (CMS) Architecture
+
+Phase C removes routine curriculum management from source code and seed scripts. Authorized staff (`CONTENT_EDITOR`, `ADMIN`, `OWNER`) can safely create, draft, section-edit, review, publish, archive, and restore learning content while preserving all learner-owned history.
+
+### 20.1 Content Status Lifecycle & State Machine
+The platform establishes a canonical content workflow across all curriculum entities (`Course`, `Module`, `Lesson`):
+
+```text
+       ┌───────────┐
+       │   DRAFT   │ ◄──────────────────────┐
+       └─────┬─────┘                        │
+             │ (submit review)              │ (request changes / restore)
+             ▼                              │
+       ┌───────────┐                        │
+       │ IN_REVIEW │ ───────────────────────┤
+       └─────┬─────┘                        │
+             │ (publish / admin approval)   │
+             ▼                              │
+       ┌───────────┐                        │
+       │ PUBLISHED │ ───────────────────────┘ (unpublish / restore)
+       └─────┬─────┘
+             │ (archive)
+             ▼
+       ┌───────────┐
+       │ ARCHIVED  │
+       └───────────┘
+```
+
+- **Additive Status Migration:** Replaces reliance on raw boolean flags with `ContentStatus` enum (`DRAFT`, `IN_REVIEW`, `SCHEDULED`, `PUBLISHED`, `ARCHIVED`). The legacy `published` boolean is synchronized automatically (`PUBLISHED` $\to$ `true`, otherwise `false`) to ensure 100% backward compatibility for existing learner queries.
+- **Strict Role-Based Authority & Self-Approval Prevention:**
+  - `CONTENT_EDITOR`: Can create drafts, edit draft content, preview content, and submit for review. Editors **cannot** publish content or self-approve their own submissions.
+  - `ADMIN` / `OWNER`: Full publishing authority, can approve/reject review submissions, publish, archive, and restore revisions.
+
+### 20.2 Monotonic Lesson Revision History (`LessonRevision`)
+- **Immutable Snapshot Model:** Every time a lesson is published, a complete deep snapshot is persisted containing:
+  - Lesson metadata (`title`, `slug`, `description`, `difficulty`, `estimatedMinutes`, `xpReward`, `order`)
+  - All ordered `LessonSection` records (with type, title, content, mediaUrl, metadata, required)
+  - Associated `Quiz`, `Question` records, and `AnswerOption` records
+- **Lesson-Local Versioning:** Monotonically increasing integers ($1, 2, 3, \dots$) allocated atomically inside database transactions.
+- **Safety Backups & Restores:** Restoring an earlier revision:
+  1. Atomically captures a safety backup snapshot of the current state.
+  2. Overwrites lesson metadata, sections, and quiz to match the selected revision.
+  3. Reverts status to `DRAFT` (not directly `PUBLISHED`) to mandate administrative review.
+  4. Records an audit event (`LESSON_REVISION_RESTORED`).
+
+### 20.3 Learner History Immutability & Anti-Cascade Integrity
+- **Restricted Foreign Keys:** `QuizAttemptAnswer.questionId` enforces `onDelete: Restrict` at the database level.
+- **Protected Question Deletion:** Deleting questions that have historical learner submissions (`QuizAttemptAnswer`) is strictly rejected with a `409 QUESTION_IN_USE` error code. Historical quiz attempts and XP ledgers are never silently orphaned or altered.
+
+### 20.4 Safe Transactional Reordering
+To prevent database unique constraint collisions (`@@unique([courseId, order])`, `@@unique([moduleId, order])`, `@@unique([lessonId, order])`):
+- CMS operations use a **Two-Phase Negative Offset Remapping** within an atomic Prisma transaction.
+- Step 1: Remap all target records to negative temporary values ($-\text{order} - 1000$).
+- Step 2: Remap negative values to their final sequential, compacted positive indices ($1, 2, 3, \dots$).
+
+### 20.5 Optimistic Concurrency Protection
+To prevent silent overwrite collisions when multiple editors collaborate:
+- Mutations verify the incoming `updatedAt` timestamp against the database record.
+- If the database record was updated more recently by another editor, the server aborts the mutation with `409 CONTENT_CONFLICT` and prompts the editor to refresh before saving.
+
+### 20.6 Centralized Publishing Validation Engine
+Centralized in `AdminContentService.validateLessonForPublish()`:
+- Missing title, description, or zero sections rejects publishing.
+- Section-specific validation (TEXT requires content, VIDEO requires mediaUrl, CHORD requires valid chord reference, PRACTICE requires duration metadata).
+- Quiz validation (quiz requires $\ge 1$ question; questions require $\ge 2$ options with exactly 1 correct answer; passing score in $0 \dots 100$).
+- Module publishing requires $\ge 1$ published lesson.
+- Course publishing requires $\ge 1$ published module.
+

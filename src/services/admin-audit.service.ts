@@ -59,6 +59,10 @@ export class AdminAuditService {
    * Records an immutable administrative audit log
    */
   static async recordAdminAction(params: RecordAdminActionParams) {
+    return this.record(params);
+  }
+
+  static async record(params: RecordAdminActionParams) {
     try {
       const ipHash = this.hashIp(params.ip);
       const before = this.sanitizePayload(params.before);

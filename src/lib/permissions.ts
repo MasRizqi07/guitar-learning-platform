@@ -6,14 +6,31 @@ export type Permission =
   | 'course.read'
   | 'course.create'
   | 'course.update'
+  | 'course.review'
   | 'course.publish'
+  | 'course.archive'
+  | 'module.read'
+  | 'module.create'
+  | 'module.update'
+  | 'module.review'
+  | 'module.publish'
+  | 'module.archive'
   | 'lesson.read'
   | 'lesson.create'
   | 'lesson.update'
+  | 'lesson.review'
   | 'lesson.publish'
+  | 'lesson.archive'
   | 'quiz.read'
   | 'quiz.create'
   | 'quiz.update'
+  | 'chord.read'
+  | 'chord.create'
+  | 'chord.update'
+  | 'chord.archive'
+  | 'achievement.read'
+  | 'achievement.create'
+  | 'achievement.update'
   | 'media.read'
   | 'media.create'
   | 'media.delete'
@@ -34,35 +51,54 @@ export type Permission =
 const ROLE_PERMISSIONS: Record<string, ReadonlySet<Permission>> = {
   LEARNER: new Set<Permission>([
     'course.read',
+    'module.read',
     'lesson.read',
     'quiz.read',
+    'chord.read',
+    'achievement.read',
     'media.read',
   ]),
   // Legacy USER maps identically to LEARNER
   USER: new Set<Permission>([
     'course.read',
+    'module.read',
     'lesson.read',
     'quiz.read',
+    'chord.read',
+    'achievement.read',
     'media.read',
   ]),
   CONTENT_EDITOR: new Set<Permission>([
     'course.read',
     'course.create',
     'course.update',
+    'course.review',
+    'module.read',
+    'module.create',
+    'module.update',
+    'module.review',
     'lesson.read',
     'lesson.create',
     'lesson.update',
+    'lesson.review',
     'quiz.read',
     'quiz.create',
     'quiz.update',
+    'chord.read',
+    'chord.create',
+    'chord.update',
+    'achievement.read',
     'media.read',
     'media.create',
     'media.delete',
   ]),
   SUPPORT: new Set<Permission>([
     'course.read',
+    'module.read',
     'lesson.read',
     'quiz.read',
+    'chord.read',
+    'achievement.read',
     'media.read',
     'user.read',
     'user.suspend',
@@ -74,14 +110,31 @@ const ROLE_PERMISSIONS: Record<string, ReadonlySet<Permission>> = {
     'course.read',
     'course.create',
     'course.update',
+    'course.review',
     'course.publish',
+    'course.archive',
+    'module.read',
+    'module.create',
+    'module.update',
+    'module.review',
+    'module.publish',
+    'module.archive',
     'lesson.read',
     'lesson.create',
     'lesson.update',
+    'lesson.review',
     'lesson.publish',
+    'lesson.archive',
     'quiz.read',
     'quiz.create',
     'quiz.update',
+    'chord.read',
+    'chord.create',
+    'chord.update',
+    'chord.archive',
+    'achievement.read',
+    'achievement.create',
+    'achievement.update',
     'media.read',
     'media.create',
     'media.delete',
@@ -100,14 +153,31 @@ const ROLE_PERMISSIONS: Record<string, ReadonlySet<Permission>> = {
     'course.read',
     'course.create',
     'course.update',
+    'course.review',
     'course.publish',
+    'course.archive',
+    'module.read',
+    'module.create',
+    'module.update',
+    'module.review',
+    'module.publish',
+    'module.archive',
     'lesson.read',
     'lesson.create',
     'lesson.update',
+    'lesson.review',
     'lesson.publish',
+    'lesson.archive',
     'quiz.read',
     'quiz.create',
     'quiz.update',
+    'chord.read',
+    'chord.create',
+    'chord.update',
+    'chord.archive',
+    'achievement.read',
+    'achievement.create',
+    'achievement.update',
     'media.read',
     'media.create',
     'media.delete',

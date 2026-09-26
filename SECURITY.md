@@ -111,7 +111,17 @@ Configured in `next.config.ts` for all application routes:
 
 ---
 
-## 9. Responsible Vulnerability Disclosure
+## 9. Content Security & Integrity Controls (Phase C)
+
+- **Self-Approval Prevention:** `CONTENT_EDITOR` accounts can draft curriculum and submit for review, but are structurally blocked from publishing their own content or bypassing peer review. Only `ADMIN` and `OWNER` roles can publish or archive live curriculum.
+- **Learner Answer Protection:** Quiz answers (`isCorrect`) are strictly stripped from all learner-facing responses prior to submission (`LearnerQuizDTO`), preventing client-side inspection or devtools cheating.
+- **Historical Question Protection (`onDelete: Restrict`):** Questions with existing learner `QuizAttemptAnswer` records cannot be deleted. Any attempt to remove an in-use question throws a `QUESTION_IN_USE` error, preventing destruction of historical quiz records.
+- **Optimistic Concurrency Protection:** CMS mutations validate `clientUpdatedAt` against the database row timestamp. Stale concurrent edits are rejected with `CONTENT_CONFLICT` (HTTP 409), preventing editors from silently overwriting each other's changes.
+- **Staff-Only Preview Mode:** Content previews at `/admin/lessons/[id]/preview` require active staff session authentication and the `lesson.read` permission. Previews never write to learner progress tables.
+
+---
+
+## 10. Responsible Vulnerability Disclosure
 
 If you discover a potential security vulnerability in this project, please report it privately:
 - **Email:** `security@yourdomain.com` (placeholder)

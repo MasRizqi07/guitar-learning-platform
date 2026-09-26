@@ -2,9 +2,9 @@ import { prisma } from '@/lib/db';
 import { LessonProgressStatus } from '@prisma/client';
 
 export class CurriculumRepository {
-  static async getMainCourse() {
+  static async getMainCourse(courseId?: string) {
     return prisma.course.findFirst({
-      where: { published: true },
+      where: courseId ? { id: courseId, published: true } : { published: true },
       include: {
         modules: {
           orderBy: { order: 'asc' },

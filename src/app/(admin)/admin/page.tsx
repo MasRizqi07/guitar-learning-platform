@@ -20,6 +20,9 @@ export default async function AdminOverviewPage() {
   const overview = await AdminUserService.getOverview(actor);
   const { metrics, recentRegistrations, recentSecurityEvents, recentAdminActions } = overview;
 
+  const canManageUsers = ['SUPPORT', 'ADMIN', 'OWNER'].includes(actor.role);
+  const canManageContent = ['CONTENT_EDITOR', 'ADMIN', 'OWNER'].includes(actor.role);
+
   return (
     <div className="space-y-8">
       {/* Header & Quick Action Banner */}
@@ -37,14 +40,25 @@ export default async function AdminOverviewPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Link
-            href="/admin/users"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition-colors shadow-md shadow-amber-500/10"
-          >
-            <Users className="w-4 h-4" />
-            <span>Manage Users</span>
-            <ArrowRight className="w-3.5 h-3.5 ml-1" />
-          </Link>
+          {canManageContent && (
+            <Link
+              href="/admin/content"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition-colors shadow-md shadow-amber-500/10"
+            >
+              <FileText className="w-4 h-4" />
+              <span>Curriculum CMS</span>
+              <ArrowRight className="w-3.5 h-3.5 ml-1" />
+            </Link>
+          )}
+          {canManageUsers && (
+            <Link
+              href="/admin/users"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs transition-colors"
+            >
+              <Users className="w-4 h-4" />
+              <span>Manage Users</span>
+            </Link>
+          )}
         </div>
       </div>
 

@@ -24,6 +24,17 @@ export type ErrorCode =
   | 'QUIZ_ATTEMPT_NOT_FOUND'
   | 'QUIZ_ALREADY_SUBMITTED'
   | 'XP_TRANSACTION_DUPLICATE'
+  | 'CONTENT_NOT_FOUND'
+  | 'CONTENT_CONFLICT'
+  | 'INVALID_CONTENT_STATUS'
+  | 'INVALID_STATUS_TRANSITION'
+  | 'CONTENT_NOT_PUBLISHABLE'
+  | 'CONTENT_ALREADY_ARCHIVED'
+  | 'SLUG_ALREADY_EXISTS'
+  | 'REVISION_NOT_FOUND'
+  | 'REVISION_RESTORE_FAILED'
+  | 'QUIZ_INVALID'
+  | 'QUESTION_IN_USE'
   | 'INTERNAL_SERVER_ERROR';
 
 export class AppError extends Error {
@@ -54,6 +65,10 @@ export class AppError extends Error {
 
   static notFound(code: ErrorCode = 'INTERNAL_SERVER_ERROR', message = 'Resource not found'): AppError {
     return new AppError(code, message, 404);
+  }
+
+  static conflict(code: ErrorCode = 'CONTENT_CONFLICT', message = 'Resource was modified by another editor'): AppError {
+    return new AppError(code, message, 409);
   }
 
   static validation(message = 'Validation failed', details?: unknown): AppError {

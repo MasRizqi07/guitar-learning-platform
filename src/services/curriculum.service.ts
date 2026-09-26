@@ -6,9 +6,9 @@ import { AppError } from '@/lib/errors';
 import { LessonProgressStatus } from '@prisma/client';
 
 export class CurriculumService {
-  static async getLearningPath(userId: string) {
+  static async getLearningPath(userId: string, courseId?: string) {
     const [course, progressMap, onboarding] = await Promise.all([
-      CurriculumRepository.getMainCourse(),
+      CurriculumRepository.getMainCourse(courseId),
       CurriculumRepository.getUserProgressMap(userId),
       UserRepository.getOnboarding(userId),
     ]);
@@ -134,8 +134,8 @@ export class CurriculumService {
       throw AppError.notFound('LESSON_NOT_FOUND', 'Lesson not found');
     }
 
-    // Check availability
-    const learningPath = await this.getLearningPath(userId);
+    // Check availability within this lesson's course
+    const learningPath = await this.getLearningPath(userId, lesson.module.course.id);
     let availabilityStatus = 'LOCKED';
 
     for (const mod of learningPath.modules) {

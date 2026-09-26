@@ -13,6 +13,11 @@ import {
   Menu,
   X,
   Shield,
+  FolderTree,
+  FileText,
+  HelpCircle,
+  Music,
+  Award,
 } from 'lucide-react';
 import clsx from 'clsx';
 import { UserRole } from '@/lib/permissions';
@@ -25,7 +30,11 @@ export function AdminSidebar({ currentRole }: AdminSidebarProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const navItems = [
+  const canManageUsers = ['SUPPORT', 'ADMIN', 'OWNER'].includes(currentRole);
+  const canAccessAudit = ['ADMIN', 'OWNER'].includes(currentRole);
+  const canAccessCMS = ['CONTENT_EDITOR', 'ADMIN', 'OWNER'].includes(currentRole);
+
+  const primaryNavItems = [
     {
       name: 'Overview',
       href: '/admin',
@@ -33,28 +42,78 @@ export function AdminSidebar({ currentRole }: AdminSidebarProps) {
       active: pathname === '/admin',
       available: true,
     },
-    {
-      name: 'Users',
-      href: '/admin/users',
-      icon: Users,
-      active: pathname.startsWith('/admin/users'),
-      available: true,
-    },
-    {
-      name: 'Audit Log',
-      href: '/admin/audit',
-      icon: ShieldAlert,
-      active: pathname.startsWith('/admin/audit'),
-      available: ['ADMIN', 'OWNER'].includes(currentRole),
-    },
-    {
-      name: 'Content CMS',
-      href: '#',
-      icon: BookOpen,
-      active: false,
-      available: false,
-      badge: 'Phase C',
-    },
+    ...(canManageUsers
+      ? [
+          {
+            name: 'Users',
+            href: '/admin/users',
+            icon: Users,
+            active: pathname.startsWith('/admin/users'),
+            available: true,
+          },
+        ]
+      : []),
+    ...(canAccessAudit
+      ? [
+          {
+            name: 'Audit Log',
+            href: '/admin/audit',
+            icon: ShieldAlert,
+            active: pathname.startsWith('/admin/audit'),
+            available: true,
+          },
+        ]
+      : []),
+  ];
+
+  const contentNavItems = canAccessCMS
+    ? [
+        {
+          name: 'CMS Overview',
+          href: '/admin/content',
+          icon: LayoutDashboard,
+          active: pathname === '/admin/content',
+        },
+        {
+          name: 'Courses',
+          href: '/admin/courses',
+          icon: BookOpen,
+          active: pathname.startsWith('/admin/courses'),
+        },
+        {
+          name: 'Modules',
+          href: '/admin/modules',
+          icon: FolderTree,
+          active: pathname.startsWith('/admin/modules'),
+        },
+        {
+          name: 'Lessons',
+          href: '/admin/lessons',
+          icon: FileText,
+          active: pathname.startsWith('/admin/lessons'),
+        },
+        {
+          name: 'Quizzes',
+          href: '/admin/quizzes',
+          icon: HelpCircle,
+          active: pathname.startsWith('/admin/quizzes'),
+        },
+        {
+          name: 'Chords',
+          href: '/admin/chords',
+          icon: Music,
+          active: pathname.startsWith('/admin/chords'),
+        },
+        {
+          name: 'Achievements',
+          href: '/admin/achievements',
+          icon: Award,
+          active: pathname.startsWith('/admin/achievements'),
+        },
+      ]
+    : [];
+
+  const futureNavItems = [
     {
       name: 'Media Library',
       href: '#',
@@ -100,12 +159,12 @@ export function AdminSidebar({ currentRole }: AdminSidebarProps) {
       {/* Mobile Backdrop */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm md:hidden"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
-      {/* Sidebar Shell */}
+      {/* Sidebar Content */}
       <aside
         className={clsx(
           'fixed inset-y-0 left-0 z-50 w-64 bg-[#10141D] border-r border-[#1F2636] flex flex-col transition-transform duration-200 ease-in-out md:static md:translate-x-0',
@@ -126,18 +185,86 @@ export function AdminSidebar({ currentRole }: AdminSidebarProps) {
         </div>
 
         {/* Navigation Section */}
-        <div className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-          <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-            Platform Management
+        <div className="flex-1 px-3 py-4 space-y-4 overflow-y-auto">
+          {/* Platform Management */}
+          <div className="space-y-1">
+            <div className="px-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              Platform Operations
+            </div>
+            {primaryNavItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={clsx(
+                    'flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150',
+                    item.active
+                      ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30 shadow-sm'
+                      : 'text-slate-300 hover:text-slate-100 hover:bg-slate-800/60'
+                  )}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Icon
+                      className={clsx(
+                        'w-4 h-4',
+                        item.active ? 'text-amber-400' : 'text-slate-400 group-hover:text-slate-200'
+                      )}
+                    />
+                    <span>{item.name}</span>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
 
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            if (!item.available) {
+          {/* Content Management Section */}
+          {canAccessCMS && (
+            <div className="space-y-1">
+              <div className="px-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-amber-400/80">
+                Content CMS
+              </div>
+              {contentNavItems.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className={clsx(
+                      'flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-150',
+                      item.active
+                        ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30 shadow-sm'
+                        : 'text-slate-300 hover:text-slate-100 hover:bg-slate-800/60'
+                    )}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <Icon
+                        className={clsx(
+                          'w-4 h-4',
+                          item.active ? 'text-amber-400' : 'text-slate-400 group-hover:text-slate-200'
+                        )}
+                      />
+                      <span>{item.name}</span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Future Modules */}
+          <div className="space-y-1">
+            <div className="px-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              Future Modules
+            </div>
+            {futureNavItems.map((item) => {
+              const Icon = item.icon;
               return (
                 <div
                   key={item.name}
-                  className="flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium text-slate-500 cursor-not-allowed select-none opacity-60"
+                  className="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium text-slate-500 cursor-not-allowed select-none opacity-60"
                   title={`${item.name} - Coming in future phase`}
                 >
                   <div className="flex items-center gap-2.5">
@@ -151,32 +278,8 @@ export function AdminSidebar({ currentRole }: AdminSidebarProps) {
                   )}
                 </div>
               );
-            }
-
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setMobileOpen(false)}
-                className={clsx(
-                  'flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-semibold transition-all duration-150',
-                  item.active
-                    ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30 shadow-sm'
-                    : 'text-slate-300 hover:text-slate-100 hover:bg-slate-800/60'
-                )}
-              >
-                <div className="flex items-center gap-2.5">
-                  <Icon
-                    className={clsx(
-                      'w-4 h-4',
-                      item.active ? 'text-amber-400' : 'text-slate-400 group-hover:text-slate-200'
-                    )}
-                  />
-                  <span>{item.name}</span>
-                </div>
-              </Link>
-            );
-          })}
+            })}
+          </div>
         </div>
 
         {/* Footer Role Badge */}
