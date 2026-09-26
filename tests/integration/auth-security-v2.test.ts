@@ -200,6 +200,7 @@ describe('Phase A — Production Account & Security Foundation', () => {
       const user2 = await verifySessionToken(sessionToken2);
       expect(user2).not.toBeNull();
       expect(user2?.sessionId).toBe(sessionId2);
+      expect(sessionId3).toBeDefined();
     });
 
     it('lists all active sessions and marks current session correctly', async () => {

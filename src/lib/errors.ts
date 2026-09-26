@@ -6,6 +6,13 @@ export type ErrorCode =
   | 'RATE_LIMIT_EXCEEDED'
   | 'USER_NOT_FOUND'
   | 'SESSION_NOT_FOUND'
+  | 'ADMIN_ACCESS_REQUIRED'
+  | 'PERMISSION_DENIED'
+  | 'INVALID_ACCOUNT_STATUS'
+  | 'CANNOT_SUSPEND_SELF'
+  | 'ROLE_CHANGE_FORBIDDEN'
+  | 'OWNER_REQUIRED'
+  | 'LAST_OWNER_PROTECTED'
   | 'LESSON_NOT_FOUND'
   | 'LESSON_LOCKED'
   | 'LESSON_ALREADY_COMPLETED'
@@ -55,6 +62,30 @@ export class AppError extends Error {
 
   static rateLimit(message = 'Too many requests'): AppError {
     return new AppError('RATE_LIMIT_EXCEEDED', message, 429);
+  }
+
+  static adminAccessRequired(message = 'Admin access required'): AppError {
+    return new AppError('ADMIN_ACCESS_REQUIRED', message, 403);
+  }
+
+  static permissionDenied(permission: string, message?: string): AppError {
+    return new AppError(
+      'PERMISSION_DENIED',
+      message || `Access denied. Required permission: ${permission}`,
+      403
+    );
+  }
+
+  static cannotSuspendSelf(message = 'Administrators cannot suspend their own account'): AppError {
+    return new AppError('CANNOT_SUSPEND_SELF', message, 400);
+  }
+
+  static roleChangeForbidden(message = 'You do not have permission to perform this role transition'): AppError {
+    return new AppError('ROLE_CHANGE_FORBIDDEN', message, 403);
+  }
+
+  static lastOwnerProtected(message = 'The platform must maintain at least one active OWNER. Cannot demote or suspend the last owner.'): AppError {
+    return new AppError('LAST_OWNER_PROTECTED', message, 400);
   }
 
   static internal(message = 'Internal server error'): AppError {

@@ -88,15 +88,30 @@ Configured in `next.config.ts` for all application routes:
 
 ---
 
-## 7. Known Limitations & Future Hardening
+## 7. Account Security, Sessions & Rate Limiting (Phase A)
 
-1. **Email Verification:** Registration does not currently require email confirmation tokens. Recommended for future iterations if public open registration experiences spam.
-2. **Password Reset Flow:** Forgot password / password reset via email is currently documented as an excluded MVP feature.
-3. **Edge Rate Limiting:** For ultra-high-volume traffic, implementing Vercel Edge Middleware with `@upstash/ratelimit` on `/api/auth/login` is recommended.
+- **Persistent Revocable Sessions:** Sessions are stored in the PostgreSQL `Session` table indexed by SHA-256 token hashes (`tokenHash`). Raw session secrets are never persisted in the database.
+- **Per-Device Revocation:** Users can view active devices and revoke individual or all non-current sessions from `/settings/security`.
+- **Email Verification:** Unverified accounts receive cryptographically secure SHA-256 single-use tokens expiring in 24 hours, with a 60-second re-request cooldown.
+- **Password Recovery:** Password reset tokens are single-use, hashed with SHA-256, expire in 1 hour, and atomically revoke all active sessions upon successful reset.
+- **Distributed Rate Limiting:** In-memory distributed rate limiter with sliding window protects against brute-force attacks on login (5 attempts / 15m), registration (3 attempts / hour), and password resets.
 
 ---
 
-## 8. Responsible Vulnerability Disclosure
+## 8. Role-Based Access Control & Operational Security (Phase B)
+
+- **Server-Authoritative Enforcement:** Every administrative operation enforces permissions server-side using `requirePermission(actor, permission)`.
+- **Privilege Separation:** 5 roles (`LEARNER`, `CONTENT_EDITOR`, `SUPPORT`, `ADMIN`, `OWNER`) define granular operational boundaries.
+- **Administrative Invariants:**
+  - `CANNOT_SUSPEND_SELF`: Prevents staff from locking themselves out.
+  - `LAST_OWNER_PROTECTED`: Guarantees that at least one active `OWNER` exists at all times; demoting or suspending the sole owner is blocked.
+  - Non-owner administrators cannot touch `OWNER` status or promote accounts to `OWNER`.
+- **Session Revocation on Suspension:** Suspending a user immediately revokes all active database sessions (`revokedAt = now()`), terminating in-flight requests.
+- **Immutable Audit Trail:** All administrative mutations write to `AdminAuditLog`. The service is strictly append-only, hashes IP addresses using SHA-256, and scrubs sensitive keys (passwords, tokens, cookies, secrets) before persistence.
+
+---
+
+## 9. Responsible Vulnerability Disclosure
 
 If you discover a potential security vulnerability in this project, please report it privately:
 - **Email:** `security@yourdomain.com` (placeholder)

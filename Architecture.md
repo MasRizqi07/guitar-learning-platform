@@ -2408,4 +2408,36 @@ Progress + Gamification
 
 PHASE 7
 QA + Production
+
+PHASE A
+Account & Security Foundation (Sessions, Verification, Rate Limiting, Security Events)
+
+PHASE B
+Admin & RBAC Operations (Operational Backoffice, Multi-Role Permissions, User Directory, Suspension, Role Governance, Audit Logging)
 ```
+
+---
+
+# 19. Phase B — Admin & RBAC Operations Architecture (Production Platform v2)
+
+Phase B introduces a hardened operational backoffice enabling authorized staff to administer users, manage roles, and review security events without direct database intervention.
+
+### 19.1 Admin Layout & Access Boundary
+- Route Group: `src/app/(admin)/admin`
+- Layout Authorization: Server-side `requireAuthUser()` checking staff roles (`SUPPORT`, `CONTENT_EDITOR`, `ADMIN`, `OWNER`). Unprivileged roles (`LEARNER`, `USER`) are redirected immediately to `/dashboard`.
+- Sub-pages require explicit permission checks via `requirePermission(actor, permission)`:
+  - User Directory: `user.read`
+  - User Suspension / Unsuspension: `user.suspend`
+  - Role Modification: `role.manage`
+  - Audit Trail Inspection: `audit.read`
+
+### 19.2 Invariants & Privilege Isolation
+- **`LAST_OWNER_PROTECTED`:** Prevents demoting or suspending the final active `OWNER` account. There must always be at least one active owner in the system.
+- **`CANNOT_SUSPEND_SELF`:** An administrator cannot suspend their own account through the admin interface.
+- **`ROLE_CHANGE_FORBIDDEN`:** Users cannot alter their own roles. Non-owner staff cannot promote anyone to `OWNER` or demote an `OWNER`.
+- **Immediate Session Revocation:** When an account is suspended, all active database sessions (`Session` table) are atomically invalidated (`revokedAt = now()`), immediately blocking all in-flight and future requests from that user.
+
+### 19.3 Append-Only Audit Trail
+- Model: `AdminAuditLog`
+- Guarantees: Strictly append-only; application service layer provides no update or delete operations.
+- Privacy Hardening: IP addresses are stored as SHA-256 digests (`ipHash`); all sensitive payload keys (`password`, `token`, `secret`, `cookie`, `jwt`) are sanitized prior to persistence.

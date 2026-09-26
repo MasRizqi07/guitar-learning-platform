@@ -68,7 +68,6 @@ const ROLE_PERMISSIONS: Record<string, ReadonlySet<Permission>> = {
     'user.suspend',
     'support.read',
     'support.update',
-    'audit.read',
   ]),
   ADMIN: new Set<Permission>([
     // Learner + Content Editor + Support + Admin
@@ -94,6 +93,7 @@ const ROLE_PERMISSIONS: Record<string, ReadonlySet<Permission>> = {
     'analytics.read',
     'audit.read',
     'feature_flag.read',
+    'role.manage',
   ]),
   OWNER: new Set<Permission>([
     // All permissions

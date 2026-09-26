@@ -251,15 +251,15 @@ The platform maintains a strict distinction between **Pure Unit Tests**, **Datab
 
 ```text
                                  ┌──────────────────────────────┐
-                                 │   Playwright Browser E2E     │ (3 tests in Chromium)
+                                 │   Playwright Browser E2E     │ (4 tests in Chromium)
                                  ├──────────────────────────────┤
-                                 │ Database Service Integration │ (43 tests in Vitest)
+                                 │ Database Service Integration │ (86 tests in Vitest)
                                  ├──────────────────────────────┤
                                  │   Pure Domain & Math Unit    │ (33 tests in Vitest)
                                  └──────────────────────────────┘
 ```
 
-### 1. Run Vitest Unit & Integration Tests (76 Tests)
+### 1. Run Vitest Unit & Integration Tests (119 Tests)
 
 ```bash
 npm test
@@ -274,10 +274,12 @@ npm test
 - `tests/integration/security-idor.test.ts`: 10 tests verifying IDOR cross-user protection, quiz answer sanitization, practice anti-cheat boundary enforcement, and XP idempotency.
 - `tests/integration/golden-path.test.ts`: 13 tests exercising the end-to-end backend service lifecycle.
 - `tests/integration/health.test.ts`: 1 test verifying active database connection ping via `/api/health`.
+- `tests/integration/auth-security-v2.test.ts`: 16 tests covering Phase A account security (persistent token hashing, revocable multi-device sessions, verification tokens, password resets, rate limiting).
+- `tests/integration/admin-rbac-v2.test.ts`: 27 tests covering Phase B administrative isolation (RBAC boundary, user suspension, session invalidation, role management, `LAST_OWNER_PROTECTED` invariants, and secret-scrubbed audit logs).
 
-**Result: 76/76 Vitest tests passing across 9 test suites.**
+**Result: 119/119 Vitest tests passing across 11 test suites.**
 
-### 2. Run Real Playwright Browser End-to-End Tests (3 Tests)
+### 2. Run Real Playwright Browser End-to-End Tests (4 Tests)
 
 ```bash
 # Local browser testing
@@ -289,15 +291,28 @@ PLAYWRIGHT_TEST_BASE_URL=https://your-production-url.vercel.app npm run test:e2e
 
 - `tests/e2e/golden-path.spec.ts`: Executes true browser user journey: Landing $\rightarrow$ Register $\rightarrow$ Stepper Onboarding (Steps 1–7) $\rightarrow$ Dashboard $\rightarrow$ Roadmap $\rightarrow$ Lesson 1 sections $\rightarrow$ Quiz submission $\rightarrow$ Results & progress persistence $\rightarrow$ Sign out $\rightarrow$ Sign in verification.
 - `tests/e2e/tuner.spec.ts`: Verifies Tuner UI, 6 reference tones plucking, loop playback, microphone error fallback, and Interactive Fretboard scale filter switches in the browser.
+- `tests/e2e/admin-rbac.spec.ts`: Exercises owner administration: Owner Login $\rightarrow$ Access `/admin` $\rightarrow$ Search User in Directory $\rightarrow$ Inspect User Detail $\rightarrow$ Suspend Account with Reason $\rightarrow$ Verify Sessions Revoked $\rightarrow$ Unsuspend Account $\rightarrow$ Change User Role $\rightarrow$ Inspect Immutable Audit Log.
 
-**Result: 3/3 Playwright browser tests passing in Chromium.**
+**Result: 4/4 Playwright browser tests passing in Chromium.**
 
-### 3. Typecheck, Lint, and Production Build
+### 3. Backoffice & Platform Owner Bootstrap
+
+To safely provision the initial platform `OWNER` without exposing public HTTP setup endpoints:
+
+```bash
+npm run admin:bootstrap-owner -- --email=owner@example.com
+```
+
+Refer to:
+- [`docs/RBAC.md`](docs/RBAC.md) — Comprehensive 5-role permission matrix, operational boundaries, and security invariants.
+- [`docs/ADMIN_OPERATIONS.md`](docs/ADMIN_OPERATIONS.md) — Operational runbook for user directory search, suspension lifecycles, and audit inspection.
+
+### 4. Typecheck, Lint, and Production Build
 
 ```bash
 npm run lint         # ESLint (0 errors, 0 warnings)
 npx tsc --noEmit     # TypeScript Strict Typecheck (0 errors)
-npm run build        # Next.js 16 Production Build (27 routes compiled cleanly)
+npm run build        # Next.js 16 Production Build (45 routes compiled cleanly)
 ```
 
 ---
