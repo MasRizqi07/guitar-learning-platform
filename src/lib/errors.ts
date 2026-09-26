@@ -1,8 +1,11 @@
 export type ErrorCode =
   | 'UNAUTHORIZED'
   | 'FORBIDDEN'
+  | 'BAD_REQUEST'
   | 'VALIDATION_ERROR'
+  | 'RATE_LIMIT_EXCEEDED'
   | 'USER_NOT_FOUND'
+  | 'SESSION_NOT_FOUND'
   | 'LESSON_NOT_FOUND'
   | 'LESSON_LOCKED'
   | 'LESSON_ALREADY_COMPLETED'
@@ -30,6 +33,10 @@ export class AppError extends Error {
     Object.setPrototypeOf(this, AppError.prototype);
   }
 
+  static badRequest(message = 'Bad request', details?: unknown): AppError {
+    return new AppError('BAD_REQUEST', message, 400, details);
+  }
+
   static unauthorized(message = 'Authentication required'): AppError {
     return new AppError('UNAUTHORIZED', message, 401);
   }
@@ -46,7 +53,12 @@ export class AppError extends Error {
     return new AppError('VALIDATION_ERROR', message, 422, details);
   }
 
+  static rateLimit(message = 'Too many requests'): AppError {
+    return new AppError('RATE_LIMIT_EXCEEDED', message, 429);
+  }
+
   static internal(message = 'Internal server error'): AppError {
     return new AppError('INTERNAL_SERVER_ERROR', message, 500);
   }
 }
+

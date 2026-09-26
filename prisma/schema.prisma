@@ -9,9 +9,22 @@ datasource db {
 }
 
 enum UserRole {
-  USER
+  LEARNER
+  CONTENT_EDITOR
+  SUPPORT
   ADMIN
+  OWNER
+  USER
 }
+
+enum AccountStatus {
+  ACTIVE
+  SUSPENDED
+  BANNED
+  DELETION_PENDING
+  DELETED
+}
+
 
 enum ExperienceLevel {
   ABSOLUTE_BEGINNER
@@ -107,29 +120,57 @@ enum ActivityType {
   DAILY_GOAL_COMPLETED
 }
 
-model User {
-  id            String    @id @default(uuid())
-  name          String
-  email         String    @unique
-  emailVerified DateTime?
-  passwordHash  String?
-  role          UserRole  @default(USER)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+enum SecurityEventType {
 
-  profile            Profile?
-  onboardingProfile  OnboardingProfile?
-  userLearningGoals  UserLearningGoal[]
-  lessonProgress     LessonProgress[]
-  practiceSessions   PracticeSession[]
-  quizAttempts       QuizAttempt[]
-  xpTransactions     XPTransaction[]
-  userAchievements   UserAchievement[]
-  learningActivities LearningActivity[]
+  LOGIN_SUCCESS
+  LOGIN_FAILED
+  PASSWORD_RESET_REQUESTED
+  PASSWORD_RESET_COMPLETED
+  PASSWORD_CHANGED
+  EMAIL_VERIFICATION_SENT
+  EMAIL_VERIFIED
+  SESSION_REVOKED
+  SESSIONS_REVOKED_ALL
+  ACCOUNT_SUSPENDED
+  ACCOUNT_UNSUSPENDED
+  ACCOUNT_DELETION_REQUESTED
+}
+
+model User {
+  id               String         @id @default(uuid())
+  name             String
+  email            String         @unique
+  emailVerified    DateTime?
+  passwordHash     String?
+  role             UserRole       @default(LEARNER)
+  status           AccountStatus  @default(ACTIVE)
+  suspendedAt      DateTime?
+  suspensionReason String?
+  deletedAt        DateTime?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  profile                 Profile?
+  onboardingProfile       OnboardingProfile?
+  userLearningGoals       UserLearningGoal[]
+  lessonProgress          LessonProgress[]
+  practiceSessions        PracticeSession[]
+  quizAttempts            QuizAttempt[]
+  xpTransactions          XPTransaction[]
+  userAchievements        UserAchievement[]
+  learningActivities      LearningActivity[]
+  sessions                Session[]
+  emailVerificationTokens EmailVerificationToken[]
+  passwordResetTokens     PasswordResetToken[]
+  securityEvents          SecurityEvent[]
+  adminAuditLogs          AdminAuditLog[]
 
   @@index([email])
+  @@index([role])
+  @@index([status])
   @@index([createdAt])
 }
+
 
 model Profile {
   id             String    @id @default(uuid())
@@ -470,3 +511,87 @@ model LearningActivity {
 
   @@index([userId, createdAt])
 }
+
+model Session {
+  id         String    @id @default(uuid())
+  userId     String
+  tokenHash  String    @unique
+  userAgent  String?
+  ipHash     String?
+  createdAt  DateTime  @default(now())
+  lastSeenAt DateTime  @default(now())
+  expiresAt  DateTime
+  revokedAt  DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([tokenHash])
+  @@index([expiresAt])
+  @@index([revokedAt])
+}
+
+model EmailVerificationToken {
+  id         String    @id @default(uuid())
+  userId     String
+  tokenHash  String    @unique
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([tokenHash])
+  @@index([expiresAt])
+}
+
+model PasswordResetToken {
+  id         String    @id @default(uuid())
+  userId     String
+  tokenHash  String    @unique
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([tokenHash])
+  @@index([expiresAt])
+}
+
+model SecurityEvent {
+  id        String            @id @default(uuid())
+  userId    String?
+  type      SecurityEventType
+  ipHash    String?
+  userAgent String?
+  metadata  Json?
+  createdAt DateTime          @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([type, createdAt])
+}
+
+model AdminAuditLog {
+  id          String   @id @default(uuid())
+  actorUserId String
+  action      String
+  entityType  String
+  entityId    String
+  before      Json?
+  after       Json?
+  ipHash      String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  actor User @relation(fields: [actorUserId], references: [id], onDelete: Cascade)
+
+  @@index([actorUserId, createdAt])
+  @@index([entityType, entityId])
+  @@index([action, createdAt])
+}
+

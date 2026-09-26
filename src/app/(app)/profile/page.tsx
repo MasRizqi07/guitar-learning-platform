@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import {
   User as UserIcon,
   Clock,
@@ -14,7 +15,9 @@ import {
   Guitar,
   Loader2,
   Calendar,
+  Shield,
 } from 'lucide-react';
+
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -222,6 +225,15 @@ export default function ProfilePage() {
                 {data.profile?.totalXP || 0}
               </span>
             </div>
+            <div className="h-6 w-px bg-[#2A303A]" />
+            <Link
+              href="/settings/security"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition-colors border border-slate-700"
+              title="Manage security & active sessions"
+            >
+              <Shield className="w-3.5 h-3.5 text-amber-400" />
+              <span>Security</span>
+            </Link>
           </div>
         </div>
       </Card>

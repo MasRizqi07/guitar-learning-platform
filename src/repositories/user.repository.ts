@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/db';
-import { UserRole } from '@prisma/client';
+import { UserRole, AccountStatus } from '@prisma/client';
 
 export class UserRepository {
   static async findByEmail(email: string) {
@@ -35,7 +35,8 @@ export class UserRepository {
           name: data.name,
           email: data.email.toLowerCase(),
           passwordHash: data.passwordHash,
-          role: data.role ?? UserRole.USER,
+          role: data.role ?? UserRole.LEARNER,
+          status: AccountStatus.ACTIVE,
         },
       });
 
@@ -51,6 +52,45 @@ export class UserRepository {
       });
 
       return { ...user, profile };
+    });
+  }
+
+  static async suspendUser(userId: string, reason?: string) {
+    return prisma.$transaction(async (tx) => {
+      const user = await tx.user.update({
+        where: { id: userId },
+        data: {
+          status: AccountStatus.SUSPENDED,
+          suspendedAt: new Date(),
+          suspensionReason: reason ?? 'Administrative suspension',
+        },
+      });
+
+      // Revoke all active sessions upon suspension
+      await tx.session.updateMany({
+        where: { userId, revokedAt: null },
+        data: { revokedAt: new Date() },
+      });
+
+      return user;
+    });
+  }
+
+  static async unsuspendUser(userId: string) {
+    return prisma.user.update({
+      where: { id: userId },
+      data: {
+        status: AccountStatus.ACTIVE,
+        suspendedAt: null,
+        suspensionReason: null,
+      },
+    });
+  }
+
+  static async updateRole(userId: string, role: UserRole) {
+    return prisma.user.update({
+      where: { id: userId },
+      data: { role },
     });
   }
 
