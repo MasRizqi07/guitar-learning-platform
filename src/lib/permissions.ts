@@ -33,6 +33,8 @@ export type Permission =
   | 'achievement.update'
   | 'media.read'
   | 'media.create'
+  | 'media.update'
+  | 'media.archive'
   | 'media.delete'
   | 'user.read'
   | 'user.update'
@@ -56,7 +58,6 @@ const ROLE_PERMISSIONS: Record<string, ReadonlySet<Permission>> = {
     'quiz.read',
     'chord.read',
     'achievement.read',
-    'media.read',
   ]),
   // Legacy USER maps identically to LEARNER
   USER: new Set<Permission>([
@@ -66,7 +67,6 @@ const ROLE_PERMISSIONS: Record<string, ReadonlySet<Permission>> = {
     'quiz.read',
     'chord.read',
     'achievement.read',
-    'media.read',
   ]),
   CONTENT_EDITOR: new Set<Permission>([
     'course.read',
@@ -90,7 +90,7 @@ const ROLE_PERMISSIONS: Record<string, ReadonlySet<Permission>> = {
     'achievement.read',
     'media.read',
     'media.create',
-    'media.delete',
+    'media.update',
   ]),
   SUPPORT: new Set<Permission>([
     'course.read',
@@ -99,7 +99,6 @@ const ROLE_PERMISSIONS: Record<string, ReadonlySet<Permission>> = {
     'quiz.read',
     'chord.read',
     'achievement.read',
-    'media.read',
     'user.read',
     'user.suspend',
     'support.read',
@@ -137,6 +136,8 @@ const ROLE_PERMISSIONS: Record<string, ReadonlySet<Permission>> = {
     'achievement.update',
     'media.read',
     'media.create',
+    'media.update',
+    'media.archive',
     'media.delete',
     'user.read',
     'user.update',
@@ -180,6 +181,8 @@ const ROLE_PERMISSIONS: Record<string, ReadonlySet<Permission>> = {
     'achievement.update',
     'media.read',
     'media.create',
+    'media.update',
+    'media.archive',
     'media.delete',
     'user.read',
     'user.update',

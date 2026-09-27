@@ -30,6 +30,9 @@ export class AdminContentRepository {
         take: query.pageSize,
         orderBy: { [query.sortBy === 'order' ? 'order' : 'createdAt']: query.sortOrder },
         include: {
+          thumbnailAsset: {
+            select: { id: true, publicUrl: true, originalName: true, type: true },
+          },
           _count: { select: { modules: true } },
           createdBy: { select: { id: true, name: true, email: true } },
           updatedBy: { select: { id: true, name: true, email: true } },
@@ -63,6 +66,9 @@ export class AdminContentRepository {
             },
           },
         },
+        thumbnailAsset: {
+          select: { id: true, publicUrl: true, originalName: true, type: true },
+        },
         createdBy: { select: { id: true, name: true, email: true } },
         updatedBy: { select: { id: true, name: true, email: true } },
         publishedBy: { select: { id: true, name: true, email: true } },
@@ -88,6 +94,7 @@ export class AdminContentRepository {
     description: string;
     difficulty?: string;
     thumbnailUrl?: string | null;
+    thumbnailAssetId?: string | null;
     order?: number;
     createdById: string;
   }) {
@@ -99,6 +106,7 @@ export class AdminContentRepository {
         description: data.description,
         difficulty: data.difficulty ?? 'BEGINNER',
         thumbnailUrl: data.thumbnailUrl,
+        thumbnailAssetId: data.thumbnailAssetId,
         order,
         status: ContentStatus.DRAFT,
         published: false,
@@ -282,6 +290,19 @@ export class AdminContentRepository {
         },
         sections: {
           orderBy: { order: 'asc' },
+          include: {
+            mediaAsset: {
+              select: {
+                id: true,
+                publicUrl: true,
+                originalName: true,
+                type: true,
+                width: true,
+                height: true,
+                durationMs: true,
+              },
+            },
+          },
         },
         quiz: {
           include: {

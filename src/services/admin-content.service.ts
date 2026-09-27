@@ -78,8 +78,9 @@ export class AdminContentService {
         if (!section.content || section.content.trim().length === 0) {
           errors.push(`Section "${section.title || section.order}" has empty content`);
         }
-        if ((section.type === 'VIDEO' || section.type === 'IMAGE') && !section.mediaUrl) {
-          errors.push(`Section "${section.title}" (${section.type}) requires a valid media URL`);
+        const sec = section as unknown as { type: string; title: string; order: number; mediaUrl?: string | null; mediaAssetId?: string | null };
+        if ((sec.type === 'VIDEO' || sec.type === 'IMAGE') && !sec.mediaUrl && !sec.mediaAssetId) {
+          errors.push(`Section "${section.title}" (${section.type}) requires a valid media URL or attached media asset`);
         }
       }
     }
@@ -148,6 +149,10 @@ export class AdminContentService {
     return course;
   }
 
+  static async getCourseById(actor: CMSActor, id: string) {
+    return this.getCourse(actor, id);
+  }
+
   static async createCourse(actor: CMSActor, input: CourseCreateInput) {
     if (!hasPermission(actor.role, 'course.create')) {
       throw AppError.forbidden('Permission denied: course.create required');
@@ -158,8 +163,16 @@ export class AdminContentService {
       throw AppError.badRequest('SLUG_ALREADY_EXISTS', `A course with slug "${input.slug}" already exists`);
     }
 
+    let thumbnailUrl = input.thumbnailUrl;
+    if (input.thumbnailAssetId && !thumbnailUrl) {
+      const asset = await prisma.mediaAsset.findUnique({ where: { id: input.thumbnailAssetId } });
+      if (asset) thumbnailUrl = asset.publicUrl;
+    }
+
     const course = await AdminContentRepository.createCourse({
       ...input,
+      thumbnailUrl,
+      thumbnailAssetId: input.thumbnailAssetId,
       createdById: actor.id,
     });
 
@@ -203,12 +216,23 @@ export class AdminContentService {
     const isPublishing = input.status === ContentStatus.PUBLISHED;
     const isArchiving = input.status === ContentStatus.ARCHIVED;
 
+    let thumbnailUrl = input.thumbnailUrl;
+    if (input.thumbnailAssetId && !thumbnailUrl) {
+      const asset = await prisma.mediaAsset.findUnique({ where: { id: input.thumbnailAssetId } });
+      if (asset) thumbnailUrl = asset.publicUrl;
+    }
+
     const updateData: Prisma.CourseUpdateInput = {
       title: input.title,
       slug: input.slug,
       description: input.description,
       difficulty: input.difficulty,
-      thumbnailUrl: input.thumbnailUrl,
+      thumbnailUrl,
+      thumbnailAsset: input.thumbnailAssetId !== undefined
+        ? input.thumbnailAssetId
+          ? { connect: { id: input.thumbnailAssetId } }
+          : { disconnect: true }
+        : undefined,
       order: input.order,
       status: input.status,
       published: isPublishing ? true : input.status ? false : current.published,
@@ -365,6 +389,10 @@ export class AdminContentService {
       throw AppError.notFound('CONTENT_NOT_FOUND', 'Lesson not found');
     }
     return lesson;
+  }
+
+  static async getLessonById(actor: CMSActor, id: string) {
+    return this.getLesson(actor, id);
   }
 
   static async createLesson(actor: CMSActor, input: LessonCreateInput) {
@@ -540,6 +568,7 @@ export class AdminContentService {
         title: s.title,
         content: s.content,
         mediaUrl: s.mediaUrl,
+        mediaAssetId: (s as unknown as { mediaAssetId?: string | null }).mediaAssetId || null,
         metadata: s.metadata,
         required: s.required,
         order: s.order,
@@ -683,12 +712,19 @@ export class AdminContentService {
 
     const order = input.order ?? (await AdminContentRepository.getNextSectionOrder(input.lessonId));
 
+    let mediaUrl = input.mediaUrl;
+    if (input.mediaAssetId && !mediaUrl) {
+      const asset = await prisma.mediaAsset.findUnique({ where: { id: input.mediaAssetId } });
+      if (asset) mediaUrl = asset.publicUrl;
+    }
+
     const section = await AdminContentRepository.createSection({
       lesson: { connect: { id: input.lessonId } },
       type: input.type as LessonSectionType,
       title: input.title,
       content: input.content,
-      mediaUrl: input.mediaUrl,
+      mediaUrl,
+      mediaAsset: input.mediaAssetId ? { connect: { id: input.mediaAssetId } } : undefined,
       metadata: input.metadata as unknown as Prisma.InputJsonValue,
       required: input.required ?? true,
       order,
@@ -707,16 +743,35 @@ export class AdminContentService {
     return section;
   }
 
+  static async addLessonSection(actor: CMSActor, input: LessonSectionCreateInput) {
+    return this.createSection(actor, input);
+  }
+
+  static async updateLessonSection(actor: CMSActor, id: string, input: LessonSectionUpdateInput) {
+    return this.updateSection(actor, id, input);
+  }
+
   static async updateSection(actor: CMSActor, id: string, input: LessonSectionUpdateInput) {
     if (!hasPermission(actor.role, 'lesson.update')) {
       throw AppError.forbidden('Permission denied: lesson.update required');
+    }
+
+    let mediaUrl = input.mediaUrl;
+    if (input.mediaAssetId && !mediaUrl) {
+      const asset = await prisma.mediaAsset.findUnique({ where: { id: input.mediaAssetId } });
+      if (asset) mediaUrl = asset.publicUrl;
     }
 
     const section = await AdminContentRepository.updateSection(id, {
       type: input.type as LessonSectionType | undefined,
       title: input.title,
       content: input.content,
-      mediaUrl: input.mediaUrl,
+      mediaUrl,
+      mediaAsset: input.mediaAssetId !== undefined
+        ? input.mediaAssetId
+          ? { connect: { id: input.mediaAssetId } }
+          : { disconnect: true }
+        : undefined,
       metadata: input.metadata as unknown as Prisma.InputJsonValue | undefined,
       required: input.required,
       order: input.order,
@@ -951,6 +1006,15 @@ export class AdminContentService {
     return revision;
   }
 
+  static async restoreRevision(actor: CMSActor, lessonIdOrRevId: string, maybeRevId?: string) {
+    if (!maybeRevId) {
+      const rev = await prisma.lessonRevision.findUnique({ where: { id: lessonIdOrRevId } });
+      if (!rev) throw AppError.notFound('REVISION_NOT_FOUND', 'Revision not found');
+      return this.restoreLessonRevision(actor, rev.lessonId, lessonIdOrRevId);
+    }
+    return this.restoreLessonRevision(actor, lessonIdOrRevId, maybeRevId);
+  }
+
   static async restoreLessonRevision(actor: CMSActor, lessonId: string, revisionId: string) {
     if (!hasPermission(actor.role, 'lesson.update')) {
       throw AppError.forbidden('Permission denied: lesson.update required to restore revisions');
@@ -1064,6 +1128,7 @@ export class AdminContentService {
               title: s.title,
               content: s.content,
               mediaUrl: s.mediaUrl,
+              mediaAssetId: (s as unknown as { mediaAssetId?: string | null }).mediaAssetId || null,
               metadata: s.metadata,
               required: s.required ?? true,
               order: s.order,

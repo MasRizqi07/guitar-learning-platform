@@ -20,6 +20,7 @@ import {
   Edit2,
   X,
 } from 'lucide-react';
+import { MediaPicker, PickedMediaAsset } from '@/components/admin/MediaPicker';
 
 interface LessonSectionItem {
   id: string;
@@ -27,6 +28,13 @@ interface LessonSectionItem {
   title: string;
   content: string;
   mediaUrl: string | null;
+  mediaAssetId?: string | null;
+  mediaAsset?: {
+    id: string;
+    publicUrl: string;
+    originalName: string;
+    type: string;
+  } | null;
   metadata: Record<string, unknown> | null;
   required: boolean;
   order: number;
@@ -83,6 +91,8 @@ export default function LessonEditorPage({ params }: { params: Promise<{ id: str
   const [secTitle, setSecTitle] = useState('');
   const [secContent, setSecContent] = useState('');
   const [secMediaUrl, setSecMediaUrl] = useState('');
+  const [secMediaAssetId, setSecMediaAssetId] = useState<string | null>(null);
+  const [secMediaAsset, setSecMediaAsset] = useState<PickedMediaAsset | null>(null);
   const [secRequired, setSecRequired] = useState(true);
 
   const [loading, setLoading] = useState(true);
@@ -203,6 +213,8 @@ export default function LessonEditorPage({ params }: { params: Promise<{ id: str
     setSecTitle('');
     setSecContent('');
     setSecMediaUrl('');
+    setSecMediaAssetId(null);
+    setSecMediaAsset(null);
     setSecRequired(true);
   };
 
@@ -213,6 +225,17 @@ export default function LessonEditorPage({ params }: { params: Promise<{ id: str
     setSecTitle(sec.title);
     setSecContent(sec.content);
     setSecMediaUrl(sec.mediaUrl || '');
+    setSecMediaAssetId(sec.mediaAssetId || null);
+    setSecMediaAsset(
+      sec.mediaAsset
+        ? {
+            id: sec.mediaAsset.id,
+            publicUrl: sec.mediaAsset.publicUrl,
+            originalName: sec.mediaAsset.originalName,
+            type: sec.mediaAsset.type,
+          }
+        : null
+    );
     setSecRequired(sec.required);
   };
 
@@ -233,6 +256,7 @@ export default function LessonEditorPage({ params }: { params: Promise<{ id: str
             title: secTitle,
             content: secContent,
             mediaUrl: secMediaUrl.trim() || null,
+            mediaAssetId: secMediaAssetId || null,
             required: secRequired,
           }),
         });
@@ -247,6 +271,7 @@ export default function LessonEditorPage({ params }: { params: Promise<{ id: str
             title: secTitle,
             content: secContent,
             mediaUrl: secMediaUrl.trim() || null,
+            mediaAssetId: secMediaAssetId || null,
             required: secRequired,
           }),
         });
@@ -756,17 +781,54 @@ export default function LessonEditorPage({ params }: { params: Promise<{ id: str
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  Media URL (Required for VIDEO and IMAGE types)
-                </label>
-                <input
-                  type="url"
+              <div className="space-y-3 p-3.5 rounded-lg bg-[#0C0F16] border border-[#222938]">
+                <MediaPicker
+                  label="Section Media Asset (Storage Library)"
                   value={secMediaUrl}
-                  onChange={(e) => setSecMediaUrl(e.target.value)}
-                  placeholder="https://example.com/video.mp4"
-                  className="w-full px-3 py-2 rounded-lg bg-[#0C0F16] border border-[#222938] text-xs text-slate-100 focus:outline-none focus:border-amber-500"
+                  currentAsset={secMediaAsset}
+                  allowedTypes={
+                    secType === 'VIDEO'
+                      ? ['VIDEO']
+                      : secType === 'AUDIO'
+                      ? ['AUDIO']
+                      : secType === 'IMAGE'
+                      ? ['IMAGE']
+                      : ['IMAGE', 'VIDEO', 'AUDIO', 'DOCUMENT']
+                  }
+                  onSelect={(asset) => {
+                    if (asset) {
+                      setSecMediaAssetId(asset.id);
+                      setSecMediaAsset(asset);
+                      setSecMediaUrl(asset.publicUrl);
+                    } else {
+                      setSecMediaAssetId(null);
+                      setSecMediaAsset(null);
+                      setSecMediaUrl('');
+                    }
+                  }}
                 />
+
+                <div>
+                  <label className="block text-[11px] font-medium text-slate-400 mb-1">
+                    Or Direct / Legacy Media URL (Fallback)
+                  </label>
+                  <input
+                    type="url"
+                    value={secMediaUrl}
+                    onChange={(e) => {
+                      setSecMediaUrl(e.target.value);
+                      if (secMediaAsset && e.target.value !== secMediaAsset.publicUrl) {
+                        setSecMediaAsset(null);
+                        setSecMediaAssetId(null);
+                      }
+                    }}
+                    placeholder="https://example.com/asset.mp4"
+                    className="w-full px-3.5 py-1.5 rounded-lg bg-[#12161F] border border-[#222938] text-xs text-slate-100 focus:outline-none focus:border-amber-500 font-mono"
+                  />
+                  <p className="text-[10px] text-slate-500 mt-1">
+                    Uploaded media takes precedence. Legacy external URLs remain supported.
+                  </p>
+                </div>
               </div>
 
               <div className="flex items-center gap-2 pt-1">

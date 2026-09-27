@@ -26,6 +26,14 @@ interface LessonSection {
   title: string;
   content: string;
   mediaUrl?: string | null;
+  mediaAssetId?: string | null;
+  mediaAsset?: {
+    id: string;
+    publicUrl: string;
+    mimeType?: string;
+    type?: string;
+    altText?: string | null;
+  } | null;
   metadata?: Record<string, unknown> | null;
   required: boolean;
   order: number;
@@ -245,12 +253,29 @@ export default function LessonStaffPreviewPage({ params }: { params: Promise<{ i
               </div>
             )}
 
-            {/* Specialized Rendering: Video/Image Media URL */}
-            {currentSection.mediaUrl && (
-              <div className="p-4 rounded-xl bg-[#0C0F16] border border-[#1F2636] text-xs space-y-2">
-                <div className="font-semibold text-slate-300">Media Asset:</div>
-                <div className="text-amber-400 font-mono text-[11px] truncate">
-                  {currentSection.mediaUrl}
+            {/* Visual Media Rendering (IMAGE / VIDEO / Legacy) */}
+            {(currentSection.mediaAsset?.publicUrl || currentSection.mediaUrl) && (
+              <div className="py-2 space-y-2">
+                {currentSection.type === 'VIDEO' || currentSection.mediaAsset?.type === 'VIDEO' ? (
+                  <div className="rounded-xl overflow-hidden border border-[#2A303A] bg-black">
+                    <video
+                      controls
+                      src={currentSection.mediaAsset?.publicUrl || currentSection.mediaUrl || ''}
+                      className="w-full max-h-[420px] object-contain"
+                    />
+                  </div>
+                ) : (
+                  <div className="rounded-xl overflow-hidden border border-[#2A303A] bg-[#0C0F16] flex justify-center">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={currentSection.mediaAsset?.publicUrl || currentSection.mediaUrl || ''}
+                      alt={currentSection.mediaAsset?.altText || currentSection.title}
+                      className="max-h-[380px] w-auto object-contain rounded-lg"
+                    />
+                  </div>
+                )}
+                <div className="text-[10px] text-slate-500 font-mono truncate px-1">
+                  Source: {currentSection.mediaAsset?.publicUrl || currentSection.mediaUrl}
                 </div>
               </div>
             )}

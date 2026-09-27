@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, BookOpen, Save } from 'lucide-react';
+import { MediaPicker, PickedMediaAsset } from '@/components/admin/MediaPicker';
 
 export default function NewCoursePage() {
   const router = useRouter();
@@ -12,6 +13,8 @@ export default function NewCoursePage() {
   const [description, setDescription] = useState('');
   const [difficulty, setDifficulty] = useState('BEGINNER');
   const [thumbnailUrl, setThumbnailUrl] = useState('');
+  const [thumbnailAssetId, setThumbnailAssetId] = useState<string | null>(null);
+  const [thumbnailAsset, setThumbnailAsset] = useState<PickedMediaAsset | null>(null);
   const [order, setOrder] = useState<number | ''>('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,6 +45,7 @@ export default function NewCoursePage() {
           description,
           difficulty,
           thumbnailUrl: thumbnailUrl.trim() || null,
+          thumbnailAssetId: thumbnailAssetId || null,
           order: order === '' ? undefined : Number(order),
         }),
       });
@@ -154,15 +158,22 @@ export default function NewCoursePage() {
         </div>
 
         <div>
-          <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-            Thumbnail Image URL (Optional)
-          </label>
-          <input
-            type="url"
+          <MediaPicker
+            label="Course Thumbnail (Optional)"
             value={thumbnailUrl}
-            onChange={(e) => setThumbnailUrl(e.target.value)}
-            placeholder="https://images.unsplash.com/..."
-            className="w-full px-3.5 py-2 rounded-lg bg-[#0C0F16] border border-[#222938] text-xs text-slate-100 focus:outline-none focus:border-amber-500"
+            currentAsset={thumbnailAsset}
+            allowedTypes={['IMAGE']}
+            onSelect={(asset) => {
+              if (asset) {
+                setThumbnailAssetId(asset.id);
+                setThumbnailAsset(asset);
+                setThumbnailUrl(asset.publicUrl);
+              } else {
+                setThumbnailAssetId(null);
+                setThumbnailAsset(null);
+                setThumbnailUrl('');
+              }
+            }}
           />
         </div>
 

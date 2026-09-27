@@ -179,6 +179,7 @@ model User {
   updatedLessons          Lesson[]                 @relation("LessonUpdatedBy")
   publishedLessons        Lesson[]                 @relation("LessonPublishedBy")
   createdLessonRevisions  LessonRevision[]         @relation("LessonRevisionCreatedBy")
+  createdMedia            MediaAsset[]             @relation("UserCreatedMedia")
 
   @@index([email])
   @@index([role])
@@ -247,6 +248,7 @@ model Course {
   description          String
   difficulty           String        @default("BEGINNER")
   thumbnailUrl         String?
+  thumbnailAssetId     String?
   order                Int           @unique
   published            Boolean       @default(true)
   status               ContentStatus @default(PUBLISHED)
@@ -260,12 +262,14 @@ model Course {
   createdAt            DateTime      @default(now())
   updatedAt            DateTime      @updatedAt
 
-  modules     Module[]
-  createdBy   User?    @relation("CourseCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
-  updatedBy   User?    @relation("CourseUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
-  publishedBy User?    @relation("CoursePublishedBy", fields: [publishedById], references: [id], onDelete: SetNull)
+  modules        Module[]
+  thumbnailAsset MediaAsset? @relation("CourseThumbnail", fields: [thumbnailAssetId], references: [id], onDelete: SetNull)
+  createdBy      User?       @relation("CourseCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  updatedBy      User?       @relation("CourseUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+  publishedBy    User?       @relation("CoursePublishedBy", fields: [publishedById], references: [id], onDelete: SetNull)
 
   @@index([status])
+  @@index([thumbnailAssetId])
 }
 
 model Module {
@@ -335,18 +339,21 @@ model LessonSection {
   lessonId  String
   type      LessonSectionType
   title     String
-  content   String            @db.Text
-  mediaUrl  String?
-  metadata  Json?
-  required  Boolean           @default(true)
-  order     Int
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
+  content      String            @db.Text
+  mediaUrl     String?
+  mediaAssetId String?
+  metadata     Json?
+  required     Boolean           @default(true)
+  order        Int
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
 
-  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  lesson     Lesson      @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  mediaAsset MediaAsset? @relation("LessonSectionMedia", fields: [mediaAssetId], references: [id], onDelete: SetNull)
 
   @@unique([lessonId, order])
   @@index([lessonId])
+  @@index([mediaAssetId])
 }
 
 model LessonProgress {
@@ -654,5 +661,54 @@ model AdminAuditLog {
   @@index([actorUserId, createdAt])
   @@index([entityType, entityId])
   @@index([action, createdAt])
+}
+
+enum MediaType {
+  IMAGE
+  AUDIO
+  VIDEO
+  DOCUMENT
+  OTHER
+}
+
+enum MediaStatus {
+  UPLOADING
+  ACTIVE
+  ARCHIVED
+  FAILED
+  DELETED
+}
+
+model MediaAsset {
+  id             String      @id @default(uuid())
+  type           MediaType
+  status         MediaStatus @default(UPLOADING)
+  provider       String      // 's3', 'r2', 'mock', etc.
+  bucket         String?
+  storageKey     String      @unique
+  publicUrl      String
+  originalName   String
+  mimeType       String
+  extension      String?
+  sizeBytes      BigInt
+  checksumSha256 String?
+  width          Int?
+  height         Int?
+  durationMs     Int?
+  altText        String?
+  caption        String?
+  createdById    String
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  archivedAt     DateTime?
+  deletedAt      DateTime?
+
+  createdBy        User            @relation("UserCreatedMedia", fields: [createdById], references: [id], onDelete: Restrict)
+  courseThumbnails Course[]        @relation("CourseThumbnail")
+  lessonSections   LessonSection[] @relation("LessonSectionMedia")
+
+  @@index([type, createdAt])
+  @@index([status, createdAt])
+  @@index([createdById, createdAt])
 }
 

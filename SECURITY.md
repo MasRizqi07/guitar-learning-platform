@@ -121,8 +121,20 @@ Configured in `next.config.ts` for all application routes:
 
 ---
 
-## 10. Responsible Vulnerability Disclosure
+## 10. Media Management & Storage Security (Phase D)
+
+- **Zero Storage Secret Exposure**: Cloud object storage credentials (AWS Access Key ID, Secret Access Key, R2 API tokens) are strictly server-side environment variables and are never transmitted to the browser or client-side bundles.
+- **Short-Lived Signed Upload Targets**: When uploading, the client requests a signed PUT URL that is valid for 15 minutes, tightly bound to a specific server-generated storage key, MIME type, and size limit.
+- **MIME Allowlist & Rejection of Active Formats**: Only verified, safe media types are permitted (`image/jpeg`, `image/png`, `image/webp`, `audio/mpeg`, `audio/wav`, `audio/ogg`, `video/mp4`, `video/webm`, `application/pdf`). SVG (`image/svg+xml`) is explicitly disallowed to prevent script execution / XSS vulnerabilities.
+- **Path Traversal Protection**: Client filenames are never used as storage keys. Keys are generated using server-side random UUIDs and normalized extensions (`media/{yyyy}/{mm}/{uuid}.{ext}`).
+- **Reference-Guarded Deletions**: Assets actively referenced by courses or lesson sections cannot be deleted (`409 MEDIA_IN_USE`), eliminating broken links and dangling references across public curriculum.
+- **Compensating Failure Recovery**: Storage provider deletion failures mark the asset `FAILED` rather than presenting false success, preventing database/cloud storage divergence.
+
+---
+
+## 11. Responsible Vulnerability Disclosure
 
 If you discover a potential security vulnerability in this project, please report it privately:
 - **Email:** `security@yourdomain.com` (placeholder)
 - Please allow up to 48 hours for an acknowledgment before disclosing publicly.
+

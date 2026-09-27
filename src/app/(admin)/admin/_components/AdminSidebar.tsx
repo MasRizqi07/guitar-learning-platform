@@ -110,18 +110,16 @@ export function AdminSidebar({ currentRole }: AdminSidebarProps) {
           icon: Award,
           active: pathname.startsWith('/admin/achievements'),
         },
+        {
+          name: 'Media Library',
+          href: '/admin/media',
+          icon: ImageIcon,
+          active: pathname.startsWith('/admin/media'),
+        },
       ]
     : [];
 
   const futureNavItems = [
-    {
-      name: 'Media Library',
-      href: '#',
-      icon: ImageIcon,
-      active: false,
-      available: false,
-      badge: 'Phase D',
-    },
     {
       name: 'Support Tickets',
       href: '#',

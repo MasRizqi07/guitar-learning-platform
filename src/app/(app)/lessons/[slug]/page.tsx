@@ -27,6 +27,14 @@ interface LessonSection {
   title: string;
   content: string;
   mediaUrl?: string | null;
+  mediaAssetId?: string | null;
+  mediaAsset?: {
+    id: string;
+    publicUrl: string;
+    mimeType?: string;
+    type?: string;
+    altText?: string | null;
+  } | null;
   metadata?: Record<string, unknown> | null;
   required: boolean;
   order: number;
@@ -265,6 +273,30 @@ export default function LessonPage({ params }: { params: Promise<{ slug: string 
             <div className="text-slate-300 text-sm sm:text-base leading-relaxed space-y-4">
               {currentSection.content}
             </div>
+
+            {/* Visual Media Rendering (IMAGE / VIDEO / Legacy) */}
+            {(currentSection.mediaAsset?.publicUrl || currentSection.mediaUrl) && (
+              <div className="py-2">
+                {currentSection.type === 'VIDEO' || currentSection.mediaAsset?.type === 'VIDEO' ? (
+                  <div className="rounded-xl overflow-hidden border border-[#2A303A] bg-black">
+                    <video
+                      controls
+                      src={currentSection.mediaAsset?.publicUrl || currentSection.mediaUrl || ''}
+                      className="w-full max-h-[420px] object-contain"
+                    />
+                  </div>
+                ) : (
+                  <div className="rounded-xl overflow-hidden border border-[#2A303A] bg-[#0C0F16] flex justify-center">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={currentSection.mediaAsset?.publicUrl || currentSection.mediaUrl || ''}
+                      alt={currentSection.mediaAsset?.altText || currentSection.title}
+                      className="max-h-[380px] w-auto object-contain rounded-lg"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Specialized Rendering: CHORD Diagram */}
             {currentSection.type === 'CHORD' && (

@@ -125,3 +125,15 @@ To prevent simultaneous editors from silently overwriting each other's changes:
 Every privileged CMS operation logs a structured record in `AdminAuditLog`:
 - Actions: `COURSE_CREATED`, `COURSE_UPDATED`, `COURSE_PUBLISHED`, `COURSE_ARCHIVED`, `MODULE_CREATED`, `MODULE_UPDATED`, `MODULE_REORDERED`, `LESSON_CREATED`, `LESSON_UPDATED`, `LESSON_SUBMITTED_REVIEW`, `LESSON_PUBLISHED`, `LESSON_ARCHIVED`, `LESSON_REVISION_RESTORED`, `QUIZ_UPDATED`, `CHORD_CREATED`, `CHORD_UPDATED`, `ACHIEVEMENT_CREATED`, `ACHIEVEMENT_UPDATED`.
 - Log records capture `adminId`, target entity ID, IP address, user agent, and a diff of modified fields with sensitive data scrubbed.
+
+---
+
+## 8. Media Library & Storage Integration (Phase D)
+
+The CMS seamlessly integrates with the centralized Media Library:
+- **Course Thumbnails**: Editors can select an asset from the media library (`thumbnailAssetId`) or fall back to an external URL (`thumbnailUrl`).
+- **Lesson Sections**: Visual `IMAGE` and `VIDEO` sections connect relationally to `MediaAsset` (`mediaAssetId`), ensuring that media used across the curriculum is tracked, validated, and protected from premature deletion.
+- **Reference Guarding**: Media assets attached to any course or lesson section cannot be deleted and return `409 MEDIA_IN_USE`.
+- **Revision Preservation**: Historical `LessonRevision` snapshots capture `mediaAssetId`, ensuring that rollbacks restore original media references accurately.
+- For complete operational details, refer to `docs/MEDIA_OPERATIONS.md`.
+

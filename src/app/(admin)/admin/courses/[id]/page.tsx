@@ -12,6 +12,7 @@ import {
   ArrowDown,
   AlertTriangle,
 } from 'lucide-react';
+import { MediaPicker, PickedMediaAsset } from '@/components/admin/MediaPicker';
 
 interface ModuleItem {
   id: string;
@@ -53,6 +54,8 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
   const [description, setDescription] = useState('');
   const [difficulty, setDifficulty] = useState('BEGINNER');
   const [thumbnailUrl, setThumbnailUrl] = useState('');
+  const [thumbnailAssetId, setThumbnailAssetId] = useState<string | null>(null);
+  const [thumbnailAsset, setThumbnailAsset] = useState<PickedMediaAsset | null>(null);
   const [order, setOrder] = useState<number>(1);
   const [status, setStatus] = useState<string>('DRAFT');
   const [clientUpdatedAt, setClientUpdatedAt] = useState<string>('');
@@ -82,6 +85,13 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
         setDescription(c.description);
         setDifficulty(c.difficulty);
         setThumbnailUrl(c.thumbnailUrl || '');
+        setThumbnailAssetId(c.thumbnailAssetId || null);
+        setThumbnailAsset(c.thumbnailAsset ? {
+          id: c.thumbnailAsset.id,
+          publicUrl: c.thumbnailAsset.publicUrl,
+          originalName: c.thumbnailAsset.originalName,
+          type: c.thumbnailAsset.type,
+        } : null);
         setOrder(c.order);
         setStatus(c.status);
         setClientUpdatedAt(c.updatedAt);
@@ -120,6 +130,7 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
           description,
           difficulty,
           thumbnailUrl: thumbnailUrl.trim() || null,
+          thumbnailAssetId: thumbnailAssetId || null,
           order,
           status,
           clientUpdatedAt,
@@ -326,14 +337,23 @@ export default function CourseDetailPage({ params }: { params: Promise<{ id: str
             </select>
           </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">Thumbnail URL</label>
-            <input
-              type="url"
+          <div className="sm:col-span-2">
+            <MediaPicker
+              label="Course Thumbnail"
               value={thumbnailUrl}
-              onChange={(e) => setThumbnailUrl(e.target.value)}
-              placeholder="https://..."
-              className="w-full px-3.5 py-2 rounded-lg bg-[#0C0F16] border border-[#222938] text-xs text-slate-100 focus:outline-none focus:border-amber-500"
+              currentAsset={thumbnailAsset}
+              allowedTypes={['IMAGE']}
+              onSelect={(asset) => {
+                if (asset) {
+                  setThumbnailAssetId(asset.id);
+                  setThumbnailAsset(asset);
+                  setThumbnailUrl(asset.publicUrl);
+                } else {
+                  setThumbnailAssetId(null);
+                  setThumbnailAsset(null);
+                  setThumbnailUrl('');
+                }
+              }}
             />
           </div>
         </div>

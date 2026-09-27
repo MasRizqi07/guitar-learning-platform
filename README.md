@@ -298,8 +298,9 @@ PLAYWRIGHT_TEST_BASE_URL=https://your-production-url.vercel.app npm run test:e2e
   - **Flow 2 (Revision History & Safety Restore):** Admin Edits Published Lesson $\rightarrow$ Saves Metadata $\rightarrow$ Generates Revision Snapshot $\rightarrow$ Restores v1 $\rightarrow$ Lesson Reverts to DRAFT $\rightarrow$ Safety Backup Snapshot Created.
 - `tests/e2e/golden-path.spec.ts`: Executes true browser user journey: Landing $\rightarrow$ Register $\rightarrow$ Stepper Onboarding (Steps 1–7) $\rightarrow$ Dashboard $\rightarrow$ Roadmap $\rightarrow$ Lesson 1 sections $\rightarrow$ Quiz submission $\rightarrow$ Results & progress persistence $\rightarrow$ Sign out $\rightarrow$ Sign in verification.
 - `tests/e2e/tuner.spec.ts`: Verifies Tuner UI, 6 reference tones plucking, loop playback, microphone error fallback, and Interactive Fretboard scale filter switches in the browser.
+- `tests/e2e/media-management.spec.ts`: Verifies Content Editor direct/picker media uploads, Course CMS thumbnail selection, and Admin reference-guarded safe deletion (`409 MEDIA_IN_USE` prevention and post-detach cleanup).
 
-**Result: 6/6 Playwright browser tests passing in Chromium.**
+**Result: 8/8 Playwright browser tests passing in Chromium. 164/164 Vitest integration tests passing.**
 
 ### 3. Backoffice & Platform Owner Bootstrap
 
@@ -313,13 +314,16 @@ Refer to:
 - [`docs/RBAC.md`](docs/RBAC.md) — Comprehensive 5-role permission matrix, operational boundaries, and security invariants.
 - [`docs/ADMIN_OPERATIONS.md`](docs/ADMIN_OPERATIONS.md) — Operational runbook for user directory search, suspension lifecycles, and audit inspection.
 - [`docs/CONTENT_OPERATIONS.md`](docs/CONTENT_OPERATIONS.md) — Operational guide for curriculum authoring, section editing, draft/review/publish lifecycles, revision restores, and safe quiz management.
+- [`docs/MEDIA_OPERATIONS.md`](docs/MEDIA_OPERATIONS.md) — Media storage architecture, direct signed upload pipeline, reference-safe deletion, and provider rotation runbooks.
 
 ### 4. Typecheck, Lint, and Production Build
 
 ```bash
-npm run lint         # ESLint (0 errors, 0 warnings)
+npm run lint         # ESLint (0 errors, clean output)
 npx tsc --noEmit     # TypeScript Strict Typecheck (0 errors)
-npm run build        # Next.js 16 Production Build (45+ routes compiled cleanly)
+npm test             # Vitest (164/164 tests passing)
+npm run test:e2e     # Playwright (8/8 browser E2E tests passing)
+npm run build        # Next.js 16 Production Build (70 routes compiled cleanly)
 ```
 
 ---

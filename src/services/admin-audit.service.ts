@@ -14,6 +14,16 @@ export interface RecordAdminActionParams {
   userAgent?: string | null;
 }
 
+export const MEDIA_AUDIT_ACTIONS = {
+  MEDIA_UPLOAD_INITIATED: 'MEDIA_UPLOAD_INITIATED',
+  MEDIA_UPLOAD_COMPLETED: 'MEDIA_UPLOAD_COMPLETED',
+  MEDIA_UPDATED: 'MEDIA_UPDATED',
+  MEDIA_ARCHIVED: 'MEDIA_ARCHIVED',
+  MEDIA_DELETED: 'MEDIA_DELETED',
+  MEDIA_ATTACHED: 'MEDIA_ATTACHED',
+  MEDIA_DETACHED: 'MEDIA_DETACHED',
+} as const;
+
 export class AdminAuditService {
   /**
    * Hashes IP address with SHA-256 for privacy compliance
@@ -59,6 +69,10 @@ export class AdminAuditService {
    * Records an immutable administrative audit log
    */
   static async recordAdminAction(params: RecordAdminActionParams) {
+    return this.record(params);
+  }
+
+  static async recordAction(params: RecordAdminActionParams) {
     return this.record(params);
   }
 

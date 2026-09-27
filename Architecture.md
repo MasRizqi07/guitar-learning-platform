@@ -2507,8 +2507,54 @@ To prevent silent overwrite collisions when multiple editors collaborate:
 ### 20.6 Centralized Publishing Validation Engine
 Centralized in `AdminContentService.validateLessonForPublish()`:
 - Missing title, description, or zero sections rejects publishing.
-- Section-specific validation (TEXT requires content, VIDEO requires mediaUrl, CHORD requires valid chord reference, PRACTICE requires duration metadata).
+- Section-specific validation (TEXT requires content, VIDEO requires mediaUrl or mediaAssetId, CHORD requires valid chord reference, PRACTICE requires duration metadata).
 - Quiz validation (quiz requires $\ge 1$ question; questions require $\ge 2$ options with exactly 1 correct answer; passing score in $0 \dots 100$).
 - Module publishing requires $\ge 1$ published lesson.
 - Course publishing requires $\ge 1$ published module.
+
+---
+
+# 21. Phase D — Production Media Management & Storage Architecture
+
+### 21.1 Storage Abstraction & Multi-Provider Architecture
+The storage layer decouples application business logic from physical object storage vendors through a provider-neutral interface (`StorageProvider`):
+- **Core Interface (`src/services/storage/storage-provider.ts`):** Defines `createUploadTarget`, `deleteObject`, `objectExists`, `getPublicUrl`, and optional `uploadBuffer`.
+- **Production S3/R2 Adapter (`S3StorageProvider`):** Implements zero-dependency AWS SigV4 signed URL generation and HTTP client for Cloudflare R2, AWS S3, and Supabase Storage without bloated third-party SDKs.
+- **Deterministic Mock Provider (`MockStorageProvider`):** Provides an in-memory, zero-network virtual object store with failure injection hooks (`simulateDeleteFailure`) for deterministic Vitest and Playwright CI test execution.
+
+### 21.2 Direct Upload Lifecycle
+```text
+Client Browser            Next.js App Server         Object Storage
+      │                            │                       │
+      │ 1. POST /media/upload/init │                       │
+      │───────────────────────────>│                       │
+      │                            │ Creates MediaAsset    │
+      │                            │ (status: UPLOADING)   │
+      │<───────────────────────────│                       │
+      │ 2. Returns signed PUT URL  │                       │
+      │                            │                       │
+      │ 3. Direct Binary PUT       │                       │
+      │───────────────────────────────────────────────────>│
+      │                                                    │ Saves object
+      │ 4. POST /media/upload/complete                     │
+      │───────────────────────────>│                       │
+      │                            │ 5. Checks objectExists│
+      │                            │──────────────────────>│
+      │                            │<──────────────────────│ Returns true
+      │                            │ Status: ACTIVE        │
+      │<───────────────────────────│                       │
+      │ 6. Returns ACTIVE asset    │                       │
+```
+
+### 21.3 Reference-Safe Deletion Invariant (`409 MEDIA_IN_USE`)
+- Before executing object or database deletion, `StorageService.deleteAsset()` verifies relational usage across `Course.thumbnailAssetId` and `LessonSection.mediaAssetId`.
+- If actively attached (`usageCount > 0`), the request is rejected with `409 MEDIA_IN_USE` accompanied by the list of attached courses and lessons.
+- Deleting an asset requires explicit prior detachment or replacement.
+- Provider deletion failure updates the asset status to `FAILED` for operational observability and retry, rather than reporting false success.
+
+### 21.4 Relational Attachment & Legacy Compatibility
+- **Relational Columns:** `Course.thumbnailAssetId` and `LessonSection.mediaAssetId` (`onDelete: SetNull`).
+- **Legacy Compatibility:** When `mediaAssetId` or `thumbnailAssetId` is attached, the legacy `mediaUrl` or `thumbnailUrl` is automatically populated with the asset's fast CDN public URL. If legacy external URLs exist without a `MediaAsset`, they remain 100% operational and rendered by learner components.
+- **Revision Snapshot Preservation:** Published `LessonRevision` snapshots store `mediaAssetId` for each section, ensuring that restoring older revisions faithfully recovers original media references.
+
 

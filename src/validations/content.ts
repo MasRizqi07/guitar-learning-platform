@@ -74,7 +74,8 @@ export const courseCreateSchema = z.object({
   slug: slugSchema,
   description: z.string().trim().min(5, 'Description must be at least 5 characters').max(2000),
   difficulty: z.string().trim().default('BEGINNER'),
-  thumbnailUrl: z.string().trim().url('Invalid thumbnail URL').optional().nullable(),
+  thumbnailUrl: z.string().trim().optional().nullable(),
+  thumbnailAssetId: z.string().uuid().optional().nullable(),
   order: z.number().int().min(1).optional(),
 });
 
@@ -83,7 +84,8 @@ export const courseUpdateSchema = z.object({
   slug: slugSchema.optional(),
   description: z.string().trim().min(5).max(2000).optional(),
   difficulty: z.string().trim().optional(),
-  thumbnailUrl: z.string().trim().url('Invalid thumbnail URL').optional().nullable(),
+  thumbnailUrl: z.string().trim().optional().nullable(),
+  thumbnailAssetId: z.string().uuid().optional().nullable(),
   order: z.number().int().min(1).optional(),
   status: contentStatusEnum.optional(),
   clientUpdatedAt: z.string().datetime({ offset: true }).optional(),
@@ -140,22 +142,23 @@ export const lessonSectionCreateSchema = z.object({
   type: lessonSectionTypeEnum,
   title: z.string().trim().min(1, 'Title is required').max(150),
   content: z.string().trim().min(1, 'Content is required'),
-  mediaUrl: z.string().trim().url('Must be a valid URL').optional().nullable(),
+  mediaUrl: z.string().trim().optional().nullable(),
+  mediaAssetId: z.string().uuid().optional().nullable(),
   metadata: z.record(z.string(), z.unknown()).optional().nullable(),
   required: z.boolean().default(true),
   order: z.number().int().min(1).optional(),
 }).superRefine((data, ctx) => {
-  if (data.type === 'VIDEO' && !data.mediaUrl) {
+  if (data.type === 'VIDEO' && !data.mediaUrl && !data.mediaAssetId) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
-      message: 'Video sections require a valid media URL',
+      message: 'Video sections require a valid media URL or attached media asset',
       path: ['mediaUrl'],
     });
   }
-  if (data.type === 'IMAGE' && !data.mediaUrl) {
+  if (data.type === 'IMAGE' && !data.mediaUrl && !data.mediaAssetId) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
-      message: 'Image sections require a valid media URL',
+      message: 'Image sections require a valid media URL or attached media asset',
       path: ['mediaUrl'],
     });
   }
@@ -165,7 +168,8 @@ export const lessonSectionUpdateSchema = z.object({
   type: lessonSectionTypeEnum.optional(),
   title: z.string().trim().min(1).max(150).optional(),
   content: z.string().trim().min(1).optional(),
-  mediaUrl: z.string().trim().url('Must be a valid URL').optional().nullable(),
+  mediaUrl: z.string().trim().optional().nullable(),
+  mediaAssetId: z.string().uuid().optional().nullable(),
   metadata: z.record(z.string(), z.unknown()).optional().nullable(),
   required: z.boolean().optional(),
   order: z.number().int().min(1).optional(),

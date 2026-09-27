@@ -46,6 +46,11 @@ export class CurriculumRepository {
         },
         sections: {
           orderBy: { order: 'asc' },
+          include: {
+            mediaAsset: {
+              select: { id: true, publicUrl: true, originalName: true, type: true },
+            },
+          },
         },
         quiz: {
           include: {
@@ -77,6 +82,11 @@ export class CurriculumRepository {
       include: {
         sections: {
           orderBy: { order: 'asc' },
+          include: {
+            mediaAsset: {
+              select: { id: true, publicUrl: true, originalName: true, type: true },
+            },
+          },
         },
         quiz: true,
       },
