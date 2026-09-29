@@ -20,11 +20,18 @@ import {
 } from '@/validations/auth';
 import { AccountStatus, SecurityEventType } from '@prisma/client';
 
+import { PlatformSettingsService } from '@/services/platform-settings.service';
+
 export class AuthService {
   /**
    * Registers a new learner account with default LEARNER role and ACTIVE status
    */
   static async register(input: RegisterInput, headers?: Headers): Promise<SessionUser> {
+    const isAllowed = await PlatformSettingsService.isRegistrationEnabled();
+    if (!isAllowed) {
+      throw AppError.registrationDisabled('User registration is currently disabled by platform administration.');
+    }
+
     const existing = await UserRepository.findByEmail(input.email);
     if (existing) {
       throw AppError.validation('An account with this email already exists.');

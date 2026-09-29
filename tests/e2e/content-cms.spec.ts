@@ -173,6 +173,7 @@ test.describe('Phase C Content Management System (CMS) E2E Flow', () => {
     // -------------------------------------------------------------
     await page.goto(`/admin/lessons/new?moduleId=${testModuleId}`);
     await expect(page.getByRole('heading', { name: /create lesson/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /save & edit sections/i })).toBeEnabled();
 
     // Fill form
     await page.getByPlaceholder(/clean chords/i).fill(`E2E Fingerpicking Intro ${timestamp}`);
@@ -186,7 +187,7 @@ test.describe('Phase C Content Management System (CMS) E2E Flow', () => {
     await page.getByRole('button', { name: /save & edit sections/i }).click();
 
     // Wait to navigate to lesson editor (UUID pattern)
-    await page.waitForURL(/\/admin\/lessons\/[0-9a-f-]{20,}/);
+    await page.waitForURL(/\/admin\/lessons\/[0-9a-f-]{20,}/, { timeout: 15000 });
     const url = page.url();
     createdLessonId = url.split('/admin/lessons/')[1].split('/')[0].split('?')[0];
     expect(createdLessonId).toBeTruthy();

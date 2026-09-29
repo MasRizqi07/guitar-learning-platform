@@ -5,6 +5,7 @@ export class CurriculumRepository {
   static async getMainCourse(courseId?: string) {
     return prisma.course.findFirst({
       where: courseId ? { id: courseId, published: true } : { published: true },
+      orderBy: { order: 'asc' },
       include: {
         modules: {
           orderBy: { order: 'asc' },

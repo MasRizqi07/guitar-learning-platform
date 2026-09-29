@@ -14,7 +14,7 @@ The platform defines five distinct product and operational roles:
 | **`CONTENT_EDITOR`** | Curriculum author and instructional designer. Creates and updates lessons, chords, and media drafts. | Content management surfaces. No access to user directory, suspension, or roles. | `/(admin)` (Scoped) |
 | **`SUPPORT`** | Front-line customer support and trust & safety staff. Diagnoses learner account issues and handles suspensions. | Read-only diagnostic access to learner profiles, session counts, security events; account suspension/unsuspension. No curriculum publishing or role modification. | `/(admin)` (Scoped) |
 | **`ADMIN`** | Operations manager and platform administrator. Oversees user accounts, manages non-privileged roles, reviews audit trail, publishes curriculum. | Full operational administration. Cannot manage `OWNER` accounts or promote users to `OWNER`. | `/(admin)` |
-| **`OWNER`** | Platform executives, system custodians, and technical founders. Full authority across all platform resources and configuration. | Unrestricted platform control. Governed only by self-protection and `LAST_OWNER_PROTECTED` invariants. | `/(admin)` |
+| **`OWNER`** | Platform executives, system custodians, and technical founders. Full authority across all platform resources and configuration. | Unrestricted platform control. Governed only by self-protection and `LAST_OWNER_PROTECTED` invariants. | `/(admin)`, `/(owner)` |
 
 ---
 
@@ -128,3 +128,15 @@ Account suspension represents immediate administrative revocation of access:
 - Account status transitions from `SUSPENDED` back to `ACTIVE`.
 - Existing sessions are **not** reactivated; the user must authenticate afresh.
 - A `SecurityEvent` of type `ACCOUNT_UNSUSPENDED` and an `AdminAuditLog` of action `USER_UNSUSPENDED` are written.
+
+---
+
+## 5. Owner Console & Governance Boundary (Phase E)
+
+The `/owner/**` route group and `/api/owner/**` endpoints establish a strict, server-enforced boundary accessible **strictly** by users with `role = OWNER`.
+
+### Access Rules:
+1. **Denial by Default:** Non-owner roles (`ADMIN`, `CONTENT_EDITOR`, `SUPPORT`, `LEARNER`) requesting `/owner/**` are returned an Access Denied view with HTTP 403 `OWNER_ACCESS_REQUIRED`.
+2. **Dedicated Surface:** Operational administration (`/admin`) and executive governance (`/owner`) are decoupled. Admin users cannot view product metrics, cohort retention, feature flags, or platform settings.
+3. **Emergency Override Bypass:** When `MAINTENANCE_MODE` is activated, learners and staff writes are locked down, but `OWNER` users maintain full bypass capabilities to access system settings and restore service.
+

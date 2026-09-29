@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server';
 import { requireAuthUser } from '@/lib/auth';
 import { PracticeService } from '@/services/practice.service';
 import { apiSuccess, apiError } from '@/lib/api-response';
+import { assertNotInMaintenance } from '@/lib/maintenance';
+import { ProductAnalyticsService } from '@/services/product-analytics/product-analytics.service';
 import { z } from 'zod';
 
 const practiceCompleteSchema = z.object({
@@ -15,10 +17,20 @@ const practiceCompleteSchema = z.object({
 export async function POST(req: NextRequest) {
   try {
     const user = await requireAuthUser();
+    await assertNotInMaintenance(user);
+
     const body = await req.json();
     const validated = practiceCompleteSchema.parse(body);
 
     const result = await PracticeService.recordPracticeSession(user.id, validated);
+
+    // Non-authoritative analytics tracking
+    await ProductAnalyticsService.trackPracticeCompleted(user.id, {
+      sessionType: validated.practiceType,
+      durationSeconds: validated.durationSeconds,
+      isValid: result.session.isValid,
+    });
+
     return apiSuccess(result);
   } catch (error) {
     return apiError(error);

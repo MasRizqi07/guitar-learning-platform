@@ -45,6 +45,15 @@ export type ErrorCode =
   | 'MEDIA_NOT_ACTIVE'
   | 'MEDIA_STORAGE_UNAVAILABLE'
   | 'MEDIA_PERMISSION_DENIED'
+  | 'OWNER_ACCESS_REQUIRED'
+  | 'INVALID_ANALYTICS_RANGE'
+  | 'FEATURE_FLAG_NOT_FOUND'
+  | 'FEATURE_FLAG_KEY_EXISTS'
+  | 'INVALID_ROLLOUT_PERCENTAGE'
+  | 'PLATFORM_SETTING_NOT_FOUND'
+  | 'INVALID_PLATFORM_SETTING'
+  | 'REGISTRATION_DISABLED'
+  | 'MAINTENANCE_MODE'
   | 'INTERNAL_SERVER_ERROR';
 
 export class AppError extends Error {
@@ -111,6 +120,22 @@ export class AppError extends Error {
 
   static lastOwnerProtected(message = 'The platform must maintain at least one active OWNER. Cannot demote or suspend the last owner.'): AppError {
     return new AppError('LAST_OWNER_PROTECTED', message, 400);
+  }
+
+  static ownerAccessRequired(message = 'Platform OWNER access required'): AppError {
+    return new AppError('OWNER_ACCESS_REQUIRED', message, 403);
+  }
+
+  static registrationDisabled(message = 'User registration is currently disabled'): AppError {
+    return new AppError('REGISTRATION_DISABLED', message, 403);
+  }
+
+  static invalidAnalyticsRange(message = 'Invalid analytics date range'): AppError {
+    return new AppError('INVALID_ANALYTICS_RANGE', message, 400);
+  }
+
+  static maintenanceMode(message = 'Platform is currently undergoing scheduled maintenance'): AppError {
+    return new AppError('MAINTENANCE_MODE', message, 503);
   }
 
   static internal(message = 'Internal server error'): AppError {

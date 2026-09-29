@@ -127,13 +127,18 @@ export default function NewLessonPage() {
             required
             value={moduleId}
             onChange={(e) => setModuleId(e.target.value)}
-            className="w-full px-3.5 py-2 rounded-lg bg-[#0C0F16] border border-[#222938] text-xs text-slate-200 focus:outline-none focus:border-amber-500"
+            disabled={modules.length === 0}
+            className="w-full px-3.5 py-2 rounded-lg bg-[#0C0F16] border border-[#222938] text-xs text-slate-200 focus:outline-none focus:border-amber-500 disabled:opacity-50"
           >
-            {modules.map((m) => (
-              <option key={m.id} value={m.id}>
-                {m.course.title} → {m.title}
-              </option>
-            ))}
+            {modules.length === 0 ? (
+              <option value="">Loading modules...</option>
+            ) : (
+              modules.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.course.title} → {m.title}
+                </option>
+              ))
+            )}
           </select>
         </div>
 
@@ -239,7 +244,7 @@ export default function NewLessonPage() {
           </Link>
           <button
             type="submit"
-            disabled={saving}
+            disabled={saving || modules.length === 0}
             className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs hover:bg-amber-400 transition disabled:opacity-50"
           >
             <Save className="w-3.5 h-3.5" />

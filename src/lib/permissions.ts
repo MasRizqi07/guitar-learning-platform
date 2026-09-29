@@ -257,3 +257,16 @@ export function requireRole(
     );
   }
 }
+
+/**
+ * Validates that an actor has the OWNER role, throwing AppError.ownerAccessRequired if not
+ */
+export function requireOwnerRole(user: { role?: string | null; id?: string }): void {
+  if (!user || !user.role) {
+    throw AppError.unauthorized('Authentication required');
+  }
+  const canonical = normalizeRole(user.role);
+  if (canonical !== 'OWNER') {
+    throw AppError.ownerAccessRequired('Only platform OWNER may access this console or resource');
+  }
+}

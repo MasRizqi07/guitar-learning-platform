@@ -152,6 +152,7 @@ model User {
   passwordHash     String?
   role             UserRole       @default(LEARNER)
   status           AccountStatus  @default(ACTIVE)
+  analyticsExcluded Boolean        @default(false)
   suspendedAt      DateTime?
   suspensionReason String?
   deletedAt        DateTime?
@@ -180,10 +181,14 @@ model User {
   publishedLessons        Lesson[]                 @relation("LessonPublishedBy")
   createdLessonRevisions  LessonRevision[]         @relation("LessonRevisionCreatedBy")
   createdMedia            MediaAsset[]             @relation("UserCreatedMedia")
+  createdFeatureFlags     FeatureFlag[]            @relation("FeatureFlagCreatedBy")
+  updatedFeatureFlags     FeatureFlag[]            @relation("FeatureFlagUpdatedBy")
+  updatedPlatformSettings PlatformSetting[]        @relation("PlatformSettingUpdatedBy")
 
   @@index([email])
   @@index([role])
   @@index([status])
+  @@index([analyticsExcluded])
   @@index([createdAt])
 }
 
@@ -711,4 +716,34 @@ model MediaAsset {
   @@index([status, createdAt])
   @@index([createdById, createdAt])
 }
+
+model FeatureFlag {
+  id                String   @id @default(uuid())
+  key               String   @unique
+  description       String?
+  enabled           Boolean  @default(false)
+  rolloutPercentage Int      @default(0)
+  config            Json?
+  createdById       String?
+  updatedById       String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  createdBy User? @relation("FeatureFlagCreatedBy", fields: [createdById], references: [id], onDelete: SetNull)
+  updatedBy User? @relation("FeatureFlagUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+
+  @@index([key])
+  @@index([enabled])
+}
+
+model PlatformSetting {
+  key         String   @id
+  value       Json
+  description String?
+  updatedById String?
+  updatedAt   DateTime @updatedAt
+
+  updatedBy User? @relation("PlatformSettingUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+}
+
 

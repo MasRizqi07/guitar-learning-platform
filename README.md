@@ -279,10 +279,12 @@ npm test
 - `tests/integration/auth-security-v2.test.ts`: 16 tests covering Phase A account security (persistent token hashing, revocable multi-device sessions, verification tokens, password resets, rate limiting).
 - `tests/integration/admin-rbac-v2.test.ts`: 27 tests covering Phase B administrative isolation (RBAC boundary, user suspension, session invalidation, role management, `LAST_OWNER_PROTECTED` invariants, and secret-scrubbed audit logs).
 - `tests/integration/content-cms-v2.test.ts`: 21 tests covering Phase C Content Management System (Course, Module, Lesson, Section, Quiz, Chord, Achievement CMS, status lifecycle machine, publishing validations, monotonic lesson revision snapshots, safety restore, and question deletion foreign-key constraints).
+- `tests/integration/media-management-v2.test.ts`: 24 tests covering Phase D Media Management (upload initiation, binary upload completion, reference-safe deletion, provider abstraction, asset replacement).
+- `tests/integration/owner-analytics-v2.test.ts`: 20 tests covering Phase E Owner Console (authoritative transactional analytics, DAU/WAU/MAU, 6-stage funnel, mature cohort retention, feature flags with deterministic rollout, and platform settings).
 
-**Result: 140/140 Vitest tests passing across 12 test suites.**
+**Result: 184/184 Vitest tests passing across 14 test suites.**
 
-### 2. Run Real Playwright Browser End-to-End Tests (6 Tests)
+### 2. Run Real Playwright Browser End-to-End Tests (10 Tests)
 
 ```bash
 # Local browser testing
@@ -299,8 +301,9 @@ PLAYWRIGHT_TEST_BASE_URL=https://your-production-url.vercel.app npm run test:e2e
 - `tests/e2e/golden-path.spec.ts`: Executes true browser user journey: Landing $\rightarrow$ Register $\rightarrow$ Stepper Onboarding (Steps 1–7) $\rightarrow$ Dashboard $\rightarrow$ Roadmap $\rightarrow$ Lesson 1 sections $\rightarrow$ Quiz submission $\rightarrow$ Results & progress persistence $\rightarrow$ Sign out $\rightarrow$ Sign in verification.
 - `tests/e2e/tuner.spec.ts`: Verifies Tuner UI, 6 reference tones plucking, loop playback, microphone error fallback, and Interactive Fretboard scale filter switches in the browser.
 - `tests/e2e/media-management.spec.ts`: Verifies Content Editor direct/picker media uploads, Course CMS thumbnail selection, and Admin reference-guarded safe deletion (`409 MEDIA_IN_USE` prevention and post-detach cleanup).
+- `tests/e2e/owner-console.spec.ts`: Verifies Owner executive console: Owner login $\rightarrow$ `/owner` executive KPI metrics $\rightarrow$ `/owner/analytics/users` 6-stage funnel & retention cohorts $\rightarrow$ `/owner/analytics/learning` valid practice & quiz pass rates $\rightarrow$ `/owner/analytics/content` lesson drop-off analysis $\rightarrow$ `/owner/features` flag creation & deterministic rollout $\rightarrow$ `/owner/system` governance controls $\rightarrow$ `/owner/audit` log inspection $\rightarrow$ Admin access denial (`HTTP 403 OWNER_ACCESS_REQUIRED`).
 
-**Result: 8/8 Playwright browser tests passing in Chromium. 164/164 Vitest integration tests passing.**
+**Result: 10/10 Playwright browser tests passing in Chromium. 184/184 Vitest integration tests passing.**
 
 ### 3. Backoffice & Platform Owner Bootstrap
 
@@ -313,6 +316,8 @@ npm run admin:bootstrap-owner -- --email=owner@example.com
 Refer to:
 - [`docs/RBAC.md`](docs/RBAC.md) — Comprehensive 5-role permission matrix, operational boundaries, and security invariants.
 - [`docs/ADMIN_OPERATIONS.md`](docs/ADMIN_OPERATIONS.md) — Operational runbook for user directory search, suspension lifecycles, and audit inspection.
+- [`docs/OWNER_OPERATIONS.md`](docs/OWNER_OPERATIONS.md) — Platform governance, executive analytics, deterministic feature flag rollouts, and maintenance mode.
+- [`docs/ANALYTICS_DEFINITIONS.md`](docs/ANALYTICS_DEFINITIONS.md) — Authoritative mathematical definitions, exclusions, and formulas for all product KPIs.
 - [`docs/CONTENT_OPERATIONS.md`](docs/CONTENT_OPERATIONS.md) — Operational guide for curriculum authoring, section editing, draft/review/publish lifecycles, revision restores, and safe quiz management.
 - [`docs/MEDIA_OPERATIONS.md`](docs/MEDIA_OPERATIONS.md) — Media storage architecture, direct signed upload pipeline, reference-safe deletion, and provider rotation runbooks.
 
@@ -321,9 +326,9 @@ Refer to:
 ```bash
 npm run lint         # ESLint (0 errors, clean output)
 npx tsc --noEmit     # TypeScript Strict Typecheck (0 errors)
-npm test             # Vitest (164/164 tests passing)
-npm run test:e2e     # Playwright (8/8 browser E2E tests passing)
-npm run build        # Next.js 16 Production Build (70 routes compiled cleanly)
+npm test             # Vitest (184/184 tests passing)
+npm run test:e2e     # Playwright (10/10 browser E2E tests passing)
+npm run build        # Next.js 16 Production Build (86 routes compiled cleanly)
 ```
 
 ---

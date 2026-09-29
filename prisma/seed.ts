@@ -1174,6 +1174,81 @@ async function main() {
   }
 
   console.log(`✓ Seeded ${modulesData.length} modules and ${totalLessonsSeeded} lessons with sections and quizzes.`);
+
+  // 6. Seed Default Feature Flags
+  const defaultFlags = [
+    {
+      key: 'ADAPTIVE_LEARNING',
+      description: 'Dynamically adapts curriculum order based on quiz accuracy and practice speed',
+      enabled: false,
+      rolloutPercentage: 0,
+    },
+    {
+      key: 'EAR_TRAINING',
+      description: 'Acoustic pitch ear training and string identification modules',
+      enabled: false,
+      rolloutPercentage: 0,
+    },
+    {
+      key: 'AI_TUTOR',
+      description: 'Interactive AI guitar assistant for personalized fretboard guidance',
+      enabled: false,
+      rolloutPercentage: 0,
+    },
+    {
+      key: 'NEW_PROGRESS_UI',
+      description: 'Experimental roadmap timeline visualization for learners',
+      enabled: false,
+      rolloutPercentage: 0,
+    },
+  ];
+
+  for (const flag of defaultFlags) {
+    await prisma.featureFlag.upsert({
+      where: { key: flag.key },
+      update: {
+        description: flag.description,
+      },
+      create: flag,
+    });
+  }
+  console.log(`✓ Seeded ${defaultFlags.length} default feature flags`);
+
+  // 7. Seed Default Platform Settings
+  const defaultSettings = [
+    {
+      key: 'REGISTRATION_ENABLED',
+      value: true,
+      description: 'Controls whether new public learner registrations are accepted',
+    },
+    {
+      key: 'MAINTENANCE_MODE',
+      value: false,
+      description: 'Enables maintenance mode restricting learner mutations',
+    },
+    {
+      key: 'SUPPORT_EMAIL',
+      value: 'support@guitarlearning.com',
+      description: 'Primary support contact email address displayed across the platform',
+    },
+    {
+      key: 'DEFAULT_DAILY_GOAL',
+      value: 15,
+      description: 'Default daily practice goal in minutes for new registrations',
+    },
+  ];
+
+  for (const setting of defaultSettings) {
+    await prisma.platformSetting.upsert({
+      where: { key: setting.key },
+      update: {
+        description: setting.description,
+      },
+      create: setting,
+    });
+  }
+  console.log(`✓ Seeded ${defaultSettings.length} default platform settings`);
+
   console.log('✨ Seeding complete and verified deterministic!');
 }
 

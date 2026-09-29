@@ -129,3 +129,16 @@ The platform includes a production Content Management System allowing authorized
     ├── Manage badges, XP rewards, and unlocking condition criteria
     └── Stable code identifier enforcement
 ```
+
+---
+
+## 6. Owner Console & Platform Governance Boundary (Phase E)
+
+Platform governance, executive product analytics, dynamic feature flags, and emergency maintenance mode are partitioned into a dedicated, strictly isolated surface at `/owner`. 
+
+`ADMIN` and lower roles are strictly forbidden from accessing `/owner` or `/api/owner/*` (returning `403 OWNER_ACCESS_REQUIRED`). 
+
+For complete documentation on executive metrics, cohort retention, feature flags, and system settings, refer to:
+- [`docs/OWNER_OPERATIONS.md`](OWNER_OPERATIONS.md)
+- [`docs/ANALYTICS_DEFINITIONS.md`](ANALYTICS_DEFINITIONS.md)
+

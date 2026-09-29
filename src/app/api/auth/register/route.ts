@@ -5,9 +5,16 @@ import { setSessionCookie } from '@/lib/auth';
 import { apiSuccess, apiError } from '@/lib/api-response';
 import { RateLimiter } from '@/lib/rate-limit';
 import { AppError } from '@/lib/errors';
+import { PlatformSettingsService } from '@/services/platform-settings.service';
+import { ProductAnalyticsService } from '@/services/product-analytics/product-analytics.service';
 
 export async function POST(req: NextRequest) {
   try {
+    const registrationEnabled = await PlatformSettingsService.isRegistrationEnabled();
+    if (!registrationEnabled) {
+      throw AppError.registrationDisabled('User registration is currently disabled by platform administration.');
+    }
+
     const ip = RateLimiter.extractClientIp(req.headers);
 
     // Apply rate limit: 5 registrations per hour per IP
@@ -25,6 +32,9 @@ export async function POST(req: NextRequest) {
     const user = await AuthService.register(validated, req.headers);
 
     await setSessionCookie(user, req.headers);
+
+    // Non-authoritative analytics tracking
+    await ProductAnalyticsService.trackUserRegistered(user.id, { role: user.role });
 
     return apiSuccess({ user, message: 'Account created successfully' }, 201);
   } catch (error) {

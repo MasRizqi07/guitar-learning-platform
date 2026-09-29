@@ -2557,4 +2557,41 @@ Client Browser            Next.js App Server         Object Storage
 - **Legacy Compatibility:** When `mediaAssetId` or `thumbnailAssetId` is attached, the legacy `mediaUrl` or `thumbnailUrl` is automatically populated with the asset's fast CDN public URL. If legacy external URLs exist without a `MediaAsset`, they remain 100% operational and rendered by learner components.
 - **Revision Snapshot Preservation:** Published `LessonRevision` snapshots store `mediaAssetId` for each section, ensuring that restoring older revisions faithfully recovers original media references.
 
+---
+
+# 22. Phase E — Owner Console, Product Analytics, Feature Flags & Governance
+
+### 22.1 Dedicated Route Group & Strict Owner Access Boundary
+- **Route Group:** `src/app/(owner)/owner/**` (`/owner`, `/owner/analytics/users`, `/owner/analytics/learning`, `/owner/analytics/content`, `/owner/features`, `/owner/system`, `/owner/audit`).
+- **Enforcement:** `requireOwnerRole()` evaluates session authentication server-side before rendering any layout or page templates.
+- **Denial Behavior:** Non-owner roles (`ADMIN`, `CONTENT_EDITOR`, `SUPPORT`, `LEARNER`) are denied with HTTP 403 `OWNER_ACCESS_REQUIRED`.
+
+### 22.2 Authoritative Transactional Analytics Engine
+- **Decoupled Architecture:** Analytics queries run through `OwnerAnalyticsService` and `OwnerAnalyticsRepository`, querying PostgreSQL transactional records (`User`, `Profile`, `LessonProgress`, `PracticeSession`, `QuizAttempt`).
+- **Staff & Test Exclusions:** All core learner KPIs exclude staff accounts (`CONTENT_EDITOR`, `SUPPORT`, `ADMIN`, `OWNER`) and accounts flagged with `User.analyticsExcluded = true`.
+- **Query Bounds:** All date ranges are strictly validated with a maximum bound of 365 days. Aggregate results are safely cached in-memory with a 60-second TTL.
+- **Explicit Definitions:** Metrics follow mathematical formulas documented in `docs/ANALYTICS_DEFINITIONS.md`.
+
+### 22.3 Metrics & Retention Calculation
+- **Active Learners:** Meaningful activity requires qualifying `LearningActivity`, valid `PracticeSession`, or completed `QuizAttempt`.
+- **Cohort Retention (D1, D7, D30):** Denominators strictly exclude immature cohorts (cohort age $< 1\text{d}$, $< 7\text{d}$, or $< 30\text{d}$), eliminating false low-retention reporting.
+- **Valid Practice Volume:** Only `isValid = true` sessions are included; duration is converted from `durationSeconds`.
+- **Content Drop-Off & Stalled Learners:** Learners with started but incomplete lessons whose last activity exceeds 7 days are categorized as "stalled", avoiding false churn classification.
+
+### 22.4 Behavioral Analytics Abstraction
+- **Provider Interface (`src/services/product-analytics/`):** Decouples external analytics via `AnalyticsProvider`, implemented by `NoopAnalyticsProvider` (local/test) and `PostHogAnalyticsProvider`.
+- **Non-Blocking Isolation:** Analytics provider errors or network timeouts are trapped and never fail or roll back transactional operations (lesson completions, XP, quizzes).
+- **PII Scrubbing:** Passwords, tokens, cookies, and raw email addresses are scrubbed prior to dispatch.
+
+### 22.5 Feature Flags & Deterministic Rollout
+- **Model (`FeatureFlag`):** Unique key, description, boolean enabled toggle, rollout percentage ($0 \dots 100$), and optional JSON configuration.
+- **Deterministic Hashing:** User percentage evaluation uses `SHA-256(flagKey + ":" + userId) % 100`, guaranteeing identical bucket placement across requests without stateful assignment storage or `Math.random()`.
+- **Audit Integration:** All mutations write to `AdminAuditLog` with before/after state diffs.
+
+### 22.6 Platform Settings & Emergency Governance
+- **Operational Settings (`PlatformSetting`):** Dynamic key-value store for non-secret platform configuration (`REGISTRATION_ENABLED`, `MAINTENANCE_MODE`, `SUPPORT_EMAIL`).
+- **Secrets Prohibition:** System secrets (`AUTH_SECRET`, database credentials, API keys) are strictly forbidden from `PlatformSetting`.
+- **Emergency Maintenance Mode:** When enabled, non-owner mutations return HTTP 503 `MAINTENANCE_MODE`. `OWNER` sessions bypass maintenance locks to ensure platform control and restoration.
+
+
 

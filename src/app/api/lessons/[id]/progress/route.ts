@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import { requireAuthUser } from '@/lib/auth';
 import { CurriculumService } from '@/services/curriculum.service';
 import { apiSuccess, apiError } from '@/lib/api-response';
+import { assertNotInMaintenance } from '@/lib/maintenance';
 import { z } from 'zod';
 
 const progressInputSchema = z.object({
@@ -14,6 +15,7 @@ export async function POST(
 ) {
   try {
     const user = await requireAuthUser();
+    await assertNotInMaintenance(user);
     const { id: lessonId } = await context.params;
     const body = await req.json();
     const { currentSectionOrder } = progressInputSchema.parse(body);

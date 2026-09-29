@@ -132,7 +132,17 @@ Configured in `next.config.ts` for all application routes:
 
 ---
 
-## 11. Responsible Vulnerability Disclosure
+## 11. Owner Console, Analytics & Governance Security (Phase E)
+
+- **Absolute Owner Boundary:** The `/owner/**` route group and `/api/owner/**` endpoints strictly require `role = OWNER`. Non-owner roles (including `ADMIN`, `CONTENT_EDITOR`, `SUPPORT`, and `LEARNER`) are rejected with HTTP 403 `OWNER_ACCESS_REQUIRED`.
+- **Zero Secrets in Platform Settings:** The `PlatformSetting` model explicitly forbids storing system secrets (`AUTH_SECRET`, `DATABASE_URL`, storage tokens, provider API keys). All secrets remain strictly managed via server environment variables.
+- **Behavioral Analytics Privacy & PII Scrubbing:** Product analytics dispatching (`ProductAnalyticsService`) scrubs emails, passwords, session tokens, and IP addresses before transmitting events. Only pseudonymous internal identifiers and safe operational metadata are forwarded.
+- **Authoritative Isolation:** External tracking failure (e.g. PostHog downtime or network timeout) is isolated in a non-blocking catch block and will **never** cause transactional failures in lesson completions, quiz submissions, or XP awards.
+- **Maintenance Mode with Owner Override:** Activating `MAINTENANCE_MODE` returns HTTP 503 `MAINTENANCE_MODE` for learner and staff mutations while preserving uninterrupted access for `OWNER` accounts to safely manage platform recovery.
+
+---
+
+## 12. Responsible Vulnerability Disclosure
 
 If you discover a potential security vulnerability in this project, please report it privately:
 - **Email:** `security@yourdomain.com` (placeholder)

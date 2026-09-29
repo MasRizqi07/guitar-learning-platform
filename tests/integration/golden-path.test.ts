@@ -274,7 +274,7 @@ describe('Phase 10: Golden Path Release Gate (End-to-End Workflow)', () => {
     expect(lesson1Progress?.status).toBe('COMPLETED');
 
     const learningPath = await CurriculumService.getLearningPath(userId);
-    const l2 = learningPath.modules[0].lessons.find((l) => l.id === lesson2Id);
+    const l2 = learningPath.modules.flatMap((m) => m.lessons).find((l) => l.id === lesson2Id);
     expect(l2?.availability).toBe('AVAILABLE');
   });
 });
