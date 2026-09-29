@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-fixed-dim": "#ffb3ad", "on-error": "#690005", "on-tertiary": "#68000a", "inverse-primary": "#855300", "on-secondary-fixed-variant": "#005321", "tertiary-fixed": "#ffdad7", "secondary-fixed": "#6bff8f", "on-surface": "#e1e2eb", "surface": "#101319", "primary-container": "#f59e0b", "surface-container-lowest": "#0b0e14", "on-secondary": "#003915", "surface-variant": "#32353b", "outline-variant": "#534434", "primary-fixed": "#ffddb8", "secondary-container": "#00b954", "secondary": "#4ae176", "inverse-surface": "#e1e2eb", "tertiary-container": "#ff938c", "surface-container": "#1d2026", "surface-container-high": "#272a30", "on-primary-container": "#613b00", "on-tertiary-fixed": "#410004", "on-surface-variant": "#d8c3ad", "surface-tint": "#ffb95f", "on-primary": "#472a00", "background": "#101319", "primary-fixed-dim": "#ffb95f", "primary": "#ffc174", "error": "#ffb4ab", "surface-container-highest": "#32353b", "secondary-fixed-dim": "#4ae176", "surface-container-low": "#191c22", "surface-dim": "#101319", "on-tertiary-fixed-variant": "#930013", "on-secondary-fixed": "#002109", "tertiary": "#ffbcb7", "outline": "#a08e7a", "on-error-container": "#ffdad6", "on-background": "#e1e2eb", "surface-bright": "#363940", "on-primary-fixed": "#2a1700", "on-secondary-container": "#004119", "on-tertiary-container": "#8d0012", "error-container": "#93000a", "on-primary-fixed-variant": "#653e00", "inverse-on-surface": "#2d3037" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-xl": "2rem", "gutter": "1.25rem", "gutter-mobile": "0.75rem", "space-xs": "0.25rem", "margin": "2rem", "space-sm": "0.5rem", "margin-mobile": "1rem", "space-md": "0.75rem", "space-lg": "1.25rem" }, "fontFamily": { "headline-xl": [ "Geist" ], "body-lg": [ "Geist" ], "headline-sm": [ "Geist" ], "display-lg": [ "Geist" ], "headline-md": [ "Geist" ], "body-sm": [ "Geist" ], "mono-fret": [ "JetBrains Mono" ], "body-md": [ "Geist" ], "display-lg-mobile": [ "Geist" ], "mono-metric": [ "JetBrains Mono" ], "label-caps": [ "JetBrains Mono" ], "headline-xl-mobile": [ "Geist" ] }, "fontSize": { "headline-xl": [ "32px", { "lineHeight": "38px", "letterSpacing": "-0.025em", "fontWeight": "600" } ], "body-lg": [ "16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "headline-sm": [ "16px", { "lineHeight": "22px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "display-lg": [ "48px", { "lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "700" } ], "headline-md": [ "20px", { "lineHeight": "26px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "body-sm": [ "12px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" } ], "mono-fret": [ "14px", { "lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "500" } ], "body-md": [ "14px", { "lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "400" } ], "display-lg-mobile": [ "34px", { "lineHeight": "38px", "letterSpacing": "-0.025em", "fontWeight": "700" } ], "mono-metric": [ "24px", { "lineHeight": "28px", "letterSpacing": "-0.03em", "fontWeight": "600" } ], "label-caps": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "600" } ], "headline-xl-mobile": [ "26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low border-r border-outline-variant/30 z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/20 bg-surface-container-lowest/60"><img alt="FretFlow Guitar Platform Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WupnvPwKzOLghcjgS1e9BiW2-TQwGi1UzhnnioRgha9X8Dw0sC6j-xW8QcuMnQFpVgwb0lorUOkaiJ6kCsAKeqieJb0_0KxM_0Qp0ZnqpNWQruArJ2RZMWLqfpfuaMoOkcPYJynG9Bw1kz_WGh_f_CdSfP9o9LPH2PRCl_xqtUSsB5tEHnjOUo6WBeTGI7z0nmdNsJ-uBk7eJAjEZK84pkC3kVqRJA-cgFdzxirUBoBwaei1YKdCwN"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight">FretFlow</span><span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Acoustic &amp; Electric</span></div></div><div class="px-space-md pt-space-lg pb-space-sm"><span class="px-space-sm font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Navigation Engine</span></div><nav class="flex flex-col gap-space-xs px-space-md" data-active-classes="bg-surface-container-high text-primary font-bold shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_16px_rgba(245,158,11,0.15)] border-l-2 border-primary"><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="dashboard" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">grid_view</span><span class="font-body-md text-body-md">Dashboard</span></div><span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded-full bg-primary-container/20 text-primary border border-primary/30 flex items-center gap-0.5">🔥 5d</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="learning-path" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">alt_route</span><span class="font-body-md text-body-md">Learning Path</span></div><span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant">42%</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="focus-practice-room" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">timer</span><span class="font-body-md text-body-md">Practice Room</span></div><span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded-full bg-secondary-container/20 text-secondary border border-secondary/30">15m goal</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="guitar-tuner-and-library" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">graphic_eq</span><span class="font-body-md text-body-md">Tuner &amp; Library</span></div><span class="material-symbols-outlined text-on-surface-variant text-[16px]">queue_music</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="progress-and-achievements" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">military_tech</span><span class="font-body-md text-body-md">Progress</span></div><span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded-full bg-primary-container/15 text-primary">+640 XP</span></a></nav></div><div class="p-space-md m-space-md rounded-xl bg-surface-container border border-outline-variant/30 flex flex-col gap-space-xs"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Daily Target</span><span class="font-mono-fret text-mono-fret text-secondary">66%</span></div><div class="w-full h-1.5 rounded-full bg-surface-container-lowest overflow-hidden"><div class="h-full bg-secondary rounded-full w-2/3 shadow-[0_0_8px_rgba(74,225,118,0.5)]"></div></div><div class="flex justify-between items-center text-on-surface-variant font-label-caps text-label-caps pt-space-xs"><span>10 of 15 min complete</span><span class="text-primary font-mono-fret">🔥 5d</span></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/80 backdrop-blur-xl border-b border-outline-variant/20 z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><img alt="FretFlow Guitar Platform Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WupnvPwKzOLghcjgS1e9BiW2-TQwGi1UzhnnioRgha9X8Dw0sC6j-xW8QcuMnQFpVgwb0lorUOkaiJ6kCsAKeqieJb0_0KxM_0Qp0ZnqpNWQruArJ2RZMWLqfpfuaMoOkcPYJynG9Bw1kz_WGh_f_CdSfP9o9LPH2PRCl_xqtUSsB5tEHnjOUo6WBeTGI7z0nmdNsJ-uBk7eJAjEZK84pkC3kVqRJA-cgFdzxirUBoBwaei1YKdCwN"/><div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-high border border-outline-variant/40"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Active:</span><span class="font-headline-sm text-headline-sm text-on-surface text-sm font-semibold">Module 02: Basic Chords</span></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container border border-outline-variant/30"><span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span><span class="font-mono-fret text-mono-fret text-on-surface text-xs">10 / 15 min</span></div><div class="flex items-center gap-1 px-space-sm py-1 rounded-full bg-primary-container/20 border border-primary/40 text-primary font-mono-metric text-xs"><span class="material-symbols-outlined text-primary text-[16px]">local_fire_department</span><span class="font-bold font-mono-fret text-mono-fret text-xs">5 Days</span></div><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container border border-outline-variant/30"><span class="material-symbols-outlined text-primary text-[18px]">verified</span><span class="font-mono-fret text-mono-fret text-xs text-on-surface">Lvl 4 • 640 XP</span></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right hidden sm:flex"><span class="font-headline-sm text-headline-sm text-xs text-on-surface">Alex</span><span class="font-label-caps text-label-caps text-[10px] text-on-surface-variant uppercase">Beginner</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface flex-1"><div class="flex flex-col w-full">
+<div class="w-full max-w-[840px] mx-auto py-space-xl px-space-md sm:px-space-lg flex flex-col gap-space-lg">
+<!-- Breadcrumb & Status Bar -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm text-on-surface-variant font-label-caps text-label-caps uppercase tracking-wider">
+<div class="flex items-center gap-space-xs">
+<span class="hover:text-primary transition-colors cursor-pointer">Roadmap</span>
+<span class="text-outline">/</span>
+<span class="text-on-surface font-medium">Beginner Fundamentals</span>
+<span class="text-outline">/</span>
+<span class="text-primary font-semibold">Module 02</span>
+</div>
+<div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-high border border-outline-variant/30 text-on-surface">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-mono-fret text-xs">Standard E A D G B E</span>
+</div>
+</div>
+<!-- Course Overview Header Panel -->
+<div class="rounded-xl bg-surface-container-low border border-outline-variant/30 p-space-lg relative overflow-hidden shadow-lg">
+<div class="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-primary/5 blur-3xl pointer-events-none"></div>
+<div class="flex flex-col gap-space-md relative z-10">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-caps text-label-caps text-primary tracking-widest uppercase">Curriculum Path</span>
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">Beginner Guitar Fundamentals</h1>
+</div>
+<div class="flex items-center gap-space-sm bg-surface-container px-space-md py-space-sm rounded-lg border border-outline-variant/30 self-start md:self-auto">
+<div class="flex flex-col text-right">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Course Progress</span>
+<span class="font-mono-metric text-on-surface text-lg">12 <span class="text-outline-variant font-normal">/ 30</span></span>
+</div>
+<div class="relative w-12 h-12 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 44 44">
+<circle cx="22" cy="22" fill="none" r="18" stroke="#272a30" stroke-width="4.5"></circle>
+<circle cx="22" cy="22" fill="none" r="18" stroke="#ffc174" stroke-dasharray="113" stroke-dashoffset="67.8" stroke-linecap="round" stroke-width="4.5"></circle>
+</svg>
+<span class="absolute font-mono-fret text-xs text-primary font-bold">40%</span>
+</div>
+</div>
+</div>
+<!-- Fast Stats Telemetry Bar -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm pt-space-xs">
+<div class="flex items-center gap-space-sm bg-surface-container/70 rounded-lg p-space-sm border border-outline-variant/20">
+<div class="w-9 h-9 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">local_fire_department</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase">Streak Cadence</span>
+<span class="font-mono-fret text-xs font-semibold text-on-surface">5-Day Active 🔥</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm bg-surface-container/70 rounded-lg p-space-sm border border-outline-variant/20">
+<div class="w-9 h-9 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase">Platform XP</span>
+<span class="font-mono-fret text-xs font-semibold text-on-surface">420 XP Earned</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm bg-surface-container/70 rounded-lg p-space-sm border border-outline-variant/20">
+<div class="w-9 h-9 rounded-lg bg-surface-container-highest flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined text-[20px]">schedule</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase">Est. Completion</span>
+<span class="font-mono-fret text-xs font-semibold text-on-surface">3.5 Hrs Remaining</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Collapsible Previous Module (Module 01: Complete) -->
+<details class="group rounded-xl bg-surface-container-low border border-outline-variant/30 overflow-hidden transition-all">
+<summary class="flex items-center justify-between p-space-md cursor-pointer list-none select-none hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-space-md">
+<div class="w-8 h-8 rounded-full bg-secondary/15 text-secondary flex items-center justify-center border border-secondary/30">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-caps text-label-caps uppercase text-secondary">Completed</span>
+<span class="text-outline text-xs">•</span>
+<span class="font-headline-sm text-sm text-on-surface">Module 01: Mechanics &amp; Single Strings</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Postural hold, fretting finger pressure, picking hand rest strokes</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<span class="font-mono-fret text-xs text-secondary hidden sm:inline-block">5 / 5 Done (100%)</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] transition-transform duration-200 group-open:rotate-180">expand_more</span>
+</div>
+</summary>
+<div class="p-space-md pt-0 text-on-surface-variant text-body-sm flex flex-col gap-space-xs border-t border-outline-variant/10 bg-surface-container-lowest/50">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm pt-space-sm">
+<div class="flex items-center justify-between p-space-xs bg-surface-container/40 rounded border border-outline-variant/20 px-space-sm">
+<span class="text-xs">1.1 Anatomy &amp; Pick Grip</span>
+<span class="text-secondary font-mono-fret text-xs">✓ 100%</span>
+</div>
+<div class="flex items-center justify-between p-space-xs bg-surface-container/40 rounded border border-outline-variant/20 px-space-sm">
+<span class="text-xs">1.2 Fretting Hand Placement</span>
+<span class="text-secondary font-mono-fret text-xs">✓ 100%</span>
+</div>
+<div class="flex items-center justify-between p-space-xs bg-surface-container/40 rounded border border-outline-variant/20 px-space-sm">
+<span class="text-xs">1.3 Chromatic Walk (Frets 1-4)</span>
+<span class="text-secondary font-mono-fret text-xs">✓ 100%</span>
+</div>
+<div class="flex items-center justify-between p-space-xs bg-surface-container/40 rounded border border-outline-variant/20 px-space-sm">
+<span class="text-xs">1.4 String Crossing &amp; Meter</span>
+<span class="text-secondary font-mono-fret text-xs">✓ 100%</span>
+</div>
+</div>
+</div>
+</details>
+<!-- Active Target Module 02 Header Card -->
+<div class="rounded-xl bg-surface-container border border-primary/40 shadow-[0_0_24px_rgba(245,158,11,0.08)] p-space-lg flex flex-col gap-space-md relative overflow-hidden">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-space-md border-b border-outline-variant/20 pb-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded text-[10px] font-mono-fret font-semibold uppercase bg-primary text-on-primary">Active Focus</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">5 Lessons • Approx 45 mins</span>
+</div>
+<h2 class="font-headline-xl text-headline-xl text-on-surface">Module 02: Basic Chords (Open Position)</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
+            Master the 5 essential open major and minor shapes with clean finger arch, strict string clearance, and buzz-free voicing.
+          </p>
+</div>
+<div class="flex flex-col gap-1 min-w-[140px]">
+<div class="flex justify-between items-center font-mono-fret text-xs">
+<span class="text-on-surface-variant">Progress</span>
+<span class="text-primary font-bold">2 of 5 (40%)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-lowest overflow-hidden border border-outline-variant/30">
+<div class="h-full bg-primary rounded-full w-2/5 shadow-[0_0_8px_rgba(255,193,116,0.6)]"></div>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-sm text-xs text-on-surface-variant font-label-caps">
+<div class="flex items-center gap-space-md">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary"></span> 1 Completed</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary animate-ping"></span> 1 Active</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-surface-variant"></span> 3 Pending</span>
+</div>
+<button class="hover:text-primary flex items-center gap-1 text-on-surface transition-colors cursor-pointer" id="syllabus-toggle">
+<span class="material-symbols-outlined text-[16px]">menu_book</span>
+<span>Curriculum Syllabus</span>
+</button>
+</div>
+<!-- Syllabus Expand Drawer -->
+<div class="hidden flex-col gap-space-xs pt-space-sm text-xs font-mono-fret border-t border-outline-variant/15 text-on-surface-variant" id="syllabus-panel">
+<div class="flex justify-between py-1"><span>Target Cadence: 3 Chords / Week</span><span class="text-on-surface">BPM Target: 60 Quarter Notes</span></div>
+<div class="flex justify-between py-1"><span>Fretting Threshold: &lt; 15% buzz detection</span><span class="text-secondary">Audio Analyzer Engaged</span></div>
+</div>
+</div>
+<!-- Vertical Interactive Learning Path -->
+<div class="relative flex flex-col py-space-md">
+<!-- Central Dynamic Path Spine -->
+<div class="absolute left-6 sm:left-8 top-10 bottom-10 w-[3px] -translate-x-1/2 pointer-events-none flex flex-col">
+<!-- Segment 1: Completed Node 1 to 2 (Emerald) -->
+<div class="h-[185px] w-full bg-secondary shadow-[0_0_8px_rgba(74,225,118,0.5)]"></div>
+<!-- Segment 2: Active Node 2 to 3 (Pulsing Amber) -->
+<div class="h-[310px] w-full relative">
+<div class="absolute inset-0 border-l-[3px] border-dashed border-primary animate-pulse opacity-90"></div>
+<div class="w-2.5 h-2.5 -left-[3.5px] top-1/2 rounded-full bg-primary shadow-[0_0_10px_#ffc174] absolute animate-bounce"></div>
+</div>
+<!-- Segment 3: Locked Stages (Muted Slate) -->
+<div class="flex-1 w-full border-l-[3px] border-dashed border-outline-variant/40"></div>
+</div>
+<div class="flex flex-col gap-space-xl z-10">
+<!-- NODE 1: COMPLETED -->
+<div class="flex items-start gap-space-md sm:gap-space-lg group">
+<!-- Anchor Marker -->
+<div class="relative flex items-center justify-center shrink-0 w-12 h-12 sm:w-16 sm:h-16">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-surface-container border-2 border-secondary flex items-center justify-center text-secondary shadow-[0_0_16px_rgba(74,225,118,0.35)] transition-transform group-hover:scale-105">
+<span class="material-symbols-outlined text-[24px] font-bold">check</span>
+</div>
+<span class="absolute -bottom-2 font-mono-fret text-[10px] text-secondary font-bold bg-surface-container-lowest px-1 rounded border border-secondary/40">DONE</span>
+</div>
+<!-- Lesson Content Card -->
+<div class="flex-1 rounded-xl bg-surface-container-low border border-secondary/30 p-space-md sm:p-space-lg flex flex-col gap-space-sm hover:border-secondary/60 transition-all shadow-md">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded text-[11px] font-mono-fret font-medium bg-secondary/15 text-secondary border border-secondary/30">Lesson 2.1</span>
+<span class="font-label-caps text-label-caps text-secondary uppercase font-semibold">100% Mastery</span>
+</div>
+<span class="font-mono-fret text-xs text-primary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">bolt</span> +20 XP Claimed
+              </span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-1 max-w-md">
+<h3 class="font-headline-md text-headline-md text-on-surface">C Major Chord (The 3-Finger Triangle)</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                  Clean anchor placement on 5th string root, open G drone ring, and clearance test passed for buzz-free High E string.
+                </p>
+</div>
+<!-- Mini Chord Preview SVG -->
+<div class="shrink-0 p-2 rounded bg-surface-container border border-outline-variant/30 w-28 flex flex-col items-center">
+<span class="font-mono-fret text-[11px] text-on-surface font-semibold mb-1">C Major</span>
+<svg class="w-16 h-18 text-on-surface" viewbox="0 0 70 80">
+<!-- Nut -->
+<line stroke="#a08e7a" stroke-width="3" x1="10" x2="60" y1="12" y2="12"></line>
+<!-- Frets -->
+<line stroke="#534434" stroke-width="1" x1="10" x2="60" y1="28" y2="28"></line>
+<line stroke="#534434" stroke-width="1" x1="10" x2="60" y1="44" y2="44"></line>
+<line stroke="#534434" stroke-width="1" x1="10" x2="60" y1="60" y2="60"></line>
+<line stroke="#534434" stroke-width="1" x1="10" x2="60" y1="76" y2="76"></line>
+<!-- 6 Strings -->
+<line stroke="#32353b" stroke-width="2" x1="10" x2="10" y1="12" y2="76"></line>
+<line stroke="#32353b" stroke-width="1.8" x1="20" x2="20" y1="12" y2="76"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="30" x2="30" y1="12" y2="76"></line>
+<line stroke="#32353b" stroke-width="1.2" x1="40" x2="40" y1="12" y2="76"></line>
+<line stroke="#32353b" stroke-width="1" x1="50" x2="50" y1="12" y2="76"></line>
+<line stroke="#32353b" stroke-width="0.8" x1="60" x2="60" y1="12" y2="76"></line>
+<!-- Mute & Open markers -->
+<text fill="#ffb4ab" font-family="monospace" font-size="8" x="7" y="9">✕</text>
+<circle cx="40" cy="7" fill="none" r="2.5" stroke="#4ae176" stroke-width="1"></circle>
+<circle cx="60" cy="7" fill="none" r="2.5" stroke="#4ae176" stroke-width="1"></circle>
+<!-- Finger Dots -->
+<circle cx="20" cy="52" fill="#4ae176" r="4.5"></circle>
+<circle cx="30" cy="36" fill="#4ae176" r="4.5"></circle>
+<circle cx="50" cy="20" fill="#4ae176" r="4.5"></circle>
+</svg>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs border-t border-outline-variant/15">
+<span class="font-label-caps text-label-caps text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span> Pitch Verification: 100%
+              </span>
+<button class="px-space-md py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high border border-outline-variant/40 font-body-sm font-medium transition-all flex items-center gap-1.5 cursor-pointer">
+<span class="material-symbols-outlined text-[16px] text-secondary">replay</span>
+                Review Chord &amp; Diagram
+              </button>
+</div>
+</div>
+</div>
+<!-- NODE 2: ACTIVE / IN PROGRESS (HERO NODE) -->
+<div class="flex items-start gap-space-md sm:gap-space-lg group relative">
+<!-- Pulse Beacon Anchor -->
+<div class="relative flex items-center justify-center shrink-0 w-12 h-12 sm:w-16 sm:h-16">
+<div class="absolute w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/20 animate-ping"></div>
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-surface-container border-2 border-primary flex items-center justify-center text-primary shadow-[0_0_24px_rgba(245,158,11,0.6)] z-10">
+<span class="material-symbols-outlined text-[24px] animate-pulse">play_arrow</span>
+</div>
+<span class="absolute -bottom-2.5 font-mono-fret text-[10px] text-on-primary bg-primary font-bold px-1.5 py-0.2 rounded-full z-20 shadow-md">
+              LIVE
+            </span>
+</div>
+<!-- Primary Active Focus Card -->
+<div class="flex-1 rounded-xl bg-surface-container-high border-2 border-primary/70 p-space-md sm:p-space-lg flex flex-col gap-space-md shadow-[0_8px_32px_rgba(245,158,11,0.12)] relative">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded text-[11px] font-mono-fret font-semibold bg-primary text-on-primary">ACTIVE TARGET</span>
+<span class="font-label-caps text-label-caps text-primary uppercase font-bold tracking-wider">Lesson 2.2 • Step 2 of 5</span>
+</div>
+<div class="flex items-center gap-1 text-primary font-mono-fret text-xs bg-primary-container/20 px-2 py-0.5 rounded border border-primary/30">
+<span class="material-symbols-outlined text-[14px]">stars</span> +20 XP Upon Pass
+              </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md items-center">
+<div class="md:col-span-2 flex flex-col gap-space-xs">
+<h3 class="font-headline-xl text-headline-xl text-on-surface">G Major Chord (Full 6-String Voice)</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                  Anchor finger 3 on 1st string 3rd fret, stretch finger 2 to low 6th string root. Keep palm arched to avoid damping the open B and G strings.
+                </p>
+<div class="flex flex-wrap gap-2 pt-space-xs">
+<span class="px-2 py-1 rounded bg-surface-container text-xs font-mono-fret text-on-surface border border-outline-variant/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">touch_app</span> 3 Fret Spread
+                  </span>
+<span class="px-2 py-1 rounded bg-surface-container text-xs font-mono-fret text-on-surface border border-outline-variant/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">volume_up</span> Full 6-String Ring
+                  </span>
+<span class="px-2 py-1 rounded bg-surface-container text-xs font-mono-fret text-on-surface border border-outline-variant/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-primary">speed</span> 60 BPM Transition
+                  </span>
+</div>
+</div>
+<!-- Interactive Detailed Chord Diagram Box -->
+<div class="bg-surface-container-lowest p-space-sm rounded-lg border border-outline-variant/40 flex flex-col items-center justify-center shadow-inner">
+<div class="flex justify-between w-full px-2 text-[10px] font-mono-fret text-on-surface-variant mb-1">
+<span>E A D G B E</span>
+<span class="text-primary font-semibold">G (Root)</span>
+</div>
+<!-- SVG Chord Diagram (G Major) -->
+<svg class="w-full max-w-[150px] text-on-surface" viewbox="0 0 110 110">
+<!-- Nut -->
+<line stroke="#d8c3ad" stroke-linecap="round" stroke-width="4" x1="15" x2="95" y1="18" y2="18"></line>
+<!-- Frets -->
+<line stroke="#534434" stroke-width="1.5" x1="15" x2="95" y1="38" y2="38"></line>
+<line stroke="#534434" stroke-width="1.5" x1="15" x2="95" y1="58" y2="58"></line>
+<line stroke="#534434" stroke-width="1.5" x1="15" x2="95" y1="78" y2="78"></line>
+<line stroke="#534434" stroke-width="1.5" x1="15" x2="95" y1="98" y2="98"></line>
+<!-- 6 Strings with varying thicknesses -->
+<line stroke="#ffc174" stroke-width="3" x1="15" x2="15" y1="18" y2="98"></line>
+<line stroke="#778092" stroke-width="2.2" x1="31" x2="31" y1="18" y2="98"></line>
+<line stroke="#778092" stroke-width="1.8" x1="47" x2="47" y1="18" y2="98"></line>
+<line stroke="#778092" stroke-width="1.4" x1="63" x2="63" y1="18" y2="98"></line>
+<line stroke="#778092" stroke-width="1.1" x1="79" x2="79" y1="18" y2="98"></line>
+<line stroke="#ffc174" stroke-width="0.9" x1="95" x2="95" y1="18" y2="98"></line>
+<!-- Open string rings -->
+<circle cx="47" cy="10" fill="none" r="3" stroke="#ffc174" stroke-width="1.5"></circle>
+<circle cx="63" cy="10" fill="none" r="3" stroke="#ffc174" stroke-width="1.5"></circle>
+<circle cx="79" cy="10" fill="none" r="3" stroke="#ffc174" stroke-width="1.5"></circle>
+<!-- Fretted Nodes with Finger Labels -->
+<!-- Finger 2: Low E, 3rd fret -->
+<circle class="shadow-lg" cx="15" cy="68" fill="#f59e0b" r="6.5"></circle>
+<text fill="#101319" font-family="monospace" font-size="8.5" font-weight="bold" text-anchor="middle" x="15" y="71">2</text>
+<!-- Finger 1: A string, 2nd fret -->
+<circle cx="31" cy="48" fill="#f59e0b" r="6.5"></circle>
+<text fill="#101319" font-family="monospace" font-size="8.5" font-weight="bold" text-anchor="middle" x="31" y="51">1</text>
+<!-- Finger 3: High E, 3rd fret -->
+<circle cx="95" cy="68" fill="#f59e0b" r="6.5"></circle>
+<text fill="#101319" font-family="monospace" font-size="8.5" font-weight="bold" text-anchor="middle" x="95" y="71">3</text>
+</svg>
+<span class="text-[10px] font-mono-fret text-secondary mt-1">✓ Zero-Buzz Clearance</span>
+</div>
+</div>
+<!-- CTA Transport Deck -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-space-sm pt-space-sm border-t border-outline-variant/30">
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2.5 rounded-lg bg-surface-container border border-outline-variant/40 hover:bg-surface-container-highest text-on-surface text-body-sm font-medium transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+<span class="material-symbols-outlined text-[18px] text-primary">timer</span>
+                  Launch 2-Min Warmup
+                </button>
+</div>
+<button class="px-space-lg py-2.5 rounded-lg bg-primary hover:bg-primary-fixed text-on-primary font-headline-sm font-semibold transition-all shadow-[0_2px_8px_rgba(245,158,11,0.4)] flex items-center justify-center gap-2 cursor-pointer group-hover:scale-[1.01]">
+<span>Continue Lesson (Step 2 of 5)</span>
+<span class="material-symbols-outlined text-[20px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- NODE 3: UNLOCKED / NEXT UP -->
+<div class="flex items-start gap-space-md sm:gap-space-lg group">
+<!-- Unlocked Anchor -->
+<div class="relative flex items-center justify-center shrink-0 w-12 h-12 sm:w-16 sm:h-16">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-surface-container-high border-2 border-outline-variant flex items-center justify-center text-on-surface-variant group-hover:border-primary group-hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[22px]">lock_open</span>
+</div>
+<span class="absolute -bottom-2 font-mono-fret text-[10px] text-on-surface-variant font-medium bg-surface-container-lowest px-1 rounded border border-outline-variant/40">NEXT</span>
+</div>
+<!-- Lesson Content Card -->
+<div class="flex-1 rounded-xl bg-surface-container-low border border-outline-variant/40 p-space-md sm:p-space-lg flex flex-col gap-space-sm hover:border-outline-variant transition-all hover:bg-surface-container">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded text-[11px] font-mono-fret font-medium bg-surface-container-highest text-on-surface-variant">Lesson 2.3</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Ready to Begin</span>
+</div>
+<span class="font-mono-fret text-xs text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">timer</span> 12 mins • +20 XP
+              </span>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<h3 class="font-headline-md text-headline-md text-on-surface">D Major Chord (Compact Triangle Cluster)</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl">
+                  4-string strumming discipline with thumb muting on string 6 (Low E) and open string 4 (D) root reference.
+                </p>
+</div>
+<button class="shrink-0 px-space-md py-2.5 rounded-lg bg-surface-container-high hover:bg-primary hover:text-on-primary text-on-surface border border-outline-variant/40 font-headline-sm font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+<span>Start Lesson</span>
+<span class="material-symbols-outlined text-[18px]">play_circle</span>
+</button>
+</div>
+</div>
+</div>
+<!-- NODE 4: LOCKED -->
+<div class="flex items-start gap-space-md sm:gap-space-lg opacity-60 hover:opacity-80 transition-opacity">
+<!-- Locked Anchor -->
+<div class="relative flex items-center justify-center shrink-0 w-12 h-12 sm:w-16 sm:h-16">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+</div>
+</div>
+<!-- Lesson Content Card -->
+<div class="flex-1 rounded-xl bg-surface-container-lowest border border-outline-variant/20 p-space-md sm:p-space-lg flex flex-col gap-space-xs">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded text-[11px] font-mono-fret font-medium bg-surface-container-low text-outline">Lesson 2.4</span>
+<span class="font-label-caps text-label-caps text-outline uppercase">Locked</span>
+</div>
+<span class="font-mono-fret text-xs text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock</span> Requires Lesson 2.3
+              </span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-headline-md text-headline-md text-on-surface-variant">A Minor Chord (Relative Minor Architecture)</h3>
+<p class="font-body-sm text-body-sm text-outline">
+                Shape mimicry with C Major root anchor finger shifts, open 5th string A root drone, and subtle 1st fret index finger tension.
+              </p>
+</div>
+</div>
+</div>
+<!-- NODE 5: LOCKED (MODULE CAPSTONE MILESTONE) -->
+<div class="flex items-start gap-space-md sm:gap-space-lg opacity-50 hover:opacity-75 transition-opacity">
+<!-- Locked Capstone Anchor -->
+<div class="relative flex items-center justify-center shrink-0 w-12 h-12 sm:w-16 sm:h-16">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-surface-container-lowest border border-outline-variant/30 flex items-center justify-center text-outline">
+<span class="material-symbols-outlined text-[20px]">military_tech</span>
+</div>
+<span class="absolute -bottom-2 font-mono-fret text-[9px] text-outline uppercase font-semibold">Test</span>
+</div>
+<!-- Milestone Content Card -->
+<div class="flex-1 rounded-xl bg-surface-container-lowest border border-outline-variant/20 p-space-md sm:p-space-lg flex flex-col gap-space-xs">
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded text-[11px] font-mono-fret font-medium bg-surface-container-low text-outline">Lesson 2.5 • Milestone</span>
+<span class="font-label-caps text-label-caps text-outline uppercase">Module Capstone</span>
+</div>
+<span class="font-mono-fret text-xs text-primary/70 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">workspace_premium</span> +50 XP Capstone
+              </span>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="font-headline-md text-headline-md text-on-surface-variant">E Minor &amp; 5-Chord Transition Deck</h3>
+<p class="font-body-sm text-body-sm text-outline">
+                Two-finger powerhouse chord and the 60-second speed transition challenge across C, G, D, Am, and Em.
+              </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Upcoming Next Module Teaser -->
+<div class="rounded-xl bg-surface-container-lowest border border-outline-variant/20 p-space-md sm:p-space-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-md opacity-80 hover:opacity-100 transition-opacity">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-outline border border-outline-variant/30 shrink-0">
+<span class="material-symbols-outlined text-[22px]">lock</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">Up Next • Module 03</span>
+<span class="text-outline text-xs">•</span>
+<span class="font-mono-fret text-xs text-outline">0 / 6 Lessons</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Chord Transitions &amp; Anchor Fingers</h4>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Common pivot fingers, minimizing finger lift distance, and metronomic 4/4 changes</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm self-end sm:self-center">
+<span class="px-space-sm py-1 rounded bg-surface-container font-mono-fret text-xs text-outline border border-outline-variant/30">Locked</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple toggle for Syllabus drawer
+  const syllabusBtn = document.getElementById('syllabus-toggle');
+  const syllabusPanel = document.getElementById('syllabus-panel');
+  if (syllabusBtn && syllabusPanel) {
+    syllabusBtn.addEventListener('click', () => {
+      syllabusPanel.classList.toggle('hidden');
+      syllabusPanel.classList.toggle('flex');
+    });
+  }
+</script></main></div></body></html>

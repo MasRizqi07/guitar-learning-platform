@@ -1,36 +1,94 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
-import { ProgressBar } from '@/components/ui/ProgressBar';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Check,
+  Music,
+  Sprout,
+  Repeat,
+  Radio,
+  Clock,
+  Sparkles,
+  ShieldCheck,
+  Award,
+  ArrowRight,
+} from 'lucide-react';
+
+import { Logo } from '@/components/ui/Logo';
 
 const GOAL_OPTIONS = [
-  { code: 'PLAY_FAVORITE_SONGS', title: 'Play Favorite Songs', desc: 'Learn chords and strumming to play acoustic hits.' },
-  { code: 'LEARN_FROM_ZERO', title: 'Learn from Zero', desc: 'Never played before; want proper technique from day one.' },
-  { code: 'IMPROVE_CHORDS', title: 'Improve Chords', desc: 'Master clean chord transitions without buzz or delay.' },
-  { code: 'IMPROVE_RHYTHM', title: 'Improve Rhythm', desc: 'Develop internal clock, timing, and confident strumming.' },
-  { code: 'UNDERSTAND_THEORY', title: 'Understand Theory', desc: 'Understand notes, keys, and how music works.' },
-  { code: 'BUILD_CONFIDENCE', title: 'Build Confidence', desc: 'Feel relaxed and fluent picking up the guitar.' },
+  {
+    code: 'PLAY_FAVORITE_SONGS',
+    title: 'Play Favorite Songs',
+    desc: 'Jump straight into real tunes using 4 essential open chords (G, C, Em, D) and standard strumming cadences.',
+    isPopular: true,
+    icon: Music,
+  },
+  {
+    code: 'LEARN_FROM_ZERO',
+    title: 'Learn from Complete Scratch',
+    desc: 'Zero experience assumed. Fretboard anatomy, finger posture, pain-free ergonomics, and clean single-string plucking.',
+    icon: Sprout,
+  },
+  {
+    code: 'IMPROVE_CHORDS',
+    title: 'Master Chord Transitions',
+    desc: 'Eliminate hesitation and fret buzz between C, G, and D with guided metronome cadences and anchor-finger technique.',
+    icon: Repeat,
+  },
+  {
+    code: 'UNDERSTAND_THEORY',
+    title: 'Understand Rhythm & Theory',
+    desc: 'Internalize 4/4 meter, steady down/up strokes, note roots, and why chords fit together logically on the fretboard.',
+    icon: Radio,
+  },
 ];
 
 const EXPERIENCE_OPTIONS = [
-  { value: 'ABSOLUTE_BEGINNER', title: 'Absolute Beginner', desc: 'I have never held or played a guitar before.', icon: '🌱' },
-  { value: 'BEGINNER', title: 'Early Beginner', desc: 'I know 1 or 2 chords, but cannot switch between them smoothly.', icon: '🎸' },
-  { value: 'BASIC_PLAYER', title: 'Basic Player', desc: 'I can play basic open chords and simple strum patterns.', icon: '🎶' },
-  { value: 'INTERMEDIATE', title: 'Experienced', desc: 'I want a systematic refresher to fill gaps in my playing.', icon: '⭐' },
+  {
+    value: 'ABSOLUTE_BEGINNER',
+    title: 'Absolute Beginner',
+    desc: 'I have never held or played a guitar before.',
+    badge: 'Stage 0',
+  },
+  {
+    value: 'BEGINNER',
+    title: 'Early Beginner',
+    desc: 'I know 1 or 2 chords, but cannot switch between them smoothly.',
+    badge: 'Stage 1',
+  },
+  {
+    value: 'BASIC_PLAYER',
+    title: 'Basic Player',
+    desc: 'I can play basic open chords and simple strum patterns.',
+    badge: 'Stage 2',
+  },
+  {
+    value: 'INTERMEDIATE',
+    title: 'Experienced Player',
+    desc: 'I want a systematic refresher to fill gaps in timing and fretboard navigation.',
+    badge: 'Stage 3',
+  },
 ];
 
 const GUITAR_TYPES = [
-  { value: 'ACOUSTIC', title: 'Acoustic Guitar', desc: 'Steel-string acoustic guitar', icon: '🪕' },
-  { value: 'ELECTRIC', title: 'Electric Guitar', desc: 'Solid or semi-hollow body electric', icon: '⚡' },
-  { value: 'CLASSICAL', title: 'Classical Guitar', desc: 'Nylon-string acoustic guitar', icon: '🎻' },
-  { value: 'NO_GUITAR', title: 'No Guitar Yet', desc: 'Planning to acquire one soon', icon: '📦' },
+  { value: 'ACOUSTIC', title: 'Acoustic Guitar', desc: 'Steel-string acoustic guitar (standard dreadnought or folk).' },
+  { value: 'ELECTRIC', title: 'Electric Guitar', desc: 'Solid or semi-hollow body electric guitar.' },
+  { value: 'CLASSICAL', title: 'Classical Guitar', desc: 'Nylon-string classical or Spanish guitar.' },
+  { value: 'NO_GUITAR', title: 'No Guitar Yet', desc: 'Acquiring an instrument soon; learning fundamentals first.' },
 ];
 
-const DAILY_GOALS = [10, 15, 30, 45, 60];
+const DAILY_GOALS = [
+  { minutes: 10, label: 'Quick Start' },
+  { minutes: 15, label: 'Recommended', isRecommended: true },
+  { minutes: 30, label: 'Focused Pace' },
+  { minutes: 45, label: 'Deep Dive' },
+  { minutes: 60, label: 'Mastery Track' },
+];
 
 const ASSESSMENT_QUESTIONS = [
   {
@@ -79,7 +137,7 @@ export default function OnboardingPage() {
   const handleNext = () => {
     setError(null);
     if (step === 2 && selectedGoals.length === 0) {
-      setError('Please select at least one goal');
+      setError('Please select at least one learning goal');
       return;
     }
 
@@ -136,23 +194,63 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0E1014] flex flex-col justify-between p-4 sm:p-6 md:p-8">
-      {/* Header with progress */}
-      <div className="max-w-2xl w-full mx-auto space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-xl">🎸</span>
-            <span className="font-bold text-slate-200 text-sm">Guitar Learning Platform</span>
-          </div>
-          <Badge variant="primary" size="sm">
-            Step {step} of {totalSteps}
-          </Badge>
-        </div>
-        <ProgressBar value={(step / totalSteps) * 100} size="sm" />
-      </div>
+    <div className="min-h-screen bg-[#0E1014] text-[#F8FAFC] flex flex-col justify-between items-center p-4 sm:p-6 fret-grid-bg relative overflow-x-hidden selection:bg-amber-500 selection:text-slate-950 font-sans">
+      {/* Ambient Top Glow Light Beam */}
+      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[340px] pointer-events-none bg-gradient-to-b from-amber-500/10 via-amber-500/5 to-transparent blur-3xl -z-10" />
 
-      {/* Main Content Area */}
-      <div className="max-w-2xl w-full mx-auto my-8">
+      {/* Micro Top Brand Bar */}
+      <header className="w-full max-w-xl flex items-center justify-between pt-2 pb-4">
+        <div className="flex items-center gap-2">
+          <Logo size="sm" showText={true} href="/" />
+          <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 px-1.5 py-0.5 rounded bg-white/5 border border-white/10 hidden sm:inline">
+            Placement Engine
+          </span>
+        </div>
+
+        <Link
+          href="/login"
+          className="text-xs font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-1 py-1 px-2.5 rounded-md hover:bg-white/5"
+        >
+          <span>Already have an account?</span>
+          <span className="text-amber-400 font-semibold hover:underline">Log in</span>
+        </Link>
+      </header>
+
+      {/* Central Card Shell */}
+      <main className="w-full max-w-xl bg-[#171A20]/90 backdrop-blur-xl border border-[#2A303A] rounded-2xl p-6 sm:p-8 shadow-2xl relative my-auto">
+        {/* Top Stepper Header */}
+        <div className="flex items-center justify-between mb-4">
+          {step > 1 && step < 7 ? (
+            <button
+              type="button"
+              onClick={() => setStep((prev) => prev - 1)}
+              className="group flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors py-1.5 px-2.5 -ml-2 rounded-lg hover:bg-white/5"
+            >
+              <ChevronLeft className="w-4 h-4 text-slate-400 group-hover:text-amber-400 transition-colors" />
+              <span>Back</span>
+            </button>
+          ) : (
+            <div className="w-16" />
+          )}
+
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-mono tracking-widest text-amber-400 uppercase font-semibold bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded-full">
+              Step {step} of {totalSteps}
+            </span>
+            <span className="text-xs text-slate-400 font-medium hidden sm:inline">
+              {step === 7 ? 'Placement Ready' : 'Personalization'}
+            </span>
+          </div>
+        </div>
+
+        {/* Animated Smooth Progress Bar */}
+        <div className="w-full bg-[#0E1014] h-2 rounded-full overflow-hidden mb-7 p-0.5 border border-white/5">
+          <div
+            className="bg-gradient-to-r from-amber-600 to-amber-400 h-full rounded-full transition-all duration-500 ease-out shadow-[0_0_10px_rgba(245,158,11,0.5)]"
+            style={{ width: `${(step / totalSteps) * 100}%` }}
+          />
+        </div>
+
         {error && (
           <div className="mb-6 p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-center gap-2">
             <span>⚠️</span>
@@ -160,76 +258,135 @@ export default function OnboardingPage() {
           </div>
         )}
 
-        {/* STEP 1: Welcome */}
+        {/* STEP 1: Welcome & Overview */}
         {step === 1 && (
-          <Card className="p-6 sm:p-10 border-[#2A303A] text-center space-y-6">
-            <div className="w-20 h-20 rounded-3xl bg-amber-500/10 border border-amber-500/20 text-4xl flex items-center justify-center mx-auto">
-              🎯
+          <div className="text-center space-y-6">
+            <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto shadow-lg shadow-amber-500/10">
+              <Sparkles className="w-8 h-8" />
             </div>
             <div className="space-y-2">
-              <h1 className="text-2xl sm:text-3xl font-bold text-slate-100">
+              <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#F8FAFC]">
                 Let&apos;s Personalize Your Learning Journey
               </h1>
-              <p className="text-sm sm:text-base text-slate-400 max-w-lg mx-auto">
-                In less than 2 minutes, we will tailor your beginner guitar roadmap to match your goals, schedule, and current experience.
+              <p className="text-sm sm:text-base text-slate-400 max-w-md mx-auto leading-relaxed">
+                In less than 2 minutes, we will tailor your beginner guitar roadmap to match your schedule, preferred instrument, and starting skill level.
               </p>
             </div>
-            <div className="pt-4">
-              <Button onClick={handleNext} size="lg" className="w-full sm:w-auto px-10">
-                Get Started →
-              </Button>
+
+            <div className="grid grid-cols-3 gap-2.5 text-left pt-2">
+              <div className="p-3 rounded-xl bg-[#20242C]/70 border border-[#2A303A]">
+                <ShieldCheck className="w-4 h-4 text-emerald-400 mb-1" />
+                <div className="text-xs font-bold text-[#F8FAFC]">Deterministic</div>
+                <div className="text-[10px] text-slate-400">Zero guessing</div>
+              </div>
+              <div className="p-3 rounded-xl bg-[#20242C]/70 border border-[#2A303A]">
+                <Clock className="w-4 h-4 text-amber-400 mb-1" />
+                <div className="text-xs font-bold text-[#F8FAFC]">10-15 Min</div>
+                <div className="text-[10px] text-slate-400">Daily habit loop</div>
+              </div>
+              <div className="p-3 rounded-xl bg-[#20242C]/70 border border-[#2A303A]">
+                <Award className="w-4 h-4 text-emerald-400 mb-1" />
+                <div className="text-xs font-bold text-[#F8FAFC]">Server XP</div>
+                <div className="text-[10px] text-slate-400">Real progress</div>
+              </div>
             </div>
-          </Card>
+
+            <div className="pt-4">
+              <button
+                type="button"
+                onClick={handleNext}
+                className="w-full h-12 bg-amber-500 hover:bg-amber-400 active:scale-[0.99] text-[#0E1014] font-extrabold text-sm rounded-xl shadow-[0_4px_20px_rgba(245,158,11,0.3)] transition-all flex items-center justify-center gap-2"
+              >
+                <span>Get Started</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
         )}
 
         {/* STEP 2: Learning Goals */}
         {step === 2 && (
-          <Card className="p-6 sm:p-8 border-[#2A303A] space-y-6">
-            <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-100">What are your guitar goals?</h2>
-              <p className="text-sm text-slate-400 mt-1">Select all that apply to you.</p>
+          <div>
+            <div className="mb-6">
+              <h1 className="text-2xl sm:text-[26px] font-extrabold tracking-tight text-[#F8FAFC] leading-tight mb-1.5">
+                What is your main guitar goal?
+              </h1>
+              <p className="text-sm text-slate-400 leading-relaxed">
+                Choose the target that fits your vibe. We will tailor your starting drills and song repertoire.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="space-y-3 mb-6">
               {GOAL_OPTIONS.map((g) => {
                 const selected = selectedGoals.includes(g.code);
+                const IconComponent = g.icon;
                 return (
                   <button
                     key={g.code}
                     type="button"
                     onClick={() => toggleGoal(g.code)}
-                    className={`p-4 rounded-xl border text-left transition-all duration-150 ${
+                    className={`w-full p-4 rounded-xl border text-left transition-all relative flex items-start gap-4 ${
                       selected
-                        ? 'bg-amber-500/10 border-amber-500 text-slate-100'
-                        : 'bg-[#121418] border-[#2A303A] text-slate-300 hover:border-slate-600'
+                        ? 'border-amber-500 bg-[#1C2028] shadow-[0_0_0_1px_#F59E0B,0_10px_25px_-5px_rgba(245,158,11,0.15)]'
+                        : 'border-[#2A303A] bg-[#171A20] hover:border-slate-600 hover:bg-[#20242C]'
                     }`}
                   >
-                    <div className="font-semibold text-sm flex items-center justify-between">
-                      <span>{g.title}</span>
-                      {selected && <span className="text-amber-400">✓</span>}
+                    <div
+                      className={`w-11 h-11 rounded-lg border flex-shrink-0 flex items-center justify-center transition-colors ${
+                        selected
+                          ? 'bg-amber-500/20 border-amber-500/40 text-amber-400'
+                          : 'bg-[#20242C] border-[#2A303A] text-slate-400'
+                      }`}
+                    >
+                      <IconComponent className="w-5 h-5" />
                     </div>
-                    <div className="text-xs text-slate-400 mt-1">{g.desc}</div>
+
+                    <div className="flex-1 pr-6">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-[#F8FAFC]">{g.title}</span>
+                        {g.isPopular && (
+                          <span className="text-[10px] font-mono uppercase bg-amber-500/15 text-amber-400 px-1.5 py-0.5 rounded font-bold border border-amber-500/30">
+                            Popular
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-xs text-slate-400 mt-1 leading-normal">{g.desc}</p>
+                    </div>
+
+                    {selected && (
+                      <div className="absolute top-3.5 right-3.5 w-5 h-5 rounded-full bg-amber-500 text-[#0E1014] flex items-center justify-center shadow-md">
+                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                      </div>
+                    )}
                   </button>
                 );
               })}
             </div>
 
-            <div className="flex justify-between pt-4">
-              <Button variant="secondary" onClick={() => setStep(1)}>Back</Button>
-              <Button onClick={handleNext}>Continue →</Button>
-            </div>
-          </Card>
+            <button
+              type="button"
+              onClick={handleNext}
+              className="w-full h-12 bg-amber-500 hover:bg-amber-400 text-[#0E1014] font-extrabold text-sm rounded-xl shadow-[0_4px_20px_rgba(245,158,11,0.3)] transition-all flex items-center justify-center gap-2"
+            >
+              <span>Continue</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         )}
 
         {/* STEP 3: Experience Level */}
         {step === 3 && (
-          <Card className="p-6 sm:p-8 border-[#2A303A] space-y-6">
-            <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-100">What is your current experience?</h2>
-              <p className="text-sm text-slate-400 mt-1">We will adjust your starting position accordingly.</p>
+          <div>
+            <div className="mb-6">
+              <h1 className="text-2xl sm:text-[26px] font-extrabold tracking-tight text-[#F8FAFC] leading-tight mb-1.5">
+                What is your guitar experience?
+              </h1>
+              <p className="text-sm text-slate-400 leading-relaxed">
+                We calibrate your lesson sequencing so you never feel overwhelmed or bored.
+              </p>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-3 mb-6">
               {EXPERIENCE_OPTIONS.map((opt) => {
                 const selected = experience === opt.value;
                 return (
@@ -237,41 +394,60 @@ export default function OnboardingPage() {
                     key={opt.value}
                     type="button"
                     onClick={() => setExperience(opt.value)}
-                    className={`w-full p-4 rounded-xl border text-left flex items-start gap-4 transition-all ${
+                    className={`w-full p-4 rounded-xl border text-left flex items-start justify-between gap-4 transition-all ${
                       selected
-                        ? 'bg-amber-500/10 border-amber-500 text-slate-100'
-                        : 'bg-[#121418] border-[#2A303A] text-slate-300 hover:border-slate-600'
+                        ? 'border-amber-500 bg-[#1C2028] shadow-[0_0_0_1px_#F59E0B]'
+                        : 'border-[#2A303A] bg-[#171A20] hover:border-slate-600 hover:bg-[#20242C]'
                     }`}
                   >
-                    <span className="text-2xl mt-0.5">{opt.icon}</span>
-                    <div className="flex-1">
-                      <div className="font-semibold text-sm flex items-center justify-between">
-                        <span>{opt.title}</span>
-                        {selected && <span className="text-amber-400 font-bold">✓</span>}
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-bold text-[#F8FAFC]">{opt.title}</span>
+                        <span className="text-[10px] font-mono text-slate-400 bg-white/5 px-1.5 py-0.5 rounded">
+                          {opt.badge}
+                        </span>
                       </div>
-                      <div className="text-xs text-slate-400 mt-1">{opt.desc}</div>
+                      <p className="text-xs text-slate-400 mt-1 leading-normal">{opt.desc}</p>
+                    </div>
+
+                    <div
+                      className={`w-5 h-5 rounded-full flex items-center justify-center mt-0.5 border ${
+                        selected
+                          ? 'bg-amber-500 border-amber-500 text-[#0E1014]'
+                          : 'border-slate-600 bg-transparent'
+                      }`}
+                    >
+                      {selected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
                     </div>
                   </button>
                 );
               })}
             </div>
 
-            <div className="flex justify-between pt-4">
-              <Button variant="secondary" onClick={() => setStep(2)}>Back</Button>
-              <Button onClick={handleNext}>Continue →</Button>
-            </div>
-          </Card>
+            <button
+              type="button"
+              onClick={handleNext}
+              className="w-full h-12 bg-amber-500 hover:bg-amber-400 text-[#0E1014] font-extrabold text-sm rounded-xl shadow-[0_4px_20px_rgba(245,158,11,0.3)] transition-all flex items-center justify-center gap-2"
+            >
+              <span>Continue</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         )}
 
         {/* STEP 4: Guitar Type */}
         {step === 4 && (
-          <Card className="p-6 sm:p-8 border-[#2A303A] space-y-6">
-            <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-100">What guitar do you have?</h2>
-              <p className="text-sm text-slate-400 mt-1">Our tips adapt to your instrument setup.</p>
+          <div>
+            <div className="mb-6">
+              <h1 className="text-2xl sm:text-[26px] font-extrabold tracking-tight text-[#F8FAFC] leading-tight mb-1.5">
+                What type of guitar do you have?
+              </h1>
+              <p className="text-sm text-slate-400 leading-relaxed">
+                Tension tips and chord grip recommendations adapt to your instrument setup.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
               {GUITAR_TYPES.map((g) => {
                 const selected = guitarType === g.value;
                 return (
@@ -281,84 +457,103 @@ export default function OnboardingPage() {
                     onClick={() => setGuitarType(g.value)}
                     className={`p-4 rounded-xl border text-left transition-all ${
                       selected
-                        ? 'bg-amber-500/10 border-amber-500 text-slate-100'
-                        : 'bg-[#121418] border-[#2A303A] text-slate-300 hover:border-slate-600'
+                        ? 'border-amber-500 bg-[#1C2028] shadow-[0_0_0_1px_#F59E0B]'
+                        : 'border-[#2A303A] bg-[#171A20] hover:border-slate-600 hover:bg-[#20242C]'
                     }`}
                   >
-                    <div className="text-2xl mb-2">{g.icon}</div>
-                    <div className="font-semibold text-sm flex items-center justify-between">
-                      <span>{g.title}</span>
-                      {selected && <span className="text-amber-400">✓</span>}
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-bold text-[#F8FAFC]">{g.title}</span>
+                      {selected && <Check className="w-4 h-4 text-amber-400" />}
                     </div>
-                    <div className="text-xs text-slate-400 mt-1">{g.desc}</div>
+                    <p className="text-xs text-slate-400 mt-1.5 leading-normal">{g.desc}</p>
                   </button>
                 );
               })}
             </div>
 
-            <div className="flex justify-between pt-4">
-              <Button variant="secondary" onClick={() => setStep(3)}>Back</Button>
-              <Button onClick={handleNext}>Continue →</Button>
-            </div>
-          </Card>
+            <button
+              type="button"
+              onClick={handleNext}
+              className="w-full h-12 bg-amber-500 hover:bg-amber-400 text-[#0E1014] font-extrabold text-sm rounded-xl shadow-[0_4px_20px_rgba(245,158,11,0.3)] transition-all flex items-center justify-center gap-2"
+            >
+              <span>Continue</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         )}
 
         {/* STEP 5: Daily Goal */}
         {step === 5 && (
-          <Card className="p-6 sm:p-8 border-[#2A303A] space-y-6">
-            <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-100">Daily practice target</h2>
-              <p className="text-sm text-slate-400 mt-1">
-                How many minutes can you dedicate each day? Even 15 minutes creates rapid improvement.
+          <div>
+            <div className="mb-6">
+              <h1 className="text-2xl sm:text-[26px] font-extrabold tracking-tight text-[#F8FAFC] leading-tight mb-1.5">
+                Daily Practice Target
+              </h1>
+              <p className="text-sm text-slate-400 leading-relaxed">
+                How many minutes can you dedicate each day? Even 15 minutes creates rapid muscle memory.
               </p>
             </div>
 
-            <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
-              {DAILY_GOALS.map((min) => {
-                const selected = dailyGoal === min;
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-6">
+              {DAILY_GOALS.map((g) => {
+                const selected = dailyGoal === g.minutes;
                 return (
                   <button
-                    key={min}
+                    key={g.minutes}
                     type="button"
-                    onClick={() => setDailyGoal(min)}
-                    className={`p-4 rounded-2xl border text-center transition-all ${
+                    onClick={() => setDailyGoal(g.minutes)}
+                    className={`p-3.5 rounded-xl border text-center transition-all ${
                       selected
-                        ? 'bg-amber-500 border-amber-500 text-slate-950 font-bold'
-                        : 'bg-[#121418] border-[#2A303A] text-slate-200 hover:border-slate-600'
+                        ? 'border-amber-500 bg-amber-500 text-[#0E1014] font-bold shadow-[0_0_16px_rgba(245,158,11,0.35)]'
+                        : 'border-[#2A303A] bg-[#171A20] text-slate-400 hover:text-white hover:border-slate-600'
                     }`}
                   >
-                    <div className="text-xl font-bold">{min}</div>
-                    <div className="text-[11px] opacity-80 uppercase tracking-wider">min/day</div>
+                    <div className="text-base font-extrabold font-mono">{g.minutes} Min</div>
+                    <div className="text-[10px] uppercase tracking-wider opacity-85 mt-0.5">
+                      {g.label}
+                    </div>
                   </button>
                 );
               })}
             </div>
 
-            <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300">
-              💡 <strong>Recommended:</strong> 15 minutes a day builds muscle memory without finger fatigue.
+            <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 mb-6 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-amber-400 flex-shrink-0" />
+              <span>
+                <strong>Tip:</strong> Daily 15-minute practice builds finger calluses 3x faster than 2-hour weekend binges.
+              </span>
             </div>
 
-            <div className="flex justify-between pt-4">
-              <Button variant="secondary" onClick={() => setStep(4)}>Back</Button>
-              <Button onClick={handleNext} isLoading={isLoading}>
-                {experience === 'ABSOLUTE_BEGINNER' ? 'Complete Setup →' : 'Next: Quick Assessment →'}
-              </Button>
-            </div>
-          </Card>
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={isLoading}
+              className="w-full h-12 bg-amber-500 hover:bg-amber-400 text-[#0E1014] font-extrabold text-sm rounded-xl shadow-[0_4px_20px_rgba(245,158,11,0.3)] transition-all flex items-center justify-center gap-2"
+            >
+              <span>{isLoading ? 'Calibrating...' : experience === 'ABSOLUTE_BEGINNER' ? 'Complete Calibration' : 'Next: Skill Assessment'}</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         )}
 
         {/* STEP 6: Skill Assessment (For non-absolute beginners) */}
         {step === 6 && (
-          <Card className="p-6 sm:p-8 border-[#2A303A] space-y-6">
-            <div>
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-100">Quick Skill Check</h2>
-              <p className="text-sm text-slate-400 mt-1">Helps place you at the right module.</p>
+          <div>
+            <div className="mb-6">
+              <h1 className="text-2xl sm:text-[26px] font-extrabold tracking-tight text-[#F8FAFC] leading-tight mb-1.5">
+                Quick Placement Check
+              </h1>
+              <p className="text-sm text-slate-400 leading-relaxed">
+                Answer these 2 questions so we place you at the exact right starting module.
+              </p>
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-5 mb-6">
               {ASSESSMENT_QUESTIONS.map((q, qIndex) => (
-                <div key={qIndex} className="space-y-3">
-                  <p className="text-sm font-semibold text-slate-200">{qIndex + 1}. {q.prompt}</p>
+                <div key={qIndex} className="space-y-2.5">
+                  <p className="text-sm font-semibold text-[#F8FAFC]">
+                    {qIndex + 1}. {q.prompt}
+                  </p>
                   <div className="space-y-2">
                     {q.options.map((opt, optIndex) => {
                       const selected = assessmentAnswers[qIndex] === opt.score;
@@ -371,10 +566,10 @@ export default function OnboardingPage() {
                             next[qIndex] = opt.score;
                             setAssessmentAnswers(next);
                           }}
-                          className={`w-full p-3.5 rounded-xl border text-left text-sm transition-all ${
+                          className={`w-full p-3.5 rounded-xl border text-left text-xs sm:text-sm transition-all ${
                             selected
-                              ? 'bg-amber-500/10 border-amber-500 text-slate-100 font-medium'
-                              : 'bg-[#121418] border-[#2A303A] text-slate-300 hover:border-slate-600'
+                              ? 'border-amber-500 bg-amber-500/10 text-[#F8FAFC] font-medium shadow-[0_0_0_1px_#F59E0B]'
+                              : 'border-[#2A303A] bg-[#171A20] text-slate-300 hover:border-slate-600'
                           }`}
                         >
                           {opt.text}
@@ -386,38 +581,49 @@ export default function OnboardingPage() {
               ))}
             </div>
 
-            <div className="flex justify-between pt-4">
-              <Button variant="secondary" onClick={() => setStep(5)}>Back</Button>
-              <Button onClick={handleNext} isLoading={isLoading}>Complete Assessment →</Button>
-            </div>
-          </Card>
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={isLoading}
+              className="w-full h-12 bg-amber-500 hover:bg-amber-400 text-[#0E1014] font-extrabold text-sm rounded-xl shadow-[0_4px_20px_rgba(245,158,11,0.3)] transition-all flex items-center justify-center gap-2"
+            >
+              <span>{isLoading ? 'Calculating Placement...' : 'Calculate Placement'}</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
         )}
 
         {/* STEP 7: Placement Result */}
         {step === 7 && placementResult && (
-          <Card className="p-6 sm:p-10 border-[#2A303A] text-center space-y-6">
-            <div className="w-20 h-20 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 text-4xl flex items-center justify-center mx-auto">
-              🎉
+          <div className="text-center space-y-6">
+            <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/10">
+              <Award className="w-8 h-8" />
             </div>
+
             <div className="space-y-2">
-              <Badge variant="success" size="md">Placement Ready</Badge>
-              <h1 className="text-2xl sm:text-3xl font-bold text-slate-100">
-                You&apos;re Set for Success!
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 text-xs font-mono font-semibold">
+                ✓ Placement Calibrated
+              </span>
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-[#F8FAFC]">
+                Your Learning Path is Ready!
               </h1>
-              <p className="text-sm text-slate-400 max-w-md mx-auto">
-                Based on your preferences, we&apos;ve customized your curriculum starting from{' '}
+              <p className="text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
+                Based on your profile, we have calibrated your curriculum to begin at{' '}
                 <span className="text-amber-400 font-semibold">Lesson {placementResult.startingLessonOrder}</span>.
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-[#121418] border border-[#2A303A] max-w-md mx-auto text-left space-y-2 text-sm">
+            {/* Placement Summary Card */}
+            <div className="p-4 rounded-xl bg-[#20242C]/70 border border-[#2A303A] text-left space-y-2.5 text-xs sm:text-sm">
               <div className="flex justify-between py-1 border-b border-[#2A303A]">
-                <span className="text-slate-400">Recommended Track</span>
-                <span className="font-semibold text-slate-200">{placementResult.recommendedLevel.replace('_', ' ')}</span>
+                <span className="text-slate-400">Curriculum Track</span>
+                <span className="font-semibold text-[#F8FAFC]">
+                  {placementResult.recommendedLevel.replace(/_/g, ' ')}
+                </span>
               </div>
               <div className="flex justify-between py-1 border-b border-[#2A303A]">
-                <span className="text-slate-400">Daily Target</span>
-                <span className="font-semibold text-slate-200">{dailyGoal} Minutes</span>
+                <span className="text-slate-400">Daily Goal</span>
+                <span className="font-semibold text-emerald-400">{dailyGoal} Minutes / Day</span>
               </div>
               <div className="flex justify-between py-1">
                 <span className="text-slate-400">Starting Lesson</span>
@@ -425,24 +631,40 @@ export default function OnboardingPage() {
               </div>
             </div>
 
-            <Button
+            <button
+              type="button"
               onClick={() => {
                 router.push('/dashboard');
                 router.refresh();
               }}
-              size="lg"
-              className="w-full sm:w-auto px-10"
+              className="w-full h-12 bg-amber-500 hover:bg-amber-400 text-[#0E1014] font-extrabold text-sm rounded-xl shadow-[0_4px_20px_rgba(245,158,11,0.3)] transition-all flex items-center justify-center gap-2"
             >
-              Enter Dashboard & Start Learning 🎸
-            </Button>
-          </Card>
+              <span>Enter Dashboard & Start Learning</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
         )}
-      </div>
 
-      {/* Footer */}
-      <div className="text-center text-xs text-slate-500 py-2">
-        Guitar Learning Platform • Structured Beginner Roadmap
-      </div>
+        {/* Trust & Anti-Tutorial-Hell Microcopy */}
+        <div className="flex items-center justify-center gap-3 mt-5 pt-3 border-t border-[#2A303A]/60 text-[11px] font-mono text-slate-500">
+          <span className="flex items-center gap-1">
+            <Check className="w-3 h-3 text-emerald-400" />
+            No Credit Card Required
+          </span>
+          <span className="text-slate-700">•</span>
+          <span>Placement Takes &lt; 2 Minutes</span>
+        </div>
+      </main>
+
+      {/* Clean Bottom Safety / Progress Footer */}
+      <footer className="w-full max-w-xl text-center py-3 text-xs text-slate-500 flex items-center justify-between">
+        <span className="font-mono text-[11px]">FretFlow OS v2.4</span>
+        <span className="hover:text-slate-400 transition-colors">Deterministic Curriculum Engine</span>
+        <span className="text-emerald-400 flex items-center gap-1 font-mono text-[11px]">
+          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          Ready to calibrate
+        </span>
+      </footer>
     </div>
   );
 }

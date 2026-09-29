@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"tertiary-fixed":"#ffdad7","surface-container-highest":"#32353b","inverse-on-surface":"#2d3037","outline-variant":"#534434","on-secondary-fixed":"#002109","tertiary":"#ffbcb7","on-primary-fixed-variant":"#653e00","secondary-fixed-dim":"#4ae176","surface-bright":"#363940","inverse-primary":"#855300","on-tertiary-fixed":"#410004","surface-container-low":"#191c22","background":"#101319","inverse-surface":"#e1e2eb","surface-variant":"#32353b","on-surface-variant":"#d8c3ad","secondary":"#4ae176","outline":"#a08e7a","on-secondary":"#003915","on-error-container":"#ffdad6","on-tertiary-container":"#8d0012","surface-tint":"#ffb95f","on-tertiary":"#68000a","on-error":"#690005","secondary-container":"#00b954","primary":"#ffc174","primary-container":"#f59e0b","on-secondary-fixed-variant":"#005321","surface":"#101319","surface-dim":"#101319","surface-container":"#1d2026","on-tertiary-fixed-variant":"#930013","surface-container-lowest":"#0b0e14","error-container":"#93000a","tertiary-container":"#ff938c","primary-fixed-dim":"#ffb95f","on-primary":"#472a00","primary-fixed":"#ffddb8","on-surface":"#e1e2eb","error":"#ffb4ab","on-background":"#e1e2eb","secondary-fixed":"#6bff8f","tertiary-fixed-dim":"#ffb3ad","on-secondary-container":"#004119","on-primary-container":"#613b00","surface-container-high":"#272a30","on-primary-fixed":"#2a1700"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-md":"0.75rem","gutter":"1.25rem","gutter-mobile":"0.75rem","space-sm":"0.5rem","space-xs":"0.25rem","space-xl":"2rem","space-lg":"1.25rem","margin-mobile":"1rem","margin":"2rem"},"fontFamily":{"mono-fret":["JetBrains Mono"],"body-sm":["Geist"],"headline-xl":["Geist"],"body-md":["Geist"],"display-lg":["Geist"],"body-lg":["Geist"],"headline-xl-mobile":["Geist"],"headline-sm":["Geist"],"mono-metric":["JetBrains Mono"],"label-caps":["JetBrains Mono"],"headline-md":["Geist"],"display-lg-mobile":["Geist"]},"fontSize":{"mono-fret":["14px",{"lineHeight":"16px","letterSpacing":"0em","fontWeight":"500"}],"body-sm":["12px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"400"}],"headline-xl":["32px",{"lineHeight":"38px","letterSpacing":"-0.025em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"-0.005em","fontWeight":"400"}],"display-lg":["48px",{"lineHeight":"52px","letterSpacing":"-0.03em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"400"}],"headline-xl-mobile":["26px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-sm":["16px",{"lineHeight":"22px","letterSpacing":"-0.015em","fontWeight":"600"}],"mono-metric":["24px",{"lineHeight":"28px","letterSpacing":"-0.03em","fontWeight":"600"}],"label-caps":["11px",{"lineHeight":"14px","letterSpacing":"0.06em","fontWeight":"600"}],"headline-md":["20px",{"lineHeight":"26px","letterSpacing":"-0.02em","fontWeight":"600"}],"display-lg-mobile":["34px",{"lineHeight":"38px","letterSpacing":"-0.025em","fontWeight":"700"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><aside class="fixed left-0 top-16 bottom-0 w-64 bg-surface-container-lowest z-40 flex flex-col justify-between p-space-md"><div class="flex flex-col gap-space-md"><div class="px-space-sm pt-space-xs"><span class="font-label-caps text-label-caps uppercase text-on-surface-variant/70 tracking-wider">Workspace Utilities</span></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-surface-container-high text-primary font-bold shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm rounded transition-colors min-h-[44px] bg-surface-container-high text-primary font-bold shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]" data-path="practice-room-audio-tools" href="#"><span class="material-symbols-outlined text-[20px]">graphic_eq</span><span class="font-body-md text-body-md">Practice & Audio Tools</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors min-h-[44px]" data-path="interactive-fretboard" href="#"><span class="material-symbols-outlined text-[20px]">piano</span><span class="font-body-md text-body-md">Virtual Fretboard</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors min-h-[44px]" data-path="metronome-drum-machine" href="#"><span class="material-symbols-outlined text-[20px]">speed</span><span class="font-body-md text-body-md">Metronome Engine</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors min-h-[44px]" data-path="pitch-calibrator" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span class="font-body-md text-body-md">Precision Tuner</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors min-h-[44px]" data-path="audio-input-settings" href="#"><span class="material-symbols-outlined text-[20px]">settings_input_component</span><span class="font-body-md text-body-md">Audio Interface I/O</span></a></nav></div><div class="p-space-sm bg-surface-container-low rounded-xl flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div><div class="flex flex-col"><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">DSP Engine</span><span class="font-mono-fret text-mono-fret text-secondary">48kHz • 64 spl</span></div></div><span class="material-symbols-outlined text-on-surface-variant text-[18px]">verified</span></div></aside><div class="pl-64"><header class="fixed top-0 left-0 right-0 h-16 bg-surface/90 backdrop-blur-xl z-50 shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="w-full h-full px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md min-w-[240px]"><img alt="Brand logo. - Primary color: #f59e0b - Font: geist - Mode: dark - Roundness: rounded-sm" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UZsh6ciofjdKX8fj6bk0R5nN_gBCsDokgpWCUGVIcBisJi-oxeCz_bgFPfp-LCJGW-Me5vm59stlD52BoatrKgLCjrcoANRA3WRDUk3Z144JHAOb8ihxU-5fYu30hkXFz9Z1K0LaqE5Y0NGT6G4xb2M_-0Tk8_xhiTm8weyO9mpk9iOqpkAgcxnjeO_Hr4m2VxpeQGRLyFVBG6eWfI88PUFnfrZJgiEQL_FFendYFQK-tPBFVFB1k17w"/><span class="font-headline-sm text-headline-sm font-semibold tracking-tight text-on-surface">FretFlow</span></div><nav class="hidden lg:flex items-center gap-space-xs p-space-xs bg-surface-container-lowest rounded-xl" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><a class="px-space-md py-space-xs font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="dashboard" href="#">Dashboard</a><a class="px-space-md py-space-xs font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="curriculum" href="#">Curriculum</a><a aria-current="page" class="px-space-md py-space-xs transition-colors bg-primary-container text-on-primary-container font-semibold rounded-lg" data-path="practice-room-audio-tools" href="#">Practice & Tuner</a><a class="px-space-md py-space-xs font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="library" href="#">Library</a><a class="px-space-md py-space-xs font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="progress" href="#">Progress</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-space-xs bg-surface-container-lowest rounded-xl shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)]"><span class="material-symbols-outlined text-primary text-[18px]">local_fire_department</span><span class="font-mono-metric text-body-md text-on-surface font-semibold">5</span><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Days</span></div><div class="flex items-center gap-space-xs px-space-sm py-space-xs bg-surface-container-lowest rounded-xl shadow-[inset_0_1px_2px_rgba(0,0,0,0.5)]"><span class="material-symbols-outlined text-secondary text-[18px]">bolt</span><span class="font-mono-metric text-body-md text-on-surface font-semibold">420</span><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">XP</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface min-h-screen p-space-lg"><div class="flex flex-col w-full">
+<!-- Mode Switcher & Telemetry Header Bar -->
+<div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-space-md mb-space-lg">
+<div>
+<div class="flex items-center gap-space-xs mb-space-xs">
+<span class="inline-block w-2 h-2 rounded-full bg-secondary-fixed animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Audio Lab & Practice Deck</span>
+<span class="text-on-surface-variant/40">/</span>
+<span class="font-mono-fret text-body-sm text-primary">v2.4.1 DSP-ONLINE</span>
+</div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface font-semibold tracking-tight">Audio Utilities Deck</h1>
+</div>
+<!-- Dual Segmented Workspace Mode Switcher -->
+<div class="flex items-center p-space-xs bg-surface-container-lowest rounded-xl shadow-lg">
+<button class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg bg-surface-container-high text-primary font-semibold transition-all duration-150 shadow-md" id="tab-btn-practice" onclick="switchUtilityTab('practice')">
+<span class="material-symbols-outlined text-[20px]">graphic_eq</span>
+<span class="font-body-md text-body-md">Practice Deck & Metronome</span>
+<span class="font-mono-fret text-label-caps px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">1</span>
+</button>
+<button class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:text-on-surface transition-all duration-150" id="tab-btn-tuner" onclick="switchUtilityTab('tuner')">
+<span class="material-symbols-outlined text-[20px]">mic</span>
+<span class="font-body-md text-body-md">Autocorrelation Tuner</span>
+<span class="font-mono-fret text-label-caps px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant">2</span>
+</button>
+</div>
+</div>
+<!-- ========================================================================= -->
+<!-- TAB 1: PRACTICE ROOM & METRONOME VIEWPORT                                  -->
+<!-- ========================================================================= -->
+<div class="flex flex-col gap-space-lg" id="tab-content-practice">
+<!-- Top Row: Session Countdown & Anti-Cheat Verified Telemetry -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Distraction-Free Big Timer Console (7 Cols) -->
+<div class="lg:col-span-7 bg-surface-container rounded-xl p-space-lg shadow-xl relative overflow-hidden flex flex-col justify-between">
+<div class="absolute -right-16 -top-16 w-56 h-56 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute -left-16 -bottom-16 w-48 h-48 bg-secondary/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex items-center justify-between pb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">verified_user</span>
+<span class="font-label-caps text-label-caps uppercase text-primary tracking-widest font-semibold">Active Session Core</span>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-lowest px-space-sm py-0.5 rounded-full">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary animate-ping"></div>
+<span class="font-mono-fret text-label-caps text-secondary uppercase font-semibold">Anti-Cheat Active</span>
+</div>
+</div>
+<!-- Big Timer Readout & Wave Indicator -->
+<div class="py-space-md flex flex-col sm:flex-row items-baseline sm:items-center justify-between gap-space-md">
+<div>
+<div class="font-label-caps text-label-caps uppercase text-on-surface-variant mb-space-xs">Elapsed Focus Time</div>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-mono-metric text-display-lg text-primary tracking-tighter drop-shadow-[0_0_24px_rgba(245,158,11,0.25)]" id="session-stopwatch">04:35</span>
+<span class="font-mono-fret text-body-md text-on-surface-variant/80">.42s</span>
+</div>
+</div>
+<div class="flex flex-col items-start sm:items-end">
+<div class="font-label-caps text-label-caps uppercase text-on-surface-variant mb-space-xs">Cadence Velocity</div>
+<div class="flex items-center gap-1.5">
+<span class="inline-block w-1.5 h-6 bg-primary rounded-full animate-pulse"></span>
+<span class="inline-block w-1.5 h-8 bg-primary rounded-full"></span>
+<span class="inline-block w-1.5 h-10 bg-primary rounded-full animate-pulse"></span>
+<span class="inline-block w-1.5 h-5 bg-surface-container-highest rounded-full"></span>
+<span class="inline-block w-1.5 h-7 bg-primary rounded-full"></span>
+<span class="font-mono-fret text-headline-sm text-on-surface ml-space-xs">124 <span class="text-body-sm text-on-surface-variant">switches/hr</span></span>
+</div>
+</div>
+</div>
+<!-- Session Progress Target Track -->
+<div class="pt-space-md bg-surface-container-lowest/50 -mx-space-lg -mb-space-lg px-space-lg py-space-md rounded-b-xl flex flex-col gap-space-xs">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">flag</span> Target: 10:00 min
+            </span>
+<span class="font-mono-fret text-primary font-semibold">45.8% Complete</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-highest overflow-hidden relative">
+<div class="h-full bg-primary rounded-full shadow-[0_0_12px_rgba(245,158,11,0.5)] transition-all duration-300" style="width: 45.8%;"></div>
+<!-- Minimum anti-cheat 2:00 threshold mark -->
+<div class="absolute top-0 bottom-0 left-[20%] w-0.5 bg-secondary-fixed shadow-[0_0_6px_#4ae176]" title="XP Unlock Threshold (02:00)"></div>
+</div>
+<div class="flex items-center justify-between text-label-caps font-label-caps text-on-surface-variant/70 pt-1">
+<span>START</span>
+<span class="text-secondary flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">lock_open</span> Minimum Verified Threshold: 02:00 min (Met)
+            </span>
+<span>GOAL 10:00</span>
+</div>
+</div>
+</div>
+<!-- Verified Practice Completion & Guard Panel (5 Cols) -->
+<div class="lg:col-span-5 bg-surface-container rounded-xl p-space-lg shadow-xl flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">XP Attestation Guard</span>
+<span class="px-space-xs py-0.5 rounded text-label-caps font-mono-fret bg-secondary/10 text-secondary">READY TO SUBMIT</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Continuous Audio Pitch Verified</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-space-md">
+            The local DSP loop logged 48,200 samples of active acoustic string vibrations without interruption. Zero synthetic play detected.
+          </p>
+<div class="grid grid-cols-2 gap-space-sm mb-space-md">
+<div class="p-space-sm bg-surface-container-lowest rounded-lg">
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">XP Reward</div>
+<div class="font-mono-metric text-headline-sm text-primary font-bold">+25 XP</div>
+</div>
+<div class="p-space-sm bg-surface-container-lowest rounded-lg">
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase">Streak Multiplier</div>
+<div class="font-mono-metric text-headline-sm text-secondary font-bold">1.5x Multi</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<button class="w-full min-h-[44px] flex items-center justify-center gap-space-sm px-space-md py-space-sm bg-primary text-on-primary font-semibold rounded-lg shadow-md hover:opacity-95 active:scale-[0.99] transition-all" id="complete-session-btn" onclick="triggerSessionReward()">
+<span class="material-symbols-outlined text-[20px]">military_tech</span>
+<span class="font-body-md text-body-md font-bold">Complete Practice Session</span>
+</button>
+<div class="flex items-center justify-center gap-space-xs text-center">
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">shield</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant/70 uppercase">Server-authoritative verification • Anti-bot compliant</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Middle Row: Target Chord Transition Flow Deck -->
+<div class="bg-surface-container-low rounded-xl p-space-lg shadow-lg">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+<div>
+<div class="font-label-caps text-label-caps uppercase text-primary tracking-widest font-semibold mb-0.5">Cadence Exercise</div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Dynamic Chord Transition Engine</h2>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-space-sm py-1 bg-surface-container-high rounded text-label-caps font-mono-fret text-on-surface">3-Finger Pivot Grip</span>
+<span class="px-space-sm py-1 bg-surface-container-high rounded text-label-caps font-mono-fret text-on-surface">Progression I - V</span>
+</div>
+</div>
+<!-- Dual Chord Cards with Animated Transition Bridge -->
+<div class="grid grid-cols-1 md:grid-cols-11 gap-space-md items-center">
+<!-- Active Current Chord (5 cols) -->
+<div class="md:col-span-5 bg-surface-container rounded-xl p-space-md shadow-lg relative overflow-hidden">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-caps text-label-caps uppercase text-primary font-semibold tracking-wider">Current Chord</span>
+</div>
+<span class="font-mono-fret text-body-sm text-secondary flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[16px]">check_circle</span> In-Tune & Locked
+            </span>
+</div>
+<div class="flex flex-col sm:flex-row items-center gap-space-lg">
+<!-- Chord Diagram (SVG tactile fret wire + markers) -->
+<div class="relative bg-surface-container-lowest p-space-sm rounded-lg shadow-inner flex flex-col items-center">
+<div class="font-mono-fret text-label-caps text-on-surface-variant mb-1 tracking-widest">X 3 2 0 1 0</div>
+<svg aria-label="C Major Chord Diagram" class="overflow-visible" height="150" viewbox="0 0 150 150" width="150">
+<!-- Nut (Top thick bar) -->
+<rect fill="#a08e7a" height="4" rx="1" width="100" x="25" y="18"></rect>
+<!-- 5 Frets Horizontal Lines -->
+<line stroke="#32353b" stroke-width="1.5" x1="25" x2="125" y1="45" y2="45"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="25" x2="125" y1="72" y2="72"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="25" x2="125" y1="99" y2="99"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="25" x2="125" y1="126" y2="126"></line>
+<!-- 6 Strings Vertical Lines (Thick to thin) -->
+<line stroke="#534434" stroke-width="2.5" x1="25" x2="25" y1="18" y2="135"></line>
+<line stroke="#534434" stroke-width="2" x1="45" x2="45" y1="18" y2="135"></line>
+<line stroke="#534434" stroke-width="1.8" x1="65" x2="65" y1="18" y2="135"></line>
+<line stroke="#534434" stroke-width="1.4" x1="85" x2="85" y1="18" y2="135"></line>
+<line stroke="#534434" stroke-width="1.2" x1="105" x2="105" y1="18" y2="135"></line>
+<line stroke="#534434" stroke-width="1" x1="125" x2="125" y1="18" y2="135"></line>
+<!-- String 6 Muted indicator (X) -->
+<text fill="#ffb4ab" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle" x="25" y="12">×</text>
+<!-- Open indicators (O) -->
+<circle cx="85" cy="10" fill="none" r="3" stroke="#4ae176" stroke-width="1.5"></circle>
+<circle cx="125" cy="10" fill="none" r="3" stroke="#4ae176" stroke-width="1.5"></circle>
+<!-- Finger Dot 1: Index (B String, Fret 1) -->
+<circle cx="105" cy="31.5" fill="#f59e0b" filter="drop-shadow(0 0 6px rgba(245,158,11,0.6))" r="9"></circle>
+<text fill="#472a00" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle" x="105" y="35">1</text>
+<!-- Finger Dot 2: Middle (D String, Fret 2) -->
+<circle cx="65" cy="58.5" fill="#f59e0b" filter="drop-shadow(0 0 6px rgba(245,158,11,0.6))" r="9"></circle>
+<text fill="#472a00" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle" x="65" y="62">2</text>
+<!-- Finger Dot 3: Ring (A String, Fret 3) -->
+<circle cx="45" cy="85.5" fill="#f59e0b" filter="drop-shadow(0 0 6px rgba(245,158,11,0.6))" r="9"></circle>
+<text fill="#472a00" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle" x="45" y="89">3</text>
+</svg>
+</div>
+<!-- Chord Metadata Details -->
+<div class="flex-1 flex flex-col justify-center">
+<div class="font-headline-xl text-headline-xl text-primary font-bold">C Major</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">Open 3-Finger Standard Voice</div>
+<div class="space-y-1.5 text-body-sm font-mono-fret text-on-surface-variant">
+<div class="flex items-center justify-between bg-surface-container-lowest px-space-sm py-1 rounded">
+<span class="text-on-surface-variant/70">Root Note</span>
+<span class="text-on-surface font-semibold">C3 (130.8 Hz)</span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-lowest px-space-sm py-1 rounded">
+<span class="text-on-surface-variant/70">Formula</span>
+<span class="text-on-surface font-semibold">1 - 3 - 5 (C-E-G)</span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-lowest px-space-sm py-1 rounded">
+<span class="text-on-surface-variant/70">Anchor Finger</span>
+<span class="text-primary font-semibold">Finger 1 (1st Fret B)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Animated Cadence Transition Bridge (1 col) -->
+<div class="md:col-span-1 flex flex-col items-center justify-center py-space-sm">
+<div class="relative w-16 h-16 flex items-center justify-center">
+<!-- Progress Arc SVG -->
+<svg class="w-16 h-16 transform -rotate-90" viewbox="0 0 48 48">
+<circle cx="24" cy="24" fill="none" r="20" stroke="#272a30" stroke-width="4"></circle>
+<circle cx="24" cy="24" fill="none" id="transition-circle" r="20" stroke="#f59e0b" stroke-dasharray="125.6" stroke-dashoffset="31.4" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-mono-metric text-body-lg text-primary font-bold" id="transition-timer-num">04s</span>
+</div>
+</div>
+<div class="flex items-center text-primary mt-1 animate-pulse">
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase text-center mt-0.5">Switch</span>
+</div>
+<!-- Next Chord Preview (5 cols) -->
+<div class="md:col-span-5 bg-surface-container rounded-xl p-space-md shadow-lg opacity-90 hover:opacity-100 transition-opacity">
+<div class="flex items-center justify-between pb-space-sm mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="w-2.5 h-2.5 rounded-full bg-on-surface-variant"></span>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant font-semibold tracking-wider">Next Target Chord</span>
+</div>
+<span class="font-mono-fret text-label-caps text-on-surface-variant px-space-xs py-0.5 bg-surface-container-highest rounded">QUEUE: +1</span>
+</div>
+<div class="flex flex-col sm:flex-row items-center gap-space-lg">
+<!-- G Major Chord Diagram -->
+<div class="relative bg-surface-container-lowest p-space-sm rounded-lg shadow-inner flex flex-col items-center">
+<div class="font-mono-fret text-label-caps text-on-surface-variant mb-1 tracking-widest">3 2 0 0 0 3</div>
+<svg aria-label="G Major Chord Diagram" class="overflow-visible" height="150" viewbox="0 0 150 150" width="150">
+<rect fill="#a08e7a" height="4" rx="1" width="100" x="25" y="18"></rect>
+<line stroke="#32353b" stroke-width="1.5" x1="25" x2="125" y1="45" y2="45"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="25" x2="125" y1="72" y2="72"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="25" x2="125" y1="99" y2="99"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="25" x2="125" y1="126" y2="126"></line>
+<line stroke="#534434" stroke-width="2.5" x1="25" x2="25" y1="18" y2="135"></line>
+<line stroke="#534434" stroke-width="2" x1="45" x2="45" y1="18" y2="135"></line>
+<line stroke="#534434" stroke-width="1.8" x1="65" x2="65" y1="18" y2="135"></line>
+<line stroke="#534434" stroke-width="1.4" x1="85" x2="85" y1="18" y2="135"></line>
+<line stroke="#534434" stroke-width="1.2" x1="105" x2="105" y1="18" y2="135"></line>
+<line stroke="#534434" stroke-width="1" x1="125" x2="125" y1="18" y2="135"></line>
+<!-- Open markers (D, G, B strings) -->
+<circle cx="65" cy="10" fill="none" r="3" stroke="#a08e7a" stroke-width="1.5"></circle>
+<circle cx="85" cy="10" fill="none" r="3" stroke="#a08e7a" stroke-width="1.5"></circle>
+<circle cx="105" cy="10" fill="none" r="3" stroke="#a08e7a" stroke-width="1.5"></circle>
+<!-- Finger Dot 2: Middle (Low E String, Fret 3) -->
+<circle cx="25" cy="85.5" fill="#272a30" r="9" stroke="#a08e7a" stroke-width="1.5"></circle>
+<text fill="#e1e2eb" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle" x="25" y="89">2</text>
+<!-- Finger Dot 1: Index (A String, Fret 2) -->
+<circle cx="45" cy="58.5" fill="#272a30" r="9" stroke="#a08e7a" stroke-width="1.5"></circle>
+<text fill="#e1e2eb" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle" x="45" y="62">1</text>
+<!-- Finger Dot 3: Ring (High E String, Fret 3) -->
+<circle cx="125" cy="85.5" fill="#272a30" r="9" stroke="#a08e7a" stroke-width="1.5"></circle>
+<text fill="#e1e2eb" font-family="JetBrains Mono" font-size="10" font-weight="bold" text-anchor="middle" x="125" y="89">3</text>
+</svg>
+</div>
+<!-- Next Chord Metadata Details -->
+<div class="flex-1 flex flex-col justify-center">
+<div class="font-headline-xl text-headline-xl text-on-surface font-bold">G Major</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">Full 6-String Acoustic Voice</div>
+<div class="space-y-1.5 text-body-sm font-mono-fret text-on-surface-variant">
+<div class="flex items-center justify-between bg-surface-container-lowest px-space-sm py-1 rounded">
+<span class="text-on-surface-variant/70">Root Note</span>
+<span class="text-on-surface font-semibold">G2 (98.0 Hz)</span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-lowest px-space-sm py-1 rounded">
+<span class="text-on-surface-variant/70">Movement Tip</span>
+<span class="text-secondary font-semibold">Slide 3rd finger guide</span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-lowest px-space-sm py-1 rounded">
+<span class="text-on-surface-variant/70">Cadence Weight</span>
+<span class="text-on-surface font-semibold">Dominant V Chord</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Row: Tactile Metronome DSP Engine Component -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-xl">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md mb-space-lg pb-space-md border-b-0">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">speed</span>
+<span class="font-label-caps text-label-caps uppercase text-primary tracking-widest font-semibold">Cadence Generator</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Tactile Metronome Module</h2>
+</div>
+<!-- 4/4 Beat Cadence LED Cluster -->
+<div class="flex items-center gap-space-sm bg-surface-container-lowest px-space-md py-space-sm rounded-xl">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase mr-1">Time: 4/4</span>
+<!-- LED Beat 1 (Active Amber) -->
+<div class="w-5 h-5 rounded-full bg-primary shadow-[0_0_14px_#f59e0b] flex items-center justify-center text-on-primary font-mono-fret text-[10px] font-bold" id="beat-led-1">1</div>
+<!-- LED Beat 2 -->
+<div class="w-5 h-5 rounded-full bg-surface-container-highest text-on-surface-variant/70 flex items-center justify-center font-mono-fret text-[10px]" id="beat-led-2">2</div>
+<!-- LED Beat 3 -->
+<div class="w-5 h-5 rounded-full bg-surface-container-highest text-on-surface-variant/70 flex items-center justify-center font-mono-fret text-[10px]" id="beat-led-3">3</div>
+<!-- LED Beat 4 -->
+<div class="w-5 h-5 rounded-full bg-surface-container-highest text-on-surface-variant/70 flex items-center justify-center font-mono-fret text-[10px]" id="beat-led-4">4</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-center">
+<!-- Tempo Readout & Increment Controls (6 cols) -->
+<div class="lg:col-span-6 flex flex-col gap-space-md">
+<div class="flex items-baseline justify-between">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-mono-metric text-display-lg text-on-surface font-bold tracking-tight" id="bpm-display">80</span>
+<span class="font-mono-fret text-headline-sm text-primary font-semibold">BPM</span>
+</div>
+<div class="text-right">
+<span class="font-body-md text-body-md text-primary font-semibold" id="tempo-descriptor">Andante</span>
+<span class="block font-label-caps text-label-caps text-on-surface-variant uppercase">Walking Tempo (76-108)</span>
+</div>
+</div>
+<!-- Fine Adjusters: [-5], [-1], Slider, [+1], [+5] -->
+<div class="flex items-center gap-space-xs">
+<button class="min-h-[44px] px-space-sm py-space-xs bg-surface-container-lowest hover:bg-surface-container-highest text-on-surface rounded font-mono-fret text-body-sm font-semibold active:scale-95 transition-all" onclick="adjustBpm(-5)">-5</button>
+<button class="min-h-[44px] px-space-sm py-space-xs bg-surface-container-lowest hover:bg-surface-container-highest text-on-surface rounded font-mono-fret text-body-sm font-semibold active:scale-95 transition-all" onclick="adjustBpm(-1)">-1</button>
+<div class="flex-1 px-space-sm">
+<input class="w-full accent-primary h-2 bg-surface-container-lowest rounded-lg cursor-pointer" id="bpm-slider" max="220" min="40" oninput="setBpmValue(this.value)" type="range" value="80"/>
+</div>
+<button class="min-h-[44px] px-space-sm py-space-xs bg-surface-container-lowest hover:bg-surface-container-highest text-on-surface rounded font-mono-fret text-body-sm font-semibold active:scale-95 transition-all" onclick="adjustBpm(1)">+1</button>
+<button class="min-h-[44px] px-space-sm py-space-xs bg-surface-container-lowest hover:bg-surface-container-highest text-on-surface rounded font-mono-fret text-body-sm font-semibold active:scale-95 transition-all" onclick="adjustBpm(5)">+5</button>
+</div>
+</div>
+<!-- Tap Tempo & Play Controls (6 cols) -->
+<div class="lg:col-span-6 flex flex-wrap items-center justify-start lg:justify-end gap-space-md">
+<!-- Tactile Tap Tempo Pad -->
+<button class="min-h-[44px] px-space-lg py-space-sm bg-surface-container-lowest hover:bg-surface-container-highest text-primary rounded-xl flex flex-col items-center justify-center active:scale-95 transition-all shadow-inner" id="tap-tempo-btn" onclick="handleTapTempo()">
+<span class="material-symbols-outlined text-[20px]">touch_app</span>
+<span class="font-label-caps text-label-caps uppercase font-bold tracking-wider">Tap Tempo</span>
+</button>
+<!-- Audio Engine Selector (Woodblock vs Digital) -->
+<div class="flex flex-col gap-1 bg-surface-container-lowest p-space-xs rounded-xl">
+<span class="font-label-caps text-label-caps text-on-surface-variant/80 uppercase px-space-xs">Engine Tone</span>
+<div class="flex items-center gap-1">
+<button class="px-space-sm py-1 rounded bg-surface-container-high text-primary font-mono-fret text-body-sm font-semibold" id="tone-woodblock" onclick="setMetronomeTone('woodblock')">Woodblock</button>
+<button class="px-space-sm py-1 rounded text-on-surface-variant font-mono-fret text-body-sm hover:text-on-surface" id="tone-digital" onclick="setMetronomeTone('digital')">Digital 808</button>
+</div>
+</div>
+<!-- Master Start / Stop Toggle -->
+<button class="min-h-[48px] px-space-xl py-space-sm bg-primary-container text-on-primary font-bold rounded-xl flex items-center gap-space-sm shadow-md hover:opacity-90 active:scale-95 transition-all" id="metronome-power-btn" onclick="toggleMetronome()">
+<span class="material-symbols-outlined text-[24px]" id="metro-play-icon">play_arrow</span>
+<span class="font-headline-sm text-headline-sm" id="metro-play-text">Start Click</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- ========================================================================= -->
+<!-- TAB 2: AUTOCORRELATION GUITAR TUNER VIEWPORT                               -->
+<!-- ========================================================================= -->
+<div class="hidden flex-col gap-space-lg" id="tab-content-tuner">
+<!-- Top Tuner Header Bar: Mode & Engine Settings -->
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-space-md p-space-md bg-surface-container rounded-xl shadow-lg">
+<div class="flex items-center gap-space-sm">
+<div class="w-3 h-3 rounded-full bg-secondary animate-ping"></div>
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">YIN Autocorrelation DSP</span>
+<span class="font-mono-fret text-label-caps px-space-xs py-0.5 rounded bg-surface-container-highest text-secondary font-bold">LOCKED</span>
+</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Sample Buffer: 2048 • Window: Hann • Peak Interpolated</div>
+</div>
+</div>
+<!-- Segmented Input Mode Switcher -->
+<div class="flex items-center bg-surface-container-lowest p-space-xs rounded-xl shadow-inner">
+<button class="flex items-center gap-space-xs px-space-md py-1.5 rounded-lg bg-surface-container-high text-primary font-semibold text-body-sm shadow-sm" id="mode-mic-btn" onclick="setTunerInputMode('mic')">
+<span class="material-symbols-outlined text-[18px]">mic</span>
+<span>Microphone DSP</span>
+</button>
+<button class="flex items-center gap-space-xs px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface font-semibold text-body-sm" id="mode-ear-btn" onclick="setTunerInputMode('ear')">
+<span class="material-symbols-outlined text-[18px]">volume_up</span>
+<span>By Ear (Pluck Synthesizer)</span>
+</button>
+</div>
+</div>
+<!-- Main Dual Deck: Left Strobe & Cent Gauge | Right Headstock Visualizer -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Central Needle Meter & Strobe Cent Arc Gauge (7 Cols) -->
+<div class="lg:col-span-7 bg-surface-container rounded-xl p-space-lg shadow-xl flex flex-col justify-between items-center text-center relative overflow-hidden">
+<div class="w-full flex items-center justify-between pb-space-sm">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Strobe Needle Telemetry</span>
+<span class="font-mono-fret text-body-sm text-secondary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">sensors</span> Real-time Audio Stream
+          </span>
+</div>
+<!-- Big Detected Note Character Display -->
+<div class="py-space-sm flex flex-col items-center">
+<div class="relative">
+<span class="font-display-lg text-[72px] sm:text-[96px] text-on-surface font-black tracking-tight drop-shadow-[0_0_24px_rgba(245,158,11,0.2)]" id="detected-note">E2</span>
+<span class="absolute -top-2 -right-6 px-space-xs py-0.5 bg-primary text-on-primary font-mono-fret text-label-caps font-bold rounded" id="detected-octave-badge">STR 6</span>
+</div>
+<div class="flex items-center gap-space-md mt-space-xs">
+<span class="font-mono-fret text-headline-sm text-primary font-semibold" id="detected-hz">82.4 Hz</span>
+<span class="text-on-surface-variant/50">•</span>
+<span class="font-mono-fret text-body-md text-on-surface-variant">Target: 82.41 Hz</span>
+<span class="text-on-surface-variant/50">•</span>
+<span class="font-mono-fret text-headline-sm text-secondary font-bold" id="detected-cents">+1.2 ct</span>
+</div>
+</div>
+<!-- High-Precision Arched Cent Strobe Visualizer (SVG) -->
+<div class="w-full max-w-md my-space-md relative">
+<svg aria-label="Cent Meter Visualizer" class="w-full h-auto overflow-visible" viewbox="0 0 300 150">
+<!-- Background Arc Gauge -->
+<path d="M 30 140 A 120 120 0 0 1 270 140" fill="none" stroke="#272a30" stroke-linecap="round" stroke-width="12"></path>
+<!-- In-Tune Target Emerald Sweet Spot Arc -->
+<path d="M 138 21.5 A 120 120 0 0 1 162 21.5" fill="none" filter="drop-shadow(0 0 8px #22c55e)" stroke="#22c55e" stroke-linecap="round" stroke-width="16"></path>
+<!-- Major Scale Ticks -->
+<!-- -50 cents -->
+<line stroke="#a08e7a" stroke-width="2" x1="30" x2="45" y1="140" y2="135"></line>
+<!-- -25 cents -->
+<line stroke="#a08e7a" stroke-width="2" x1="75" x2="88" y1="65" y2="72"></line>
+<!-- 0 cents Center Mark -->
+<line stroke="#22c55e" stroke-width="3" x1="150" x2="150" y1="20" y2="38"></line>
+<!-- +25 cents -->
+<line stroke="#a08e7a" stroke-width="2" x1="225" x2="212" y1="65" y2="72"></line>
+<!-- +50 cents -->
+<line stroke="#a08e7a" stroke-width="2" x1="270" x2="255" y1="140" y2="135"></line>
+<!-- Meter Needle (Responsive pivot) -->
+<g class="transition-transform duration-100 ease-out" id="tuner-needle" transform="rotate(2.4, 150, 140)">
+<line filter="drop-shadow(0 0 6px #f59e0b)" stroke="#f59e0b" stroke-linecap="round" stroke-width="3.5" x1="150" x2="150" y1="140" y2="24"></line>
+<circle cx="150" cy="140" fill="#f59e0b" r="8"></circle>
+<circle cx="150" cy="140" fill="#101319" r="3"></circle>
+</g>
+</svg>
+<!-- Cent Indicator Text Readouts -->
+<div class="flex justify-between font-mono-fret text-label-caps text-on-surface-variant px-space-md -mt-2">
+<span>-50ct (FLAT)</span>
+<span class="text-secondary font-bold">0.0 (IN TUNE)</span>
+<span>+50ct (SHARP)</span>
+</div>
+</div>
+<!-- Lock Status Badge -->
+<div class="w-full pt-space-md border-t-0 flex items-center justify-center">
+<div class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-full bg-secondary/15 text-secondary shadow-[0_0_16px_rgba(74,225,118,0.2)]">
+<span class="material-symbols-outlined text-[18px]">task_alt</span>
+<span class="font-label-caps text-label-caps uppercase font-bold tracking-wider">Perfect Pitch Lock Achieved</span>
+</div>
+</div>
+</div>
+<!-- Interactive Guitar Headstock & Machine Peg Guide (5 Cols) -->
+<div class="lg:col-span-5 bg-surface-container rounded-xl p-space-lg shadow-xl flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Physical Peg Direction</span>
+<span class="font-mono-fret text-label-caps text-primary uppercase">3+3 Acoustic Headstock</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">Machine Head Adjuster</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-space-md">
+            Interactive guide shows the mechanical turn direction to eliminate gear lash on standard acoustic tuning posts.
+          </p>
+<!-- SVG Headstock Illustration -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md flex flex-col items-center justify-center relative mb-space-md">
+<svg aria-label="Acoustic Guitar Headstock" class="overflow-visible" height="240" viewbox="0 0 220 240" width="220">
+<!-- Headstock Wooden Silhouette Outline -->
+<path d="M 50 230 L 50 80 C 50 30, 90 20, 110 32 C 130 20, 170 30, 170 80 L 170 230 Z" fill="#1d2026" stroke="#32353b" stroke-width="2"></path>
+<!-- Nut at Base -->
+<rect fill="#a08e7a" height="8" rx="1" width="124" x="48" y="222"></rect>
+<!-- Left Side Tuning Posts (Strings 6, 5, 4) -->
+<!-- Peg 6 (Low E - ACTIVE FOCUS) -->
+<circle cx="35" cy="80" fill="#f59e0b" filter="drop-shadow(0 0 8px rgba(245,158,11,0.8))" r="10"></circle>
+<text fill="#472a00" font-family="JetBrains Mono" font-size="9" font-weight="bold" text-anchor="middle" x="35" y="83.5">E2</text>
+<line stroke="#ffc174" stroke-width="2.5" x1="35" x2="65" y1="80" y2="80"></line>
+<!-- Peg 5 (A2) -->
+<circle cx="35" cy="130" fill="#272a30" r="9" stroke="#534434" stroke-width="1.5"></circle>
+<text fill="#d8c3ad" font-family="JetBrains Mono" font-size="9" text-anchor="middle" x="35" y="133.5">A2</text>
+<line stroke="#32353b" stroke-width="2" x1="35" x2="72" y1="130" y2="130"></line>
+<!-- Peg 4 (D3) -->
+<circle cx="35" cy="180" fill="#272a30" r="9" stroke="#534434" stroke-width="1.5"></circle>
+<text fill="#d8c3ad" font-family="JetBrains Mono" font-size="9" text-anchor="middle" x="35" y="183.5">D3</text>
+<line stroke="#32353b" stroke-width="1.8" x1="35" x2="80" y1="180" y2="180"></line>
+<!-- Right Side Tuning Posts (Strings 3, 2, 1) -->
+<!-- Peg 3 (G3) -->
+<circle cx="185" cy="180" fill="#272a30" r="9" stroke="#534434" stroke-width="1.5"></circle>
+<text fill="#d8c3ad" font-family="JetBrains Mono" font-size="9" text-anchor="middle" x="185" y="183.5">G3</text>
+<line stroke="#32353b" stroke-width="1.5" x1="185" x2="140" y1="180" y2="180"></line>
+<!-- Peg 2 (B3) -->
+<circle cx="185" cy="130" fill="#272a30" r="9" stroke="#534434" stroke-width="1.5"></circle>
+<text fill="#d8c3ad" font-family="JetBrains Mono" font-size="9" text-anchor="middle" x="185" y="133.5">B3</text>
+<line stroke="#32353b" stroke-width="1.2" x1="185" x2="148" y1="130" y2="130"></line>
+<!-- Peg 1 (E4 High) -->
+<circle cx="185" cy="80" fill="#272a30" r="9" stroke="#534434" stroke-width="1.5"></circle>
+<text fill="#d8c3ad" font-family="JetBrains Mono" font-size="9" text-anchor="middle" x="185" y="83.5">e4</text>
+<line stroke="#32353b" stroke-width="1" x1="185" x2="155" y1="80" y2="80"></line>
+<!-- Strings traveling to Nut -->
+<line stroke="#f59e0b" stroke-width="2.5" x1="65" x2="65" y1="80" y2="222"></line>
+<line stroke="#32353b" stroke-width="2" x1="72" x2="80" y1="130" y2="222"></line>
+<line stroke="#32353b" stroke-width="1.8" x1="80" x2="95" y1="180" y2="222"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="140" x2="125" y1="180" y2="222"></line>
+<line stroke="#32353b" stroke-width="1.2" x1="148" x2="140" y1="130" y2="222"></line>
+<line stroke="#32353b" stroke-width="1" x1="155" x2="155" y1="80" y2="222"></line>
+</svg>
+<!-- Directional Peg Turn Hint Overlaid -->
+<div class="w-full flex items-center justify-between mt-space-xs px-space-sm bg-surface-container-high py-space-xs rounded-lg">
+<span class="flex items-center gap-1 font-mono-fret text-body-sm text-primary font-bold">
+<span class="material-symbols-outlined text-[18px]">rotate_right</span> TIGHTEN CLOCKWISE
+              </span>
+<span class="font-label-caps text-label-caps text-secondary font-semibold">TUNE UP TO PITCH</span>
+</div>
+</div>
+</div>
+<div class="p-space-sm bg-surface-container-lowest rounded-xl">
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px] mt-0.5">tips_and_updates</span>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps uppercase text-on-surface font-semibold">Anti-Backlash Tension Tip</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Always tune upwards into the pitch. If sharp, detune below target first, then tighten to tension.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Row: 6-String Selector & Pluck Synthesizer Palette -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-xl">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+<div>
+<div class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Standard Guitar Tuning (E A D G B E)</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">String Isolation & Reference Tones</h3>
+</div>
+<span class="font-mono-fret text-label-caps text-secondary">A440 Standard Calibration</span>
+</div>
+<!-- 6 Interactive String Cards with Pluck Button -->
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-space-sm">
+<!-- String 6 (E2) - ACTIVE -->
+<div class="p-space-sm bg-surface-container-high rounded-xl cursor-pointer shadow-md transition-all flex flex-col justify-between" onclick="selectTuningString(6, 'E2', '82.4 Hz', 82.41)">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-mono-fret text-label-caps text-primary font-bold">STRING 6</span>
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+</div>
+<div class="my-space-xs text-center">
+<div class="font-headline-xl text-headline-xl text-primary font-bold">E2</div>
+<div class="font-mono-fret text-body-sm text-on-surface-variant">82.4 Hz</div>
+</div>
+<button class="w-full mt-space-xs py-1 rounded bg-primary text-on-primary font-label-caps text-label-caps uppercase font-bold flex items-center justify-center gap-1 shadow">
+<span class="material-symbols-outlined text-[14px]">volume_up</span> Pluck
+          </button>
+</div>
+<!-- String 5 (A2) -->
+<div class="p-space-sm bg-surface-container-lowest hover:bg-surface-container-high rounded-xl cursor-pointer shadow transition-all flex flex-col justify-between" onclick="selectTuningString(5, 'A2', '110.0 Hz', 110.00)">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-mono-fret text-label-caps text-on-surface-variant">STRING 5</span>
+</div>
+<div class="my-space-xs text-center">
+<div class="font-headline-xl text-headline-xl text-on-surface font-bold">A2</div>
+<div class="font-mono-fret text-body-sm text-on-surface-variant">110.0 Hz</div>
+</div>
+<button class="w-full mt-space-xs py-1 rounded bg-surface-container-highest text-on-surface font-label-caps text-label-caps uppercase flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">volume_up</span> Pluck
+          </button>
+</div>
+<!-- String 4 (D3) -->
+<div class="p-space-sm bg-surface-container-lowest hover:bg-surface-container-high rounded-xl cursor-pointer shadow transition-all flex flex-col justify-between" onclick="selectTuningString(4, 'D3', '146.8 Hz', 146.83)">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-mono-fret text-label-caps text-on-surface-variant">STRING 4</span>
+</div>
+<div class="my-space-xs text-center">
+<div class="font-headline-xl text-headline-xl text-on-surface font-bold">D3</div>
+<div class="font-mono-fret text-body-sm text-on-surface-variant">146.8 Hz</div>
+</div>
+<button class="w-full mt-space-xs py-1 rounded bg-surface-container-highest text-on-surface font-label-caps text-label-caps uppercase flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">volume_up</span> Pluck
+          </button>
+</div>
+<!-- String 3 (G3) -->
+<div class="p-space-sm bg-surface-container-lowest hover:bg-surface-container-high rounded-xl cursor-pointer shadow transition-all flex flex-col justify-between" onclick="selectTuningString(3, 'G3', '196.0 Hz', 196.00)">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-mono-fret text-label-caps text-on-surface-variant">STRING 3</span>
+</div>
+<div class="my-space-xs text-center">
+<div class="font-headline-xl text-headline-xl text-on-surface font-bold">G3</div>
+<div class="font-mono-fret text-body-sm text-on-surface-variant">196.0 Hz</div>
+</div>
+<button class="w-full mt-space-xs py-1 rounded bg-surface-container-highest text-on-surface font-label-caps text-label-caps uppercase flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">volume_up</span> Pluck
+          </button>
+</div>
+<!-- String 2 (B3) -->
+<div class="p-space-sm bg-surface-container-lowest hover:bg-surface-container-high rounded-xl cursor-pointer shadow transition-all flex flex-col justify-between" onclick="selectTuningString(2, 'B3', '246.9 Hz', 246.94)">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-mono-fret text-label-caps text-on-surface-variant">STRING 2</span>
+</div>
+<div class="my-space-xs text-center">
+<div class="font-headline-xl text-headline-xl text-on-surface font-bold">B3</div>
+<div class="font-mono-fret text-body-sm text-on-surface-variant">246.9 Hz</div>
+</div>
+<button class="w-full mt-space-xs py-1 rounded bg-surface-container-highest text-on-surface font-label-caps text-label-caps uppercase flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">volume_up</span> Pluck
+          </button>
+</div>
+<!-- String 1 (e4 High) -->
+<div class="p-space-sm bg-surface-container-lowest hover:bg-surface-container-high rounded-xl cursor-pointer shadow transition-all flex flex-col justify-between" onclick="selectTuningString(1, 'e4', '329.6 Hz', 329.63)">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="font-mono-fret text-label-caps text-on-surface-variant">STRING 1</span>
+</div>
+<div class="my-space-xs text-center">
+<div class="font-headline-xl text-headline-xl text-on-surface font-bold">e4</div>
+<div class="font-mono-fret text-body-sm text-on-surface-variant">329.6 Hz</div>
+</div>
+<button class="w-full mt-space-xs py-1 rounded bg-surface-container-highest text-on-surface font-label-caps text-label-caps uppercase flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[14px]">volume_up</span> Pluck
+          </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Client-side Interactive Logic for Practice Deck & Precision Tuner -->
+<script>
+  let currentBpm = 80;
+  let isMetronomeRunning = false;
+  let metronomeTimer = null;
+  let currentBeat = 0;
+  let tapTimestamps = [];
+  let chordCountdown = 8;
+  let chordInterval = null;
+
+  // Tab Switcher logic with hotkey support
+  function switchUtilityTab(tab) {
+    const practiceContent = document.getElementById('tab-content-practice');
+    const tunerContent = document.getElementById('tab-content-tuner');
+    const btnPractice = document.getElementById('tab-btn-practice');
+    const btnTuner = document.getElementById('tab-btn-tuner');
+
+    if (tab === 'practice') {
+      practiceContent.classList.remove('hidden');
+      practiceContent.classList.add('flex');
+      tunerContent.classList.add('hidden');
+      tunerContent.classList.remove('flex');
+
+      btnPractice.classList.add('bg-surface-container-high', 'text-primary');
+      btnPractice.classList.remove('text-on-surface-variant');
+      btnTuner.classList.remove('bg-surface-container-high', 'text-primary');
+      btnTuner.classList.add('text-on-surface-variant');
+    } else {
+      practiceContent.classList.add('hidden');
+      practiceContent.classList.remove('flex');
+      tunerContent.classList.remove('hidden');
+      tunerContent.classList.add('flex');
+
+      btnTuner.classList.add('bg-surface-container-high', 'text-primary');
+      btnTuner.classList.remove('text-on-surface-variant');
+      btnPractice.classList.remove('bg-surface-container-high', 'text-primary');
+      btnPractice.classList.add('text-on-surface-variant');
+    }
+  }
+
+  // Keyboard shortcut listener for quick-switch [1] and [2]
+  window.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === '1') switchUtilityTab('practice');
+    if (e.key === '2') switchUtilityTab('tuner');
+    if (e.key === ' ' && !document.getElementById('tab-content-practice').classList.contains('hidden')) {
+      e.preventDefault();
+      toggleMetronome();
+    }
+  });
+
+  // Metronome Adjusters
+  function adjustBpm(delta) {
+    setBpmValue(currentBpm + delta);
+  }
+
+  function setBpmValue(val) {
+    currentBpm = Math.min(240, Math.max(40, parseInt(val, 10)));
+    document.getElementById('bpm-display').innerText = currentBpm;
+    document.getElementById('bpm-slider').value = currentBpm;
+    
+    // Update tempo descriptor label
+    const desc = document.getElementById('tempo-descriptor');
+    if (currentBpm < 60) desc.innerText = 'Largo / Lento';
+    else if (currentBpm < 76) desc.innerText = 'Adagio';
+    else if (currentBpm < 108) desc.innerText = 'Andante';
+    else if (currentBpm < 120) desc.innerText = 'Moderato';
+    else if (currentBpm < 168) desc.innerText = 'Allegro';
+    else desc.innerText = 'Presto / Vivace';
+
+    if (isMetronomeRunning) {
+      restartMetronome();
+    }
+  }
+
+  function toggleMetronome() {
+    isMetronomeRunning = !isMetronomeRunning;
+    const playIcon = document.getElementById('metro-play-icon');
+    const playText = document.getElementById('metro-play-text');
+    const powerBtn = document.getElementById('metronome-power-btn');
+
+    if (isMetronomeRunning) {
+      playIcon.innerText = 'stop';
+      playText.innerText = 'Halt Click';
+      powerBtn.classList.replace('bg-primary-container', 'bg-error-container');
+      restartMetronome();
+    } else {
+      playIcon.innerText = 'play_arrow';
+      playText.innerText = 'Start Click';
+      powerBtn.classList.replace('bg-error-container', 'bg-primary-container');
+      clearInterval(metronomeTimer);
+      resetBeatLeds();
+    }
+  }
+
+  function restartMetronome() {
+    clearInterval(metronomeTimer);
+    const intervalMs = (60 / currentBpm) * 1000;
+    currentBeat = 0;
+    metronomeTimer = setInterval(stepBeat, intervalMs);
+  }
+
+  function stepBeat() {
+    currentBeat = (currentBeat % 4) + 1;
+    resetBeatLeds();
+
+    const targetLed = document.getElementById('beat-led-' + currentBeat);
+    if (targetLed) {
+      if (currentBeat === 1) {
+        targetLed.classList.remove('bg-surface-container-highest', 'text-on-surface-variant/70');
+        targetLed.classList.add('bg-primary', 'text-on-primary', 'shadow-[0_0_16px_#f59e0b]');
+      } else {
+        targetLed.classList.remove('bg-surface-container-highest', 'text-on-surface-variant/70');
+        targetLed.classList.add('bg-secondary', 'text-on-secondary', 'shadow-[0_0_12px_#4ae176]');
+      }
+    }
+  }
+
+  function resetBeatLeds() {
+    for (let i = 1; i <= 4; i++) {
+      const led = document.getElementById('beat-led-' + i);
+      if (led) {
+        led.className = 'w-5 h-5 rounded-full bg-surface-container-highest text-on-surface-variant/70 flex items-center justify-center font-mono-fret text-[10px]';
+      }
+    }
+  }
+
+  // Tap tempo handler
+  function handleTapTempo() {
+    const now = performance.now();
+    tapTimestamps.push(now);
+    if (tapTimestamps.length > 4) tapTimestamps.shift();
+
+    if (tapTimestamps.length >= 2) {
+      let intervals = [];
+      for (let i = 1; i < tapTimestamps.length; i++) {
+        intervals.push(tapTimestamps[i] - tapTimestamps[i - 1]);
+      }
+      const avgInterval = intervals.reduce((a, b) => a + b) / intervals.length;
+      const calculatedBpm = Math.round(60000 / avgInterval);
+      setBpmValue(calculatedBpm);
+    }
+  }
+
+  function setMetronomeTone(type) {
+    const wood = document.getElementById('tone-woodblock');
+    const digi = document.getElementById('tone-digital');
+    if (type === 'woodblock') {
+      wood.className = 'px-space-sm py-1 rounded bg-surface-container-high text-primary font-mono-fret text-body-sm font-semibold';
+      digi.className = 'px-space-sm py-1 rounded text-on-surface-variant font-mono-fret text-body-sm hover:text-on-surface';
+    } else {
+      digi.className = 'px-space-sm py-1 rounded bg-surface-container-high text-primary font-mono-fret text-body-sm font-semibold';
+      wood.className = 'px-space-sm py-1 rounded text-on-surface-variant font-mono-fret text-body-sm hover:text-on-surface';
+    }
+  }
+
+  // Dynamic Chord Cadence Countdown Loop
+  function startChordLoop() {
+    clearInterval(chordInterval);
+    chordCountdown = 8;
+    chordInterval = setInterval(() => {
+      chordCountdown--;
+      if (chordCountdown <= 0) chordCountdown = 8;
+
+      const numEl = document.getElementById('transition-timer-num');
+      const circleEl = document.getElementById('transition-circle');
+      if (numEl) numEl.innerText = '0' + chordCountdown + 's';
+      if (circleEl) {
+        // total perimeter = 2 * PI * 20 ~= 125.6
+        const offset = 125.6 * (1 - chordCountdown / 8);
+        circleEl.style.strokeDashoffset = offset;
+      }
+    }, 1000);
+  }
+  startChordLoop();
+
+  // Tuner String Selection & Interactive Needle wobble simulation
+  function selectTuningString(num, note, hzStr, targetHz) {
+    document.getElementById('detected-note').innerText = note;
+    document.getElementById('detected-octave-badge').innerText = 'STR ' + num;
+    document.getElementById('detected-hz').innerText = hzStr;
+
+    // Simulate micro-frequency deviation near target (+-1.5 cents)
+    const randomWobble = (Math.random() * 2 - 1).toFixed(1);
+    const needle = document.getElementById('tuner-needle');
+    const centText = document.getElementById('detected-cents');
+    
+    // Rotate 1 cent ~= 2 degrees around center pivot
+    const deg = (randomWobble * 2).toFixed(1);
+    if (needle) needle.setAttribute('transform', `rotate(${deg}, 150, 140)`);
+    if (centText) {
+      centText.innerText = (randomWobble > 0 ? '+' : '') + randomWobble + ' ct';
+      if (Math.abs(randomWobble) < 1.0) {
+        centText.className = 'font-mono-fret text-headline-sm text-secondary font-bold';
+      } else {
+        centText.className = 'font-mono-fret text-headline-sm text-primary font-bold';
+      }
+    }
+  }
+
+  function setTunerInputMode(mode) {
+    const micBtn = document.getElementById('mode-mic-btn');
+    const earBtn = document.getElementById('mode-ear-btn');
+    if (mode === 'mic') {
+      micBtn.className = 'flex items-center gap-space-xs px-space-md py-1.5 rounded-lg bg-surface-container-high text-primary font-semibold text-body-sm shadow-sm';
+      earBtn.className = 'flex items-center gap-space-xs px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface font-semibold text-body-sm';
+    } else {
+      earBtn.className = 'flex items-center gap-space-xs px-space-md py-1.5 rounded-lg bg-surface-container-high text-primary font-semibold text-body-sm shadow-sm';
+      micBtn.className = 'flex items-center gap-space-xs px-space-md py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface font-semibold text-body-sm';
+    }
+  }
+
+  function triggerSessionReward() {
+    const btn = document.getElementById('complete-session-btn');
+    btn.innerHTML = `<span class="material-symbols-outlined text-[20px] text-on-secondary">verified</span> <span class="font-body-md text-body-md font-bold text-on-secondary">Session Recorded (+25 XP)</span>`;
+    btn.classList.replace('bg-primary', 'bg-secondary-container');
+    setTimeout(() => {
+      btn.innerHTML = `<span class="material-symbols-outlined text-[20px]">military_tech</span> <span class="font-body-md text-body-md font-bold">Complete Practice Session</span>`;
+      btn.classList.replace('bg-secondary-container', 'bg-primary');
+    }, 3000);
+  }
+</script></main></div></body></html>

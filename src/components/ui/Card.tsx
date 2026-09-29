@@ -3,7 +3,7 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: 'default' | 'elevated' | 'interactive';
+  variant?: 'default' | 'elevated' | 'interactive' | 'glass';
 }
 
 export function Card({
@@ -18,6 +18,7 @@ export function Card({
     elevated: 'bg-[#20242C] border-[#2A303A] text-slate-100 shadow-xl shadow-black/40',
     interactive:
       'bg-[#171A20] border-[#2A303A] text-slate-100 hover:border-amber-500/50 hover:bg-[#1C2028] cursor-pointer active:scale-[0.99]',
+    glass: 'glass-panel text-slate-100 shadow-xl shadow-black/40',
   };
 
   return (

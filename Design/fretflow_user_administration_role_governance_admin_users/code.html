@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-surface-variant": "#d8c3ad", "inverse-on-surface": "#2d3037", "on-surface": "#e1e2eb", "primary": "#ffc174", "surface-variant": "#32353b", "on-secondary": "#003915", "on-tertiary-fixed": "#410004", "secondary-container": "#00b954", "surface-container-low": "#191c22", "primary-container": "#f59e0b", "on-primary-fixed": "#2a1700", "on-primary": "#472a00", "on-error": "#690005", "on-primary-fixed-variant": "#653e00", "tertiary": "#ffbcb7", "tertiary-fixed-dim": "#ffb3ad", "on-tertiary-container": "#8d0012", "outline": "#a08e7a", "inverse-surface": "#e1e2eb", "on-secondary-container": "#004119", "primary-fixed": "#ffddb8", "tertiary-fixed": "#ffdad7", "surface": "#101319", "on-background": "#e1e2eb", "surface-container-highest": "#32353b", "on-secondary-fixed": "#002109", "on-tertiary": "#68000a", "surface-dim": "#101319", "surface-container-lowest": "#0b0e14", "outline-variant": "#534434", "secondary-fixed": "#6bff8f", "on-secondary-fixed-variant": "#005321", "surface-tint": "#ffb95f", "tertiary-container": "#ff938c", "surface-bright": "#363940", "surface-container-high": "#272a30", "surface-container": "#1d2026", "error-container": "#93000a", "on-tertiary-fixed-variant": "#930013", "background": "#101319", "secondary-fixed-dim": "#4ae176", "primary-fixed-dim": "#ffb95f", "error": "#ffb4ab", "on-error-container": "#ffdad6", "secondary": "#4ae176", "on-primary-container": "#613b00", "inverse-primary": "#855300" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-xl": "2rem", "gutter": "1.25rem", "space-xs": "0.25rem", "space-lg": "1.25rem", "gutter-mobile": "0.75rem", "margin": "2rem", "margin-mobile": "1rem", "space-md": "0.75rem", "space-sm": "0.5rem" }, "fontFamily": { "display-lg-mobile": ["Geist"], "headline-sm": ["Geist"], "body-lg": ["Geist"], "mono-metric": ["JetBrains Mono"], "body-md": ["Geist"], "label-caps": ["JetBrains Mono"], "body-sm": ["Geist"], "headline-xl-mobile": ["Geist"], "mono-fret": ["JetBrains Mono"], "display-lg": ["Geist"], "headline-md": ["Geist"], "headline-xl": ["Geist"] }, "fontSize": { "display-lg-mobile": ["34px", { "lineHeight": "38px", "letterSpacing": "-0.025em", "fontWeight": "700" }], "headline-sm": ["16px", { "lineHeight": "22px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" }], "mono-metric": ["24px", { "lineHeight": "28px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "400" }], "label-caps": ["11px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" }], "headline-xl-mobile": ["26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "mono-fret": ["14px", { "lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "500" }], "display-lg": ["48px", { "lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-xl": ["32px", { "lineHeight": "38px", "letterSpacing": "-0.025em", "fontWeight": "600" }] } } } };</script></head><body class="bg-surface-container-lowest font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.5)]"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center justify-between bg-surface-container-low"><div class="flex items-center gap-space-sm"><img alt="Brand logo. - Primary color: #f59e0b
+- Font: geist
+- Mode: dark
+- Roundness: rounded-sm
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1Wx4RWkRBlQoPs4atUaOq7W-_MVgufKuI0zN0UVhkQrS0zXuOTudIXTgmvnvzjIzYwHgvRXKIz_nGQX83emllZmu1fD5cnLaqdCjDtLXNX2BdImvsEh5VzsUlkuxnK832BN4Wjg_baLWTlQoXE36FFQMbtyZCPb2dhXAywtZRjz3IRFSFkTaB_BYpGfChHCHlOFU_p7A_YjKxvNF-Mo0UUr_T9VePq7T0JeggipY2ByjwbA_45IdiWCxg"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight leading-none">FretFlow</span><span class="font-label-caps text-label-caps text-primary tracking-widest mt-1 uppercase">STAFF BACKOFFICE</span></div></div></div><div class="px-space-md py-space-sm"><div class="px-space-sm py-space-xs font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider opacity-70">Administrative Core</div><nav class="flex flex-col gap-1 mt-1" data-active-classes="bg-surface-container-high text-primary font-headline-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span><span>Overview</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="curriculum-management" href="#"><span class="material-symbols-outlined text-[18px]">menu_book</span><span>Curriculum Management</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="quizzes-and-questions" href="#"><span class="material-symbols-outlined text-[18px]">quiz</span><span>Quizzes & Questions</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="chord-and-scale-cms" href="#"><span class="material-symbols-outlined text-[18px]">graphic_eq</span><span>Chord & Scale CMS</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="user-directory-and-rbac" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span>User Directory & RBAC</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="security-and-audit-logs" href="#"><span class="material-symbols-outlined text-[18px]">verified_user</span><span>Security & Audit Logs</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all font-body-md text-body-md" data-path="platform-settings" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Platform Settings</span></a></nav></div></div><div class="p-space-md bg-surface-container-lowest m-space-sm rounded-xl"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps text-on-surface-variant">CONSOLE LATENCY</span><span class="font-mono-fret text-mono-fret text-secondary">0.42ms</span></div><div class="flex items-center gap-1.5 mt-2"><span class="h-2 w-2 rounded-full bg-secondary animate-pulse"></span><span class="font-body-sm text-body-sm text-on-surface-variant">Telemetry Active</span></div></div></aside><div class="pl-64 flex flex-col min-h-screen"><header class="fixed top-0 left-64 right-0 h-16 bg-surface/90 backdrop-blur-xl z-40 px-space-lg flex items-center justify-between shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="flex items-center gap-space-lg flex-1 max-w-lg"><div class="relative w-full flex items-center"><span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[18px]">search</span><input class="w-full h-9 pl-9 pr-space-md bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Search users, curricula, audio assets..." type="text"/></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 px-space-sm py-1 rounded-full bg-surface-container-low"><span class="h-2 w-2 rounded-full bg-secondary-container"></span><span class="font-mono-fret text-mono-fret text-on-surface-variant">PRISMA REPLICA: <span class="text-secondary font-semibold">SYNCED 3ms</span></span></div><div class="px-space-sm py-0.5 rounded-lg bg-surface-container-high font-label-caps text-label-caps text-primary border border-outline-variant/30">PRODUCTION V2</div><div class="h-6 w-px bg-surface-variant"></div><div class="flex items-center gap-space-sm"><div class="flex flex-col text-right"><span class="font-body-sm text-body-sm text-on-surface font-semibold leading-tight">Marcus Vance</span><span class="font-label-caps text-label-caps text-primary leading-tight">ADMIN</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 flex-1 bg-surface-container-lowest px-space-xl py-space-lg"><div class="flex flex-col w-full text-on-surface font-body-md antialiased pb-space-xl">
+<!-- Top Operational Header Bar -->
+<div class="flex flex-col gap-space-sm mb-space-lg">
+<div class="flex items-center gap-2 text-on-surface-variant font-label-caps text-label-caps tracking-wider uppercase">
+<span>Admin Console</span>
+<span class="text-outline-variant">/</span>
+<span>Platform Governance</span>
+<span class="text-outline-variant">/</span>
+<span class="text-primary font-semibold">User Directory & RBAC</span>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight flex items-center gap-3">
+          User Administration & Role Governance
+          <span class="px-2.5 py-0.5 rounded-full bg-surface-container-high font-mono-fret text-[11px] text-secondary border border-secondary/20 flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+            ACTIVE SYNC
+          </span>
+</h1>
+<div class="flex items-center gap-2 font-mono-fret text-[12px] text-on-surface-variant">
+<span class="text-primary font-semibold">RBAC v2 Engine: Enforced</span>
+<span class="text-outline-variant">•</span>
+<span>Total: <strong class="text-on-surface">12,480</strong> Accounts</span>
+<span class="text-outline-variant">•</span>
+<span>Active Sessions: <strong class="text-secondary">3,120</strong></span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="h-10 px-space-md bg-surface-container-high hover:bg-surface-variant text-on-surface rounded-lg font-body-sm font-semibold transition-all flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">file_download</span>
+          Export Audit CSV
+        </button>
+<button class="h-10 px-space-md bg-primary-container hover:bg-primary-container/90 text-on-primary-fixed rounded-lg font-body-sm font-semibold transition-all flex items-center gap-2 shadow-[0_2px_4px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.25)] active:translate-y-0.5">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+          + Provision Staff User
+        </button>
+</div>
+</div>
+</div>
+<!-- Query & Controls Bar -->
+<div class="bg-surface-container-low rounded-xl p-space-md mb-space-md flex flex-col gap-space-md shadow-sm">
+<div class="flex flex-wrap items-center gap-space-md justify-between">
+<!-- Search Input -->
+<div class="relative flex-1 min-w-[320px] max-w-2xl">
+<span class="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full h-11 pl-11 pr-16 bg-surface-container-lowest rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-1 focus:ring-primary shadow-inner" placeholder="Search by Name, Email, or UUID (e.g. usr_8f29...)" type="text" value="adi.pratama"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 px-1.5 py-0.5 rounded bg-surface-container-high font-mono-fret text-[11px] text-on-surface-variant/80">
+          ⌘K
+        </div>
+</div>
+<!-- Live Sync & Ordering -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5 font-mono-fret text-body-sm text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>Live Sync: <span class="text-on-surface font-semibold">2s ago</span></span>
+</div>
+<div class="h-6 w-px bg-surface-variant"></div>
+<div class="flex items-center gap-2 bg-surface-container-lowest px-3 py-2 rounded-lg font-body-sm text-on-surface cursor-pointer hover:bg-surface-container">
+<span class="text-on-surface-variant">Sort:</span>
+<span class="font-semibold text-primary">Created (Newest First)</span>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Filter Pills Row -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm pt-2">
+<!-- Role Filters -->
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase mr-2">Roles:</span>
+<button class="px-2.5 py-1 rounded bg-surface-container-high hover:bg-surface-variant text-on-surface-variant font-label-caps text-label-caps transition-all">
+          All (12,480)
+        </button>
+<button class="px-2.5 py-1 rounded bg-primary/10 text-primary font-label-caps text-label-caps font-semibold flex items-center gap-1.5 shadow-[inset_0_0_0_1px_rgba(245,158,11,0.3)]">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+          LEARNER (12,150)
+        </button>
+<button class="px-2.5 py-1 rounded bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant font-label-caps text-label-caps transition-all">
+          CONTENT_EDITOR (14)
+        </button>
+<button class="px-2.5 py-1 rounded bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant font-label-caps text-label-caps transition-all">
+          SUPPORT (28)
+        </button>
+<button class="px-2.5 py-1 rounded bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant font-label-caps text-label-caps transition-all">
+          ADMIN (8)
+        </button>
+<button class="px-2.5 py-1 rounded bg-tertiary-container/10 text-tertiary-container hover:bg-tertiary-container/20 font-label-caps text-label-caps transition-all flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">stars</span>
+          OWNER (2)
+        </button>
+</div>
+<!-- Account Status Filters -->
+<div class="flex items-center gap-1.5">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase mr-2">Status:</span>
+<button class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-caps text-label-caps">
+          All
+        </button>
+<button class="px-2 py-0.5 rounded bg-secondary-container/20 text-secondary font-label-caps text-label-caps font-semibold">
+          ACTIVE (12,410)
+        </button>
+<button class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface-variant hover:text-error font-label-caps text-label-caps">
+          SUSPENDED (64)
+        </button>
+<button class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface-variant hover:text-error font-label-caps text-label-caps">
+          BANNED (6)
+        </button>
+</div>
+</div>
+</div>
+<!-- Workspace Grid: Table + Slide-Over Drawer -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column: Production Data Table (7 Cols on desktop) -->
+<div class="xl:col-span-7 bg-surface-container-low rounded-xl overflow-hidden shadow-md flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/60 font-label-caps text-label-caps text-on-surface-variant tracking-wider uppercase">
+<th class="py-3 px-4">User</th>
+<th class="py-3 px-3">Role</th>
+<th class="py-3 px-3">Status</th>
+<th class="py-3 px-3 text-right">XP Total</th>
+<th class="py-3 px-3">Streak</th>
+<th class="py-3 px-3">Created</th>
+<th class="py-3 px-3 text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container text-body-sm font-body-sm">
+<!-- Row 1: Selected Row (Adi Pratama) -->
+<tr class="bg-surface-container hover:bg-surface-variant/80 transition-colors cursor-pointer group shadow-[inset_2px_0_0_0_#f59e0b]">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-primary/20 text-primary font-mono-fret font-bold text-[13px] flex items-center justify-center shrink-0 ring-2 ring-primary/40">
+                    AD
+                  </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate group-hover:text-primary transition-colors">Adi Pratama</span>
+<span class="material-symbols-outlined text-[15px] text-primary" title="Identity Verified">verified</span>
+</div>
+<span class="font-mono-fret text-[12px] text-on-surface-variant truncate">adi.pratama@guitarlearning.id</span>
+<span class="font-mono-fret text-[10px] text-on-surface-variant/60">usr_94a1-02cf</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-variant text-on-surface-variant font-label-caps text-label-caps uppercase font-semibold">
+                  LEARNER
+                </span>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-container/10 text-secondary font-label-caps text-label-caps font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+                  ACTIVE
+                </span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono-fret text-on-surface">
+<span class="font-semibold text-primary">640 XP</span>
+<span class="block text-[10px] text-on-surface-variant">Lvl 4</span>
+</td>
+<td class="py-3.5 px-3 font-mono-fret text-on-surface">
+<span class="text-primary-container font-semibold">🔥 7 Days</span>
+</td>
+<td class="py-3.5 px-3 font-mono-fret text-on-surface-variant text-[12px]">
+                Oct 12, 2025
+              </td>
+<td class="py-3.5 px-3 text-center">
+<button class="w-8 h-8 rounded hover:bg-surface-bright flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-all">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Marcus Vance (OWNER) -->
+<tr class="hover:bg-surface-container/60 transition-colors cursor-pointer group">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-purple-950/60 text-purple-300 font-mono-fret font-bold text-[13px] flex items-center justify-center shrink-0">
+                    MV
+                  </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate group-hover:text-primary transition-colors">Marcus Vance</span>
+<span class="material-symbols-outlined text-[15px] text-purple-400" title="System Founder">shield_person</span>
+</div>
+<span class="font-mono-fret text-[12px] text-on-surface-variant truncate">marcus.vance@guitarlearning.id</span>
+<span class="font-mono-fret text-[10px] text-on-surface-variant/60">usr_0001-root</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-purple-950/70 text-purple-300 font-label-caps text-label-caps uppercase font-semibold">
+<span class="material-symbols-outlined text-[12px]">workspace_premium</span>
+                  OWNER
+                </span>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-container/10 text-secondary font-label-caps text-label-caps font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  ACTIVE
+                </span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono-fret text-on-surface">
+<span class="font-semibold text-secondary">14,250 XP</span>
+<span class="block text-[10px] text-on-surface-variant">Staff</span>
+</td>
+<td class="py-3.5 px-3 font-mono-fret text-on-surface">
+<span class="text-primary-container font-semibold">🔥 142 Days</span>
+</td>
+<td class="py-3.5 px-3 font-mono-fret text-on-surface-variant text-[12px]">
+                Jan 01, 2025
+              </td>
+<td class="py-3.5 px-3 text-center">
+<button class="w-8 h-8 rounded hover:bg-surface-bright flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-all">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Alex Chen (CONTENT_EDITOR) -->
+<tr class="hover:bg-surface-container/60 transition-colors cursor-pointer group">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-teal-950/60 text-teal-300 font-mono-fret font-bold text-[13px] flex items-center justify-center shrink-0">
+                    AC
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate group-hover:text-primary transition-colors">Alex Chen</span>
+<span class="font-mono-fret text-[12px] text-on-surface-variant truncate">alex.chen@guitarlearning.id</span>
+<span class="font-mono-fret text-[10px] text-on-surface-variant/60">usr_1028-edit</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-teal-950/70 text-teal-300 font-label-caps text-label-caps uppercase font-semibold">
+<span class="material-symbols-outlined text-[12px]">edit_note</span>
+                  EDITOR
+                </span>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-container/10 text-secondary font-label-caps text-label-caps font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  ACTIVE
+                </span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono-fret text-on-surface">
+<span class="font-semibold">4,820 XP</span>
+<span class="block text-[10px] text-on-surface-variant">Lvl 18</span>
+</td>
+<td class="py-3.5 px-3 font-mono-fret text-on-surface">
+<span class="text-primary-container font-semibold">🔥 24 Days</span>
+</td>
+<td class="py-3.5 px-3 font-mono-fret text-on-surface-variant text-[12px]">
+                Mar 15, 2025
+              </td>
+<td class="py-3.5 px-3 text-center">
+<button class="w-8 h-8 rounded hover:bg-surface-bright flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-all">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Sarah Koenig (ADMIN) -->
+<tr class="hover:bg-surface-container/60 transition-colors cursor-pointer group">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-primary/20 text-primary font-mono-fret font-bold text-[13px] flex items-center justify-center shrink-0">
+                    SK
+                  </div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate group-hover:text-primary transition-colors">Sarah Koenig</span>
+<span class="material-symbols-outlined text-[15px] text-primary" title="Platform Security Lead">admin_panel_settings</span>
+</div>
+<span class="font-mono-fret text-[12px] text-on-surface-variant truncate">sarah.k@guitarlearning.id</span>
+<span class="font-mono-fret text-[10px] text-on-surface-variant/60">usr_0422-adm</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-primary/20 text-primary font-label-caps text-label-caps uppercase font-semibold">
+<span class="material-symbols-outlined text-[12px]">verified_user</span>
+                  ADMIN
+                </span>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-container/10 text-secondary font-label-caps text-label-caps font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  ACTIVE
+                </span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono-fret text-on-surface">
+<span class="font-semibold">8,910 XP</span>
+<span class="block text-[10px] text-on-surface-variant">Lvl 32</span>
+</td>
+<td class="py-3.5 px-3 font-mono-fret text-on-surface">
+<span class="text-primary-container font-semibold">🔥 45 Days</span>
+</td>
+<td class="py-3.5 px-3 font-mono-fret text-on-surface-variant text-[12px]">
+                Feb 10, 2025
+              </td>
+<td class="py-3.5 px-3 text-center">
+<button class="w-8 h-8 rounded hover:bg-surface-bright flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-all">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Rizky Firmansyah (SUSPENDED) -->
+<tr class="hover:bg-surface-container/60 transition-colors cursor-pointer group bg-error-container/5">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-error-container/30 text-error font-mono-fret font-bold text-[13px] flex items-center justify-center shrink-0">
+                    RF
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate group-hover:text-error transition-colors">Rizky Firmansyah</span>
+<span class="font-mono-fret text-[12px] text-on-surface-variant truncate">rizky.f@tempmail.com</span>
+<span class="font-mono-fret text-[10px] text-error font-semibold">usr_7731-bot (Flagged)</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="px-2 py-0.5 rounded bg-surface-variant text-on-surface-variant font-label-caps text-label-caps uppercase">
+                  LEARNER
+                </span>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-error-container/20 text-error font-label-caps text-label-caps font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span>
+                  SUSPENDED
+                </span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono-fret text-error">
+<span class="font-semibold">18,400 XP</span>
+<span class="block text-[10px] text-error/80">Anomaly</span>
+</td>
+<td class="py-3.5 px-3 font-mono-fret text-on-surface-variant text-[12px]">
+                0 Days (Revoked)
+              </td>
+<td class="py-3.5 px-3 font-mono-fret text-on-surface-variant text-[12px]">
+                Nov 02, 2025
+              </td>
+<td class="py-3.5 px-3 text-center">
+<button class="w-8 h-8 rounded hover:bg-surface-bright flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-all">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 6: Dina Nurhaliza (SUPPORT) -->
+<tr class="hover:bg-surface-container/60 transition-colors cursor-pointer group">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-blue-950/60 text-blue-300 font-mono-fret font-bold text-[13px] flex items-center justify-center shrink-0">
+                    DN
+                  </div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold truncate group-hover:text-primary transition-colors">Dina Nurhaliza</span>
+<span class="font-mono-fret text-[12px] text-on-surface-variant truncate">dina.n@guitarlearning.id</span>
+<span class="font-mono-fret text-[10px] text-on-surface-variant/60">usr_3391-sup</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-blue-950/70 text-blue-300 font-label-caps text-label-caps uppercase font-semibold">
+<span class="material-symbols-outlined text-[12px]">support_agent</span>
+                  SUPPORT
+                </span>
+</td>
+<td class="py-3.5 px-3">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-container/10 text-secondary font-label-caps text-label-caps font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                  ACTIVE
+                </span>
+</td>
+<td class="py-3.5 px-3 text-right font-mono-fret text-on-surface">
+<span class="font-semibold">2,150 XP</span>
+<span class="block text-[10px] text-on-surface-variant">Lvl 9</span>
+</td>
+<td class="py-3.5 px-3 font-mono-fret text-on-surface">
+<span class="text-primary-container font-semibold">🔥 12 Days</span>
+</td>
+<td class="py-3.5 px-3 font-mono-fret text-on-surface-variant text-[12px]">
+                Jun 18, 2025
+              </td>
+<td class="py-3.5 px-3 text-center">
+<button class="w-8 h-8 rounded hover:bg-surface-bright flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-all">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination / Count Footer -->
+<div class="px-4 py-3 bg-surface-container flex items-center justify-between text-body-sm text-on-surface-variant font-mono-fret">
+<span>Showing <strong class="text-on-surface">1 - 6</strong> of 12,480 users</span>
+<div class="flex items-center gap-1">
+<button class="px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-variant text-on-surface-variant disabled:opacity-40">Previous</button>
+<button class="px-2.5 py-1 rounded bg-primary text-on-primary font-bold">1</button>
+<button class="px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-variant text-on-surface">2</button>
+<button class="px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-variant text-on-surface">3</button>
+<span class="px-1 text-outline-variant">...</span>
+<button class="px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-variant text-on-surface">2,080</button>
+<button class="px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-variant text-on-surface">Next</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Slide-Over Inspection Drawer (5 Cols on desktop) -->
+<div class="xl:col-span-5 bg-surface-container-low rounded-xl p-space-lg flex flex-col gap-space-lg shadow-xl relative overflow-hidden">
+<!-- Glow ambient accent -->
+<div class="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-primary/5 blur-3xl pointer-events-none"></div>
+<!-- Drawer Header & Profile Card -->
+<div class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider font-semibold">User Inspection & RBAC Policy</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2 py-1 rounded bg-surface-container hover:bg-surface-variant text-on-surface-variant text-[11px] font-mono-fret flex items-center gap-1 transition-colors" title="Export Payload">
+<span class="material-symbols-outlined text-[14px]">data_object</span>
+              JSON
+            </button>
+<button class="w-7 h-7 rounded hover:bg-surface-container-highest flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+<!-- Identity Profile Block -->
+<div class="bg-surface-container rounded-lg p-space-md flex flex-col gap-space-sm">
+<div class="flex items-start gap-space-md">
+<div class="relative">
+<div class="w-14 h-14 rounded-full bg-primary/20 text-primary font-mono-fret font-bold text-[18px] flex items-center justify-center ring-2 ring-primary">
+                AD
+              </div>
+<span class="absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full bg-secondary ring-2 ring-surface-container"></span>
+</div>
+<div class="flex flex-col flex-1 min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md text-on-surface font-bold leading-tight">Adi Pratama</span>
+<span class="material-symbols-outlined text-[18px] text-primary" title="Verified Learner Account">verified</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-mono-fret text-[12px] mt-0.5">
+<span class="truncate">adi.pratama@guitarlearning.id</span>
+<button class="hover:text-primary transition-colors" title="Copy Email">
+<span class="material-symbols-outlined text-[14px]">content_copy</span>
+</button>
+</div>
+<div class="flex items-center gap-2 mt-1.5 flex-wrap">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high font-mono-fret text-[11px] text-primary">usr_94a1-02cf</span>
+<span class="text-[11px] text-secondary font-mono-fret flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">location_on</span>
+                  Jakarta, ID (UTC+7)
+                </span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 pt-2 text-[11px] font-mono-fret text-on-surface-variant bg-surface-container-lowest/60 p-2.5 rounded">
+<div>
+<span class="block text-on-surface-variant/60 text-[10px] uppercase">Registered IP Hash</span>
+<span class="text-on-surface truncate block" title="sha256:8f4c9b12e4aa109">sha256:8f4c...9b12</span>
+</div>
+<div>
+<span class="block text-on-surface-variant/60 text-[10px] uppercase">Telemetry State</span>
+<span class="text-secondary font-semibold">Active 2 mins ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 1: Learning Diagnostic Snapshot (2x2 Grid) -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between font-label-caps text-label-caps text-on-surface-variant uppercase">
+<span>Acoustic & Diagnostic Telemetry</span>
+<span class="text-secondary font-mono-fret text-[10px]">PASS: Anti-Cheat</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<div class="bg-surface-container p-space-sm rounded-lg flex flex-col gap-1">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase">Placement Level</span>
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">BEGINNER_2</span>
+<span class="font-mono-fret text-[11px] text-primary font-bold">4/5</span>
+</div>
+<span class="font-body-sm text-[11px] text-on-surface-variant/80">Adaptive Pitch Score: 88%</span>
+</div>
+<div class="bg-surface-container p-space-sm rounded-lg flex flex-col gap-1">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase">Active Module</span>
+<span class="font-body-md text-on-surface font-semibold truncate leading-tight">Module 02: G Major</span>
+<div class="w-full bg-surface-container-lowest rounded-full h-1.5 mt-1 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 60%"></div>
+</div>
+<span class="font-mono-fret text-[10px] text-on-surface-variant text-right">Step 3 of 5 (60%)</span>
+</div>
+<div class="bg-surface-container p-space-sm rounded-lg flex flex-col gap-1">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase">Verified Practice Time</span>
+<span class="font-mono-metric text-headline-md text-secondary font-bold">3h 45m</span>
+<span class="font-body-sm text-[11px] text-on-surface-variant/80">DSP Harmonic Match: 99.4%</span>
+</div>
+<div class="bg-surface-container p-space-sm rounded-lg flex flex-col gap-1">
+<span class="font-label-caps text-[10px] text-on-surface-variant uppercase">Current Velocity</span>
+<div class="flex items-center gap-1.5">
+<span class="text-primary-container text-[18px]">🔥</span>
+<span class="font-mono-metric text-headline-md text-on-surface font-bold">7 Days</span>
+</div>
+<span class="font-body-sm text-[11px] text-secondary">Target: 15m/day met</span>
+</div>
+</div>
+</div>
+<!-- Section 2: Active Database Sessions Widget -->
+<div class="flex flex-col gap-space-sm bg-surface-container rounded-lg p-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Active Database Sessions (2)</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-secondary-container/10 text-secondary text-[10px] font-mono-fret flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">lock</span>
+            HMAC v2 Secure
+          </span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Session 1: Current -->
+<div class="bg-surface-container-lowest p-2.5 rounded flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[20px] text-primary">laptop_mac</span>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-body-sm text-on-surface font-semibold">Chrome 122 on macOS Sonoma</span>
+<span class="px-1.5 py-0.2 rounded bg-secondary-container/20 text-secondary text-[9px] font-mono-fret font-bold">CURRENT</span>
+</div>
+<span class="font-mono-fret text-[11px] text-on-surface-variant">IP: 182.253.44.18 • Last seen: Just now</span>
+</div>
+</div>
+<button class="w-6 h-6 rounded hover:bg-surface-bright flex items-center justify-center text-on-surface-variant hover:text-error transition-colors" title="Revoke this device">
+<span class="material-symbols-outlined text-[15px]">close</span>
+</button>
+</div>
+<!-- Session 2 -->
+<div class="bg-surface-container-lowest p-2.5 rounded flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant">smartphone</span>
+<div class="flex flex-col">
+<span class="font-body-sm text-on-surface">Mobile Safari on iOS 17.4</span>
+<span class="font-mono-fret text-[11px] text-on-surface-variant">IP: 114.124.89.21 • Active 2h ago</span>
+</div>
+</div>
+<button class="w-6 h-6 rounded hover:bg-surface-bright flex items-center justify-center text-on-surface-variant hover:text-error transition-colors" title="Revoke this device">
+<span class="material-symbols-outlined text-[15px]">close</span>
+</button>
+</div>
+</div>
+<button class="w-full mt-1 py-2 px-space-md bg-surface-container-high hover:bg-error-container/20 text-error hover:text-error rounded-lg font-body-sm font-semibold transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[16px]">power_settings_new</span>
+          Force Revoke All Sessions (2 Active)
+        </button>
+</div>
+<!-- Section 3: Role Governance Actions (Server-Enforced RBAC) -->
+<div class="flex flex-col gap-space-sm bg-surface-container rounded-lg p-space-md">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Role Assignment & Privilege Matrix</span>
+<span class="font-label-caps text-label-caps text-primary">ENFORCED</span>
+</div>
+<div class="p-2.5 rounded bg-surface-container-lowest text-[11px] text-on-surface-variant leading-relaxed">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary shrink-0 mt-0.5">info</span>
+<span>Changing roles alters system privileges immediately. Promoting to staff requires two-factor validation from an OWNER.</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 mt-1">
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant">Assigned Role</label>
+<div class="relative">
+<select class="w-full h-11 px-3 bg-surface-container-lowest rounded-lg font-mono-fret text-body-sm text-on-surface appearance-none focus:outline-none focus:ring-1 focus:ring-primary pr-9 cursor-pointer">
+<option selected="" value="LEARNER">LEARNER (Default Learner Privileges)</option>
+<option value="CONTENT_EDITOR">CONTENT_EDITOR (Curriculum & Media CMS)</option>
+<option value="SUPPORT">SUPPORT (Learner Inquiries & Audit Review)</option>
+<option value="ADMIN">ADMIN (Full Console & Financial Access)</option>
+<option disabled="" value="OWNER">OWNER (Root Governance - Multi-Sign Locked)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none text-[18px]">unfold_more</span>
+</div>
+</div>
+<div class="flex items-center gap-2 p-2 rounded bg-surface-container-lowest font-mono-fret text-[11px] text-on-surface-variant">
+<span class="material-symbols-outlined text-[15px] text-secondary">security</span>
+<span>Policy: <strong class="text-on-surface">LAST_OWNER_PROTECTED</strong> is active</span>
+</div>
+<button class="w-full h-10 mt-1 bg-surface-container-high hover:bg-surface-bright text-on-surface font-body-sm font-semibold rounded-lg transition-colors flex items-center justify-center gap-2">
+<span>Apply Role & Permission Update</span>
+</button>
+</div>
+<!-- Section 4: Privileged Destructive Actions & Modal Preview -->
+<div class="flex flex-col gap-space-sm bg-error-container/10 p-space-md rounded-lg">
+<div class="flex items-center gap-2 text-error font-headline-sm text-headline-sm font-bold">
+<span class="material-symbols-outlined text-[20px]">warning</span>
+          Privileged Destructive Actions
+        </div>
+<p class="font-body-sm text-[12px] text-on-surface-variant leading-relaxed">
+          Suspending will immediately invalidate all active JWTs, terminate persistent database sessions, and block all API requests with <code class="text-error font-mono-fret">403 ACCOUNT_SUSPENDED</code>.
+        </p>
+<!-- Embedded Confirmation Requirement Mockup -->
+<div class="mt-2 p-3 bg-surface-container-lowest rounded-lg flex flex-col gap-2">
+<div class="flex items-center justify-between text-[11px] font-mono-fret">
+<span class="text-on-surface-variant">Mandatory Audit Reason</span>
+<span class="text-error">* Required</span>
+</div>
+<input class="w-full h-9 px-3 bg-surface-container text-body-sm font-body-sm text-on-surface rounded placeholder:text-on-surface-variant/40 focus:outline-none focus:ring-1 focus:ring-error" placeholder="e.g. Automated XP scraping / botting detected" type="text"/>
+<div class="flex items-center justify-between text-[10px] font-mono-fret text-on-surface-variant/80 pt-1">
+<span>Actor: <strong class="text-on-surface">Marcus Vance [ADMIN]</strong></span>
+<span>Logs to: <strong class="text-primary">AdminAuditLog</strong></span>
+</div>
+</div>
+<button class="w-full h-10 mt-1 bg-error-container hover:bg-error-container/90 text-on-error rounded-lg font-body-sm font-bold transition-all flex items-center justify-center gap-2 shadow-md active:translate-y-0.5">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+          Confirm & Suspend User Account
+        </button>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

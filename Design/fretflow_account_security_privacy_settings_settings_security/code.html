@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-fixed-dim": "#ffb3ad", "on-error": "#690005", "on-tertiary": "#68000a", "inverse-primary": "#855300", "on-secondary-fixed-variant": "#005321", "tertiary-fixed": "#ffdad7", "secondary-fixed": "#6bff8f", "on-surface": "#e1e2eb", "surface": "#101319", "primary-container": "#f59e0b", "surface-container-lowest": "#0b0e14", "on-secondary": "#003915", "surface-variant": "#32353b", "outline-variant": "#534434", "primary-fixed": "#ffddb8", "secondary-container": "#00b954", "secondary": "#4ae176", "inverse-surface": "#e1e2eb", "tertiary-container": "#ff938c", "surface-container": "#1d2026", "surface-container-high": "#272a30", "on-primary-container": "#613b00", "on-tertiary-fixed": "#410004", "on-surface-variant": "#d8c3ad", "surface-tint": "#ffb95f", "on-primary": "#472a00", "background": "#101319", "primary-fixed-dim": "#ffb95f", "primary": "#ffc174", "error": "#ffb4ab", "surface-container-highest": "#32353b", "secondary-fixed-dim": "#4ae176", "surface-container-low": "#191c22", "surface-dim": "#101319", "on-tertiary-fixed-variant": "#930013", "on-secondary-fixed": "#002109", "tertiary": "#ffbcb7", "outline": "#a08e7a", "on-error-container": "#ffdad6", "on-background": "#e1e2eb", "surface-bright": "#363940", "on-primary-fixed": "#2a1700", "on-secondary-container": "#004119", "on-tertiary-container": "#8d0012", "error-container": "#93000a", "on-primary-fixed-variant": "#653e00", "inverse-on-surface": "#2d3037" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-xl": "2rem", "gutter": "1.25rem", "gutter-mobile": "0.75rem", "space-xs": "0.25rem", "margin": "2rem", "space-sm": "0.5rem", "margin-mobile": "1rem", "space-md": "0.75rem", "space-lg": "1.25rem" }, "fontFamily": { "headline-xl": [ "Geist" ], "body-lg": [ "Geist" ], "headline-sm": [ "Geist" ], "display-lg": [ "Geist" ], "headline-md": [ "Geist" ], "body-sm": [ "Geist" ], "mono-fret": [ "JetBrains Mono" ], "body-md": [ "Geist" ], "display-lg-mobile": [ "Geist" ], "mono-metric": [ "JetBrains Mono" ], "label-caps": [ "JetBrains Mono" ], "headline-xl-mobile": [ "Geist" ] }, "fontSize": { "headline-xl": [ "32px", { "lineHeight": "38px", "letterSpacing": "-0.025em", "fontWeight": "600" } ], "body-lg": [ "16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "headline-sm": [ "16px", { "lineHeight": "22px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "display-lg": [ "48px", { "lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "700" } ], "headline-md": [ "20px", { "lineHeight": "26px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "body-sm": [ "12px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" } ], "mono-fret": [ "14px", { "lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "500" } ], "body-md": [ "14px", { "lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "400" } ], "display-lg-mobile": [ "34px", { "lineHeight": "38px", "letterSpacing": "-0.025em", "fontWeight": "700" } ], "mono-metric": [ "24px", { "lineHeight": "28px", "letterSpacing": "-0.03em", "fontWeight": "600" } ], "label-caps": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "600" } ], "headline-xl-mobile": [ "26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low border-r border-outline-variant/30 z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/20 bg-surface-container-lowest/60"><img alt="FretFlow Guitar Platform Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WupnvPwKzOLghcjgS1e9BiW2-TQwGi1UzhnnioRgha9X8Dw0sC6j-xW8QcuMnQFpVgwb0lorUOkaiJ6kCsAKeqieJb0_0KxM_0Qp0ZnqpNWQruArJ2RZMWLqfpfuaMoOkcPYJynG9Bw1kz_WGh_f_CdSfP9o9LPH2PRCl_xqtUSsB5tEHnjOUo6WBeTGI7z0nmdNsJ-uBk7eJAjEZK84pkC3kVqRJA-cgFdzxirUBoBwaei1YKdCwN"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight">FretFlow</span><span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Acoustic &amp; Electric</span></div></div><div class="px-space-md pt-space-lg pb-space-sm"><span class="px-space-sm font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Navigation Engine</span></div><nav class="flex flex-col gap-space-xs px-space-md" data-active-classes="bg-surface-container-high text-primary font-bold shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_16px_rgba(245,158,11,0.15)] border-l-2 border-primary"><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="dashboard" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">grid_view</span><span class="font-body-md text-body-md">Dashboard</span></div><span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded-full bg-primary-container/20 text-primary border border-primary/30 flex items-center gap-0.5">🔥 5d</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="learning-path" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">alt_route</span><span class="font-body-md text-body-md">Learning Path</span></div><span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant">42%</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="focus-practice-room" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">timer</span><span class="font-body-md text-body-md">Practice Room</span></div><span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded-full bg-secondary-container/20 text-secondary border border-secondary/30">15m goal</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="guitar-tuner-and-library" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">graphic_eq</span><span class="font-body-md text-body-md">Tuner &amp; Library</span></div><span class="material-symbols-outlined text-on-surface-variant text-[16px]">queue_music</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="progress-and-achievements" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">military_tech</span><span class="font-body-md text-body-md">Progress</span></div><span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded-full bg-primary-container/15 text-primary">+640 XP</span></a></nav></div><div class="p-space-md m-space-md rounded-xl bg-surface-container border border-outline-variant/30 flex flex-col gap-space-xs"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Daily Target</span><span class="font-mono-fret text-mono-fret text-secondary">66%</span></div><div class="w-full h-1.5 rounded-full bg-surface-container-lowest overflow-hidden"><div class="h-full bg-secondary rounded-full w-2/3 shadow-[0_0_8px_rgba(74,225,118,0.5)]"></div></div><div class="flex justify-between items-center text-on-surface-variant font-label-caps text-label-caps pt-space-xs"><span>10 of 15 min complete</span><span class="text-primary font-mono-fret">🔥 5d</span></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/80 backdrop-blur-xl border-b border-outline-variant/20 z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><img alt="FretFlow Guitar Platform Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WupnvPwKzOLghcjgS1e9BiW2-TQwGi1UzhnnioRgha9X8Dw0sC6j-xW8QcuMnQFpVgwb0lorUOkaiJ6kCsAKeqieJb0_0KxM_0Qp0ZnqpNWQruArJ2RZMWLqfpfuaMoOkcPYJynG9Bw1kz_WGh_f_CdSfP9o9LPH2PRCl_xqtUSsB5tEHnjOUo6WBeTGI7z0nmdNsJ-uBk7eJAjEZK84pkC3kVqRJA-cgFdzxirUBoBwaei1YKdCwN"/><div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-high border border-outline-variant/40"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Active:</span><span class="font-headline-sm text-headline-sm text-on-surface text-sm font-semibold">Module 02: Basic Chords</span></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container border border-outline-variant/30"><span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span><span class="font-mono-fret text-mono-fret text-on-surface text-xs">10 / 15 min</span></div><div class="flex items-center gap-1 px-space-sm py-1 rounded-full bg-primary-container/20 border border-primary/40 text-primary font-mono-metric text-xs"><span class="material-symbols-outlined text-primary text-[16px]">local_fire_department</span><span class="font-bold font-mono-fret text-mono-fret text-xs">5 Days</span></div><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container border border-outline-variant/30"><span class="material-symbols-outlined text-primary text-[18px]">verified</span><span class="font-mono-fret text-mono-fret text-xs text-on-surface">Lvl 4 • 640 XP</span></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right hidden sm:flex"><span class="font-headline-sm text-headline-sm text-xs text-on-surface">Alex</span><span class="font-label-caps text-label-caps text-[10px] text-on-surface-variant uppercase">Beginner</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface flex-1"><div class="flex flex-col w-full">
+<!-- Subtle Amber Ambient Light -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-32 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[128px] pointer-events-none"></div>
+<div class="absolute top-96 left-12 w-80 h-80 bg-secondary/5 rounded-full blur-[110px] pointer-events-none"></div>
+<!-- Inner Shell Container -->
+<div class="w-full max-w-7xl mx-auto px-margin-mobile lg:px-margin py-space-xl flex flex-col gap-space-xl relative z-10">
+<!-- Breadcrumbs & Meta Bar -->
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-xs font-label-caps text-label-caps uppercase tracking-wider text-on-surface-variant">
+<span class="hover:text-primary transition-colors cursor-pointer">Settings</span>
+<span class="text-outline">/</span>
+<span class="text-primary font-bold">Security &amp; Privacy</span>
+<span class="text-outline">/</span>
+<span class="text-on-surface font-mono-fret text-xs normal-case opacity-70">sec_ctx_v2_sha256</span>
+</div>
+<!-- Security Health Pill -->
+<div class="inline-flex items-center gap-space-sm px-space-md py-1.5 rounded-full bg-surface-container-high shadow-md">
+<div class="relative flex items-center justify-center">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary animate-ping absolute opacity-75"></span>
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface uppercase">Security Score:</span>
+<span class="font-mono-metric text-xs text-secondary font-bold">95% STRONG</span>
+<span class="w-1 h-3 rounded-full bg-surface-variant"></span>
+<span class="font-mono-fret text-xs text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">verified_user</span> 2FA Eligible
+          </span>
+</div>
+</div>
+<!-- Header Title Cluster -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">Password &amp; Security Settings</h1>
+<div class="flex items-center gap-space-sm font-label-caps text-label-caps text-on-surface-variant">
+<span class="material-symbols-outlined text-secondary text-[16px]">lock</span>
+<span>END-TO-END TLS 1.3 • AES-256 SESSION VAULT</span>
+</div>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-3xl">
+          Manage your credentials, active browser sessions, and secure login preferences across all acoustic and electric tracking interfaces.
+        </p>
+</div>
+<!-- Settings Horizontal Navigation Tabs -->
+<div class="w-full bg-surface-container-low rounded-xl p-1.5 flex items-center gap-1 overflow-x-auto shadow-sm">
+<button class="px-space-md py-space-sm rounded-lg font-headline-sm text-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-2 whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+<span>Account &amp; Profile</span>
+</button>
+<button class="px-space-md py-space-sm rounded-lg font-headline-sm text-xs bg-surface-container-highest text-primary font-semibold shadow-inner flex items-center gap-2 whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">security</span>
+<span>Security &amp; Sessions</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+</button>
+<button class="px-space-md py-space-sm rounded-lg font-headline-sm text-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-2 whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>Preferences &amp; Audio Input</span>
+</button>
+<button class="px-space-md py-space-sm rounded-lg font-headline-sm text-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-2 whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">notifications_active</span>
+<span>Notifications</span>
+</button>
+<button class="px-space-md py-space-sm rounded-lg font-headline-sm text-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all flex items-center gap-2 whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">shield</span>
+<span>Data &amp; Privacy (GDPR)</span>
+</button>
+</div>
+<!-- MAIN CONTENT GRID -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- LEFT COLUMN: Credentials & Authentication (7 Cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-lg">
+<!-- Email Status Card -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center text-secondary shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-[26px]">mark_email_read</span>
+</div>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-headline-sm text-headline-sm text-on-surface">alex.chen@guitarlearning.id</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container/20 text-secondary font-label-caps text-label-caps font-bold">
+<span class="material-symbols-outlined text-[12px]">verified</span> Verified Email
+                  </span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Verified on Sep 12, 2026 • Primary Security Anchor</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant pt-1">
+                  Password recovery, security notifications, and session alerts are routed to this address.
+                </p>
+</div>
+</div>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-body-sm text-xs transition-all shrink-0">
+              Change Email
+            </button>
+</div>
+<!-- Change Password Interactive Panel -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-md flex flex-col gap-space-lg">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[22px]">key</span>
+<div class="flex flex-col">
+<h2 class="font-headline-md text-headline-md text-on-surface">Update Password</h2>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Hardware-grade entropy enforcement</span>
+</div>
+</div>
+<span class="font-mono-metric text-xs px-2 py-1 rounded bg-surface-container-lowest text-primary font-semibold">Argon2id Hash</span>
+</div>
+<form class="flex flex-col gap-space-md" onsubmit="event.preventDefault(); handlePasswordSubmit();">
+<!-- Current Password -->
+<div class="flex flex-col gap-1.5">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant" for="current-pwd">Current Master Password</label>
+<a class="font-label-caps text-label-caps text-primary hover:underline" href="#">Forgot password?</a>
+</div>
+<div class="relative flex items-center">
+<input class="w-full h-11 bg-surface-container-lowest rounded-lg px-space-md pr-10 font-mono-fret text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:shadow-[0_0_0_2px_#ffc174] transition-all" id="current-pwd" placeholder="Enter current password" type="password" value="••••••••••••••••"/>
+<button class="absolute right-3 text-on-surface-variant hover:text-on-surface flex items-center" onclick="togglePasswordVis('current-pwd', this)" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- New Password -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant" for="new-pwd">New Password</label>
+<div class="relative flex items-center">
+<input class="w-full h-11 bg-surface-container-lowest rounded-lg px-space-md pr-10 font-mono-fret text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:shadow-[0_0_0_2px_#ffc174] transition-all" id="new-pwd" oninput="evaluateStrength(this.value)" placeholder="Create strong passphrase" type="password"/>
+<button class="absolute right-3 text-on-surface-variant hover:text-on-surface flex items-center" onclick="togglePasswordVis('new-pwd', this)" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+<!-- 4-Segment Strength Meter -->
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-center justify-between text-xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant">PASSWORD ENTROPY</span>
+<span class="font-mono-fret text-secondary font-bold" id="strength-label">Strong (4/4)</span>
+</div>
+<div class="grid grid-cols-4 gap-1.5 h-1.5 w-full">
+<div class="h-full rounded-full bg-secondary transition-colors duration-300" id="bar-1"></div>
+<div class="h-full rounded-full bg-secondary transition-colors duration-300" id="bar-2"></div>
+<div class="h-full rounded-full bg-secondary transition-colors duration-300" id="bar-3"></div>
+<div class="h-full rounded-full bg-secondary transition-colors duration-300" id="bar-4"></div>
+</div>
+<!-- Rule list checklist -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 font-label-caps text-[10px] text-on-surface-variant">
+<div class="flex items-center gap-1 text-secondary" id="rule-len">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> 8+ Chars
+                    </div>
+<div class="flex items-center gap-1 text-secondary" id="rule-case">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Upper &amp; Lower
+                    </div>
+<div class="flex items-center gap-1 text-secondary" id="rule-num">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Numbers
+                    </div>
+<div class="flex items-center gap-1 text-secondary" id="rule-sym">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Special Char
+                    </div>
+</div>
+</div>
+</div>
+<!-- Confirm Password -->
+<div class="flex flex-col gap-1.5">
+<label class="font-label-caps text-label-caps uppercase text-on-surface-variant" for="confirm-pwd">Confirm New Password</label>
+<div class="relative flex items-center">
+<input class="w-full h-11 bg-surface-container-lowest rounded-lg px-space-md pr-10 font-mono-fret text-on-surface placeholder:text-on-surface-variant/40 focus:outline-none focus:shadow-[0_0_0_2px_#ffc174] transition-all" id="confirm-pwd" oninput="checkMatch()" placeholder="Re-type new passphrase" type="password"/>
+<button class="absolute right-3 text-on-surface-variant hover:text-on-surface flex items-center" onclick="togglePasswordVis('confirm-pwd', this)" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+<span class="font-label-caps text-[10px] text-secondary hidden" id="match-hint">Passwords match correctly</span>
+</div>
+<!-- Security Invalidation Note -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0 mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Updating your password will automatically invalidate all existing login sessions across mobile, desktop, and MIDI tracking sync agents except this active browser.
+                </p>
+</div>
+<!-- Action Controls -->
+<div class="flex items-center justify-end gap-space-md pt-space-xs">
+<button class="px-space-md py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface font-headline-sm text-sm transition-all" type="button">
+                  Cancel
+                </button>
+<button class="px-space-lg py-2.5 rounded-lg bg-primary hover:bg-primary-fixed-dim active:bg-primary text-on-primary font-headline-sm text-sm font-semibold shadow-md transition-all flex items-center gap-2" id="submit-pwd-btn" type="submit">
+<span class="material-symbols-outlined text-[18px]">lock_reset</span>
+<span>Update Password</span>
+</button>
+</div>
+</form>
+</div>
+<!-- Two-Factor Authentication Prompt -->
+<div class="bg-surface-container-low rounded-xl p-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">phonelink_lock</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Hardware Authenticator (TOTP / FIDO2)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Add YubiKey or Google/1Password Authenticator for maximum safety.</span>
+</div>
+</div>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-primary font-headline-sm text-xs font-semibold whitespace-nowrap transition-all shadow-sm">
+              Setup 2FA Key
+            </button>
+</div>
+</div>
+<!-- RIGHT COLUMN: Visual Telemetry & Security Diagnostics (5 Cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-lg">
+<!-- Security Health Radar Card -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-md flex flex-col gap-space-md relative overflow-hidden">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">Security Diagnostics</span>
+<span class="font-mono-metric text-xs text-secondary bg-secondary/10 px-2 py-0.5 rounded">PASSED ALL CHECKS</span>
+</div>
+<!-- Visual SVG Metric Gauge -->
+<div class="flex items-center justify-center py-2">
+<div class="relative w-44 h-44 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90 transform" viewbox="0 0 100 100">
+<circle class="text-surface-container-highest" cx="50" cy="50" fill="transparent" r="42" stroke="currentColor" stroke-width="7"></circle>
+<circle class="text-secondary drop-shadow-[0_0_8px_rgba(74,225,118,0.4)]" cx="50" cy="50" fill="transparent" r="42" stroke="currentColor" stroke-dasharray="263.89" stroke-dashoffset="13.19" stroke-linecap="round" stroke-width="7"></circle>
+</svg>
+<div class="absolute flex flex-col items-center justify-center text-center">
+<span class="font-display-lg text-3xl font-bold text-on-surface font-mono-metric">95%</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant tracking-wider uppercase">Vault Health</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2 pt-1">
+<div class="flex items-center justify-between text-xs py-1 border-b border-surface-variant/40">
+<span class="text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[16px]">check</span> Password Complexity
+                </span>
+<span class="font-mono-fret text-on-surface">Maximum</span>
+</div>
+<div class="flex items-center justify-between text-xs py-1 border-b border-surface-variant/40">
+<span class="text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[16px]">check</span> Session Token Cryptography
+                </span>
+<span class="font-mono-fret text-on-surface">HMAC-SHA256</span>
+</div>
+<div class="flex items-center justify-between text-xs py-1 border-b border-surface-variant/40">
+<span class="text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[16px]">check</span> Concurrent Session Limiting
+                </span>
+<span class="font-mono-fret text-on-surface">Active (3/5)</span>
+</div>
+<div class="flex items-center justify-between text-xs py-1">
+<span class="text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[16px]">sync_problem</span> Hardware 2FA Key
+                </span>
+<span class="font-mono-fret text-primary">Pending Setup</span>
+</div>
+</div>
+</div>
+<!-- Studio Security Context Card (Editorial Visual) -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">graphic_eq</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Studio Practice Protection</span>
+</div>
+<div class="relative w-full h-36 rounded-lg overflow-hidden bg-surface-container-lowest">
+<img class="w-full h-full object-cover opacity-80" data-alt="Close up dramatic moody shot of an electric guitar neck with metallic nickel frets and glowing warm amber studio indicator lights reflecting on polished rosewood fretboard in high contrast audio engineering studio." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATrxzVC7Jmc2xOdZk-jsll50d1PPYOGtnseiSTExqR5m7RanXHtCrKApQX90MOtGWZ1WRvuAQsuLzZEAkZ2Lbkax4Fxr4NlVm5cmTcW4aJ3aE7YqaqFLuCb3Lsi1zrSqUOg67DuSkEgqpDbnekEyZ4DAhGaO7TRs7YJr3ckc3xgoVoTyiOkazFkOKJ_7GK631-tCU9m0IibP_uMJ9519MZ1FMBiSSMv578XRF5M7XOmpPFUJnNKH8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/50 to-transparent"></div>
+<div class="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+<div class="flex items-center gap-1.5 bg-surface-container-lowest/90 px-2.5 py-1 rounded backdrop-blur">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-caps text-[10px] text-on-surface font-mono-fret">FretFlow Audio Engine 4.2</span>
+</div>
+<span class="font-label-caps text-[10px] text-on-surface-variant">Real-time pitch crypt</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Your audio telemetry (microphone pitch detection samples and fret precision buffers) is processed entirely client-side via WebAssembly and never streamed or retained.
+            </p>
+</div>
+<!-- Quick Security Tip -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md flex items-center gap-space-md">
+<span class="material-symbols-outlined text-secondary text-[24px]">verified</span>
+<div class="flex flex-col text-xs">
+<span class="font-headline-sm text-on-surface font-semibold">Zero-Knowledge Architecture</span>
+<span class="text-on-surface-variant">FretFlow administrators cannot view your raw password or practice audio recordings.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 2: ACTIVE LOGIN SESSIONS -->
+<div class="flex flex-col gap-space-md pt-space-lg">
+<!-- Section Header with Master Revoke Action -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-space-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface">Active Authenticated Sessions</h2>
+<span class="font-mono-metric text-xs px-2 py-0.5 rounded-full bg-surface-container-high text-primary">3 Devices</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-2xl">
+              These devices are currently authenticated to your account using persistent SHA-256 session token hashing. Revoke any session you do not recognize.
+            </p>
+</div>
+<button class="px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-error-container hover:text-on-error-container text-error font-headline-sm text-xs font-semibold transition-all flex items-center gap-2 shrink-0 self-start sm:self-auto shadow-sm" onclick="confirmBulkRevoke()">
+<span class="material-symbols-outlined text-[16px]">logout</span>
+<span>Log Out All Other Devices</span>
+</button>
+</div>
+<!-- Session Cards Deck -->
+<div class="flex flex-col gap-space-md" id="sessions-container">
+<!-- CARD 1: Current Session -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-md flex flex-col md:flex-row md:items-center justify-between gap-space-lg relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary shadow-[0_0_12px_rgba(74,225,118,0.8)]"></div>
+<div class="flex items-start gap-space-md pl-1">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-[28px]">desktop_windows</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Desktop Chrome 124 (Surabaya, ID)</span>
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-secondary-container/20 text-secondary font-label-caps text-label-caps font-bold">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span> Active Now (This Device)
+                  </span>
+</div>
+<div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono-fret text-xs text-on-surface-variant">
+<span class="text-on-surface">IP: 182.253.44.18 (Masked ID)</span>
+<span>•</span>
+<span>OS: macOS Sonoma 14.4 (Apple Silicon)</span>
+<span>•</span>
+<span>First authorized Sep 20, 2026</span>
+</div>
+<div class="inline-flex items-center gap-1 font-mono-fret text-[11px] text-secondary/80 pt-1">
+<span class="material-symbols-outlined text-[13px]">lock</span>
+<span>SHA-256 HMAC session token verified • httpOnly SameSite=Lax</span>
+</div>
+</div>
+</div>
+<!-- Current Session Actions -->
+<div class="flex items-center gap-space-sm shrink-0 self-end md:self-center pl-1">
+<span class="font-label-caps text-label-caps text-secondary font-mono-fret bg-secondary/10 px-3 py-1.5 rounded-lg">CURRENT MASTER</span>
+</div>
+</div>
+<!-- CARD 2: Other Active Device (Ubuntu Laptop) -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-md flex flex-col md:flex-row md:items-center justify-between gap-space-lg transition-all duration-300" id="session-device-2">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-on-surface-variant shrink-0">
+<span class="material-symbols-outlined text-[28px]">laptop_chromebook</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-headline-sm text-headline-sm text-on-surface">TECNO Megabook T1 — Ubuntu Linux (Surabaya, ID)</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-container-lowest px-2 py-0.5 rounded">STUDIO LAPTOP</span>
+</div>
+<div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono-fret text-xs text-on-surface-variant">
+<span>IP: 114.124.89.21</span>
+<span>•</span>
+<span>Browser: Firefox 125 on Linux x86_64</span>
+<span>•</span>
+<span>Authenticated Sep 18, 2026</span>
+<span>•</span>
+<span class="text-primary font-medium">Last active: 2 days ago</span>
+</div>
+<div class="font-mono-fret text-[11px] text-on-surface-variant/70 pt-0.5">
+                  Token: tok_live_8f3a92...b41e • Session Lifetime: 30 days
+                </div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0 self-end md:self-center">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-error/20 hover:text-error text-on-surface-variant font-headline-sm text-xs font-semibold transition-all flex items-center gap-1.5" onclick="revokeSession('session-device-2', 'TECNO Megabook T1')">
+<span class="material-symbols-outlined text-[16px]">close</span>
+<span>Revoke Session</span>
+</button>
+</div>
+</div>
+<!-- CARD 3: Mobile Device (iPhone) -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-md flex flex-col md:flex-row md:items-center justify-between gap-space-lg transition-all duration-300" id="session-device-3">
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-on-surface-variant shrink-0">
+<span class="material-symbols-outlined text-[28px]">smartphone</span>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="font-headline-sm text-headline-sm text-on-surface">iPhone 15 Pro — Mobile Safari (Jakarta, ID)</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant bg-surface-container-lowest px-2 py-0.5 rounded">FretFlow Mobile Web</span>
+</div>
+<div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono-fret text-xs text-on-surface-variant">
+<span>IP: 36.85.12.90</span>
+<span>•</span>
+<span>iOS 17.5.1 • WebKit 605.1.15</span>
+<span>•</span>
+<span>Authenticated Sep 15, 2026</span>
+<span>•</span>
+<span class="text-on-surface-variant">Last active: 5 days ago</span>
+</div>
+<div class="font-mono-fret text-[11px] text-on-surface-variant/70 pt-0.5">
+                  Token: tok_live_012e8b...99ca • Biometric FaceID bound
+                </div>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0 self-end md:self-center">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-error/20 hover:text-error text-on-surface-variant font-headline-sm text-xs font-semibold transition-all flex items-center gap-1.5" onclick="revokeSession('session-device-3', 'iPhone 15 Pro')">
+<span class="material-symbols-outlined text-[16px]">close</span>
+<span>Revoke Session</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION 3: PRIVACY & DATA EXPORT (GDPR / Regulatory Compliance) -->
+<div class="flex flex-col gap-space-md pt-space-lg">
+<div class="flex flex-col gap-0.5">
+<h2 class="font-headline-md text-headline-md text-on-surface">Privacy, Data Governance &amp; Export</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-2xl">
+            You own 100% of your musical telemetry, chord retention statistics, and earned achievements. Fully compliant with GDPR Article 20.
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+<!-- Card A: Export Learning Data -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-md flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[22px]">download_for_offline</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Download Your Learning Data</h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Full machine-readable ledger</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Request a portable, verified archive of your complete guitar mastery track records including:
+              </p>
+<!-- Included Items Checklist -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 py-2 font-mono-fret text-xs text-on-surface">
+<div class="flex items-center gap-2 bg-surface-container-low p-2 rounded">
+<span class="material-symbols-outlined text-secondary text-[16px]">task_alt</span> Verified Lesson History
+                </div>
+<div class="flex items-center gap-2 bg-surface-container-low p-2 rounded">
+<span class="material-symbols-outlined text-secondary text-[16px]">task_alt</span> Quiz Attempt Records
+                </div>
+<div class="flex items-center gap-2 bg-surface-container-low p-2 rounded">
+<span class="material-symbols-outlined text-secondary text-[16px]">task_alt</span> Acoustic Practice Logs
+                </div>
+<div class="flex items-center gap-2 bg-surface-container-low p-2 rounded">
+<span class="material-symbols-outlined text-secondary text-[16px]">task_alt</span> XP &amp; Streak Ledger
+                </div>
+</div>
+<div class="font-label-caps text-[11px] text-on-surface-variant flex items-center gap-1.5 pt-1">
+<span class="material-symbols-outlined text-secondary text-[14px]">shield</span>
+<span>GDPR Art. 20 Compliant. Zero tracking telemetry or passwords included.</span>
+</div>
+</div>
+<!-- Export Buttons -->
+<div class="flex flex-wrap items-center gap-space-sm pt-space-xs">
+<button class="px-space-md py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-headline-sm text-xs font-semibold flex items-center gap-2 transition-all shadow-sm" onclick="triggerExport('JSON')">
+<span class="material-symbols-outlined text-primary text-[18px]">data_object</span>
+<span>Export as JSON</span>
+</button>
+<button class="px-space-md py-2.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-headline-sm text-xs font-semibold flex items-center gap-2 transition-all shadow-sm" onclick="triggerExport('CSV')">
+<span class="material-symbols-outlined text-secondary text-[18px]">table_chart</span>
+<span>Export as CSV (.zip)</span>
+</button>
+</div>
+</div>
+<!-- Card B: Delete Account & Wipe Progress -->
+<div class="bg-surface-container rounded-xl p-space-lg shadow-md flex flex-col justify-between gap-space-md relative overflow-hidden">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-lg bg-error-container/20 flex items-center justify-center text-error shrink-0">
+<span class="material-symbols-outlined text-[22px]">delete_forever</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-error font-semibold">Delete Account &amp; Permanent Anonymization</h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Irreversible action</span>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Permanently purge your account, curriculum milestones, chord tempo records, and earned XP. Once confirmed, this data cannot be recovered by any administrator.
+              </p>
+<div class="bg-error-container/10 rounded-lg p-space-md flex items-start gap-space-sm my-1">
+<span class="material-symbols-outlined text-error text-[18px] shrink-0 mt-0.5">warning</span>
+<span class="font-body-sm text-xs text-on-surface">
+                  Requires re-entering your master password and completing 24-hour quarantine freeze before hard wipe.
+                </span>
+</div>
+</div>
+<!-- Danger Trigger Button -->
+<div class="pt-space-xs">
+<button class="px-space-md py-2.5 rounded-lg bg-error-container hover:bg-on-error text-on-error-container font-headline-sm text-xs font-semibold transition-all flex items-center gap-2 shadow-sm" onclick="openDeleteModal()">
+<span class="material-symbols-outlined text-[18px]">report</span>
+<span>Request Account Deletion...</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive JavaScript Micro-interactions -->
+<script>
+    function togglePasswordVis(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const icon = btn.querySelector('.material-symbols-outlined');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.textContent = 'visibility_off';
+      } else {
+        input.type = 'password';
+        icon.textContent = 'visibility';
+      }
+    }
+
+    function evaluateStrength(val) {
+      const lenCheck = val.length >= 8;
+      const caseCheck = /[a-z]/.test(val) && /[A-Z]/.test(val);
+      const numCheck = /[0-9]/.test(val);
+      const symCheck = /[^A-Za-z0-9]/.test(val);
+
+      const score = [lenCheck, caseCheck, numCheck, symCheck].filter(Boolean).length;
+
+      // Update indicators
+      updateRuleState('rule-len', lenCheck);
+      updateRuleState('rule-case', caseCheck);
+      updateRuleState('rule-num', numCheck);
+      updateRuleState('rule-sym', symCheck);
+
+      const label = document.getElementById('strength-label');
+      const b1 = document.getElementById('bar-1');
+      const b2 = document.getElementById('bar-2');
+      const b3 = document.getElementById('bar-3');
+      const b4 = document.getElementById('bar-4');
+
+      const bars = [b1, b2, b3, b4];
+      bars.forEach(b => {
+        b.className = 'h-full rounded-full bg-surface-variant transition-colors duration-300';
+      });
+
+      if (score === 0) {
+        label.textContent = 'Enter passphrase';
+        label.className = 'font-mono-fret text-on-surface-variant font-bold';
+      } else if (score <= 2) {
+        label.textContent = `Weak (${score}/4)`;
+        label.className = 'font-mono-fret text-error font-bold';
+        for(let i=0; i<score; i++) bars[i].className = 'h-full rounded-full bg-error transition-colors duration-300';
+      } else if (score === 3) {
+        label.textContent = `Moderate (${score}/4)`;
+        label.className = 'font-mono-fret text-primary font-bold';
+        for(let i=0; i<score; i++) bars[i].className = 'h-full rounded-full bg-primary transition-colors duration-300';
+      } else {
+        label.textContent = `Strong (4/4)`;
+        label.className = 'font-mono-fret text-secondary font-bold';
+        for(let i=0; i<4; i++) bars[i].className = 'h-full rounded-full bg-secondary transition-colors duration-300';
+      }
+
+      checkMatch();
+    }
+
+    function updateRuleState(elemId, isValid) {
+      const el = document.getElementById(elemId);
+      if (!el) return;
+      if (isValid) {
+        el.className = 'flex items-center gap-1 text-secondary';
+        el.querySelector('.material-symbols-outlined').textContent = 'check_circle';
+      } else {
+        el.className = 'flex items-center gap-1 text-on-surface-variant';
+        el.querySelector('.material-symbols-outlined').textContent = 'radio_button_unchecked';
+      }
+    }
+
+    function checkMatch() {
+      const p1 = document.getElementById('new-pwd').value;
+      const p2 = document.getElementById('confirm-pwd').value;
+      const hint = document.getElementById('match-hint');
+      const btn = document.getElementById('submit-pwd-btn');
+
+      if (p2.length > 0 && p1 === p2) {
+        hint.classList.remove('hidden');
+        hint.textContent = 'Passwords match verified';
+        hint.className = 'font-label-caps text-[10px] text-secondary';
+        btn.removeAttribute('disabled');
+      } else if (p2.length > 0 && p1 !== p2) {
+        hint.classList.remove('hidden');
+        hint.textContent = 'Passwords do not match';
+        hint.className = 'font-label-caps text-[10px] text-error';
+      } else {
+        hint.classList.add('hidden');
+      }
+    }
+
+    function handlePasswordSubmit() {
+      const btn = document.getElementById('submit-pwd-btn');
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span> Re-encrypting...';
+      setTimeout(() => {
+        btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">done</span> Saved Securely!';
+        btn.classList.add('bg-secondary', 'text-on-secondary');
+        setTimeout(() => {
+          btn.innerHTML = orig;
+          btn.classList.remove('bg-secondary', 'text-on-secondary');
+        }, 2500);
+      }, 900);
+    }
+
+    function revokeSession(cardId, name) {
+      if (confirm(`Revoke active token and disconnect ${name}?`)) {
+        const card = document.getElementById(cardId);
+        if (card) {
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.95)';
+          setTimeout(() => {
+            card.remove();
+          }, 300);
+        }
+      }
+    }
+
+    function confirmBulkRevoke() {
+      if (confirm('Revoke all authenticated sessions on other devices? You will remain logged in on this browser only.')) {
+        const s2 = document.getElementById('session-device-2');
+        const s3 = document.getElementById('session-device-3');
+        if (s2) s2.remove();
+        if (s3) s3.remove();
+        alert('All secondary device tokens have been invalidated successfully.');
+      }
+    }
+
+    function triggerExport(type) {
+      alert(`Preparing ${type} export package for Alex Chen. A notification link will be generated in compliance with GDPR.`);
+    }
+
+    function openDeleteModal() {
+      const confirmPrompt = prompt('This will wipe your 5-day streak, XP, and practice metrics permanently.\n\nTo confirm, type "DELETE":');
+      if (confirmPrompt === 'DELETE') {
+        alert('Deletion scheduled. Check your email (alex.chen@guitarlearning.id) to confirm the 24-hour quarantine wipe.');
+      }
+    }
+  </script>
+</div></main></div></body></html>

@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import clsx from 'clsx';
 import { UserRole } from '@/lib/permissions';
+import { Logo } from '@/components/ui/Logo';
 
 interface AdminSidebarProps {
   currentRole: UserRole;
@@ -49,6 +50,13 @@ export function AdminSidebar({ currentRole }: AdminSidebarProps) {
             href: '/admin/users',
             icon: Users,
             active: pathname.startsWith('/admin/users'),
+            available: true,
+          },
+          {
+            name: 'Support Inbox',
+            href: '/admin/support',
+            icon: LifeBuoy,
+            active: pathname.startsWith('/admin/support'),
             available: true,
           },
         ]
@@ -119,16 +127,15 @@ export function AdminSidebar({ currentRole }: AdminSidebarProps) {
       ]
     : [];
 
-  const futureNavItems = [
-    {
-      name: 'Support Tickets',
-      href: '#',
-      icon: LifeBuoy,
-      active: false,
-      available: false,
-      badge: 'Phase F',
-    },
-  ];
+  const futureNavItems: {
+    name: string;
+    href: string;
+    icon: typeof LifeBuoy;
+    active: boolean;
+    available: boolean;
+    badge?: string;
+  }[] = [];
+
 
   return (
     <>
@@ -170,17 +177,10 @@ export function AdminSidebar({ currentRole }: AdminSidebarProps) {
         )}
       >
         {/* Brand Header */}
-        <div className="p-5 border-b border-[#1F2636] flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-slate-950 font-black shadow-md shadow-amber-500/20">
-            🎸
-          </div>
-          <div>
-            <h1 className="font-bold text-slate-100 text-sm tracking-tight leading-tight">
-              Operations Hub
-            </h1>
-            <p className="text-[11px] text-slate-400 font-medium">Guitar Learning Platform</p>
-          </div>
+        <div className="p-5 border-b border-[#1F2636] flex items-center">
+          <Logo size="sm" subtitle="STAFF BACKOFFICE" />
         </div>
+
 
         {/* Navigation Section */}
         <div className="flex-1 px-3 py-4 space-y-4 overflow-y-auto">

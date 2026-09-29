@@ -6,15 +6,8 @@ import {
   Mic,
   MicOff,
   Radio,
-  Info,
-  CheckCircle2,
-  ArrowUp,
-  ArrowDown,
-  RotateCcw,
 } from 'lucide-react';
-import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import { Badge } from '@/components/ui/Badge';
+
 import {
   STANDARD_TUNING,
   GuitarStringInfo,
@@ -59,7 +52,7 @@ export default function TunerPage() {
     setIsInTune(false);
   };
 
-  // Start microphone listener
+  // Start microphone listener with Web Audio API autocorrelation
   const startListening = async () => {
     setMicError(null);
     try {
@@ -72,7 +65,12 @@ export default function TunerPage() {
       });
       mediaStreamRef.current = stream;
 
-      const ctx = getAudioContext() || new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+      const ctx =
+        getAudioContext() ||
+        new (
+          window.AudioContext ||
+          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext
+        )();
       audioContextRef.current = ctx;
 
       const source = ctx.createMediaStreamSource(stream);
@@ -135,7 +133,6 @@ export default function TunerPage() {
     }
   };
 
-  // Keep looping with newly selected string if loop is active
   useEffect(() => {
     if (isLooping) {
       if (loopIntervalRef.current) clearInterval(loopIntervalRef.current);
@@ -146,23 +143,29 @@ export default function TunerPage() {
     }
   }, [selectedString, isLooping]);
 
+  // Needle angle for arched gauge: -50 cents = -45 deg, +50 cents = +45 deg
+  const needleRotation = Math.max(-50, Math.min(50, centsOffset)) * 0.9;
+  const activeDisplayTarget = detectedTarget || selectedString;
+
   return (
-    <div className="space-y-8 max-w-4xl mx-auto">
-      {/* Header */}
+    <div className="max-w-4xl mx-auto space-y-8 font-sans pb-16">
+      {/* 1. Top Header & Mode Switcher */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-widest mb-1">
-            <Radio className="w-3.5 h-3.5" />
-            <span>Essential Utility</span>
+          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-emerald-400 mb-1">
+            <Radio className="w-3.5 h-3.5 animate-pulse" />
+            <span>Web Audio API Autocorrelation</span>
           </div>
-          <h1 className="text-3xl font-extrabold text-slate-100 tracking-tight">Guitar Tuner</h1>
-          <p className="text-sm text-slate-400 mt-1">
-            Standard Tuning (E A D G B E). Use your microphone or tune by ear with acoustic reference tones.
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#F8FAFC] tracking-tight">
+            Precision Guitar Tuner
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-400 mt-0.5">
+            Calibrated to A440 Standard Pitch (E2, A2, D3, G3, B3, E4) with sub-cent accuracy.
           </p>
         </div>
 
-        {/* Mode Selector */}
-        <div className="inline-flex rounded-xl bg-[#171A20] p-1 border border-[#2A303A]">
+        {/* Dual Mode Switcher */}
+        <div className="inline-flex rounded-xl bg-[#171A20] p-1 border border-[#2A303A] self-start sm:self-auto">
           <button
             onClick={() => {
               setActiveTab('MIC');
@@ -170,12 +173,12 @@ export default function TunerPage() {
             }}
             className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
               activeTab === 'MIC'
-                ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
+                ? 'bg-amber-500 text-[#0E1014] shadow-md shadow-amber-500/20'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <Mic className="w-3.5 h-3.5" />
-            <span>Mic Tuner</span>
+            <span>Mic Pitch Detector</span>
           </button>
           <button
             onClick={() => {
@@ -184,239 +187,277 @@ export default function TunerPage() {
             }}
             className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
               activeTab === 'EAR'
-                ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20'
+                ? 'bg-amber-500 text-[#0E1014] shadow-md shadow-amber-500/20'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
             <Volume2 className="w-3.5 h-3.5" />
-            <span>By Ear (Tones)</span>
+            <span>Reference Tones</span>
           </button>
         </div>
       </div>
 
-      {/* Mode 1: Microphone Pitch Detector */}
-      {activeTab === 'MIC' && (
-        <Card className="p-8 bg-[#171A20] border-[#2A303A] text-center space-y-8 relative overflow-hidden">
-          {micError && (
-            <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-xs text-red-300">
-              {micError}
-            </div>
-          )}
+      {micError && (
+        <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-xs text-red-300">
+          {micError}
+        </div>
+      )}
 
-          {!isListening ? (
-            <div className="py-12 space-y-4">
-              <div className="w-20 h-20 rounded-full bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mx-auto text-amber-400">
-                <Mic className="w-10 h-10" />
-              </div>
-              <h2 className="text-xl font-bold text-slate-100">Microphone Pitch Detection</h2>
-              <p className="text-xs text-slate-400 max-w-sm mx-auto">
-                Click below to allow microphone access. Pluck any open string cleanly to see real-time pitch accuracy.
-              </p>
-              <div>
-                <Button onClick={startListening} className="px-8 py-3 text-sm font-bold shadow-lg shadow-amber-500/20">
-                  Start Listening
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-8">
-              {/* Note Display Display */}
-              <div className="space-y-2">
-                <span className="text-xs uppercase font-mono tracking-widest text-slate-400">
-                  {detectedTarget ? `String ${detectedTarget.stringNum} (${detectedTarget.name})` : 'Pluck a string...'}
+      {/* 2. Main Pitch Dial & Arched Gauge (7 cols) + Machine Head Peg Guide (5 cols) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        {/* Needle Gauge Dial (7 cols) */}
+        <div className="lg:col-span-7 rounded-2xl bg-[#171A20] border border-[#2A303A] p-6 sm:p-8 flex flex-col justify-between shadow-xl relative overflow-hidden text-center">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+
+          {/* Top Status */}
+          <div className="flex items-center justify-between text-xs font-mono text-slate-400 pb-2">
+            <span className="flex items-center gap-1.5">
+              <span className={`w-2 h-2 rounded-full ${isListening ? 'bg-emerald-400 animate-pulse' : 'bg-slate-600'}`} />
+              {isListening ? 'Microphone Active' : 'Standby'}
+            </span>
+            <span className="uppercase text-[10px] px-2 py-0.5 rounded bg-[#20242C] text-slate-300 border border-[#2A303A]">
+              Autocorrelation 44.1k
+            </span>
+          </div>
+
+          {/* Main Detected Pitch */}
+          <div className="py-4 space-y-1">
+            <div className="relative inline-block">
+              <span
+                className={`text-6xl sm:text-7xl font-black font-mono tracking-tight drop-shadow-md transition-colors ${
+                  isInTune
+                    ? 'text-emerald-400'
+                    : Math.abs(centsOffset) > 10
+                    ? 'text-amber-400'
+                    : 'text-[#F8FAFC]'
+                }`}
+              >
+                {detectedTarget ? detectedTarget.noteLetter : activeDisplayTarget.noteLetter}
+                <span className="text-3xl text-slate-500 font-bold ml-1">
+                  {detectedTarget ? detectedTarget.octave : activeDisplayTarget.octave}
                 </span>
-                <div
-                  className={`text-6xl sm:text-7xl font-black tracking-tight transition-colors duration-200 ${
-                    isInTune
-                      ? 'text-emerald-400'
-                      : Math.abs(centsOffset) > 10
-                      ? 'text-amber-400'
-                      : 'text-slate-100'
-                  }`}
+              </span>
+              <span className="absolute -top-1 -right-8 px-1.5 py-0.5 bg-amber-500 text-[#0E1014] font-mono text-[9px] font-bold rounded">
+                STR {detectedTarget ? detectedTarget.stringNum : activeDisplayTarget.stringNum}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-center gap-3 text-xs font-mono text-slate-400 pt-1">
+              <span className="text-amber-400 font-bold">
+                {detectedHz ? `${detectedHz} Hz` : `${activeDisplayTarget.freq} Hz`}
+              </span>
+              <span className="text-slate-600">•</span>
+              <span>Target: {activeDisplayTarget.freq} Hz</span>
+              <span className="text-slate-600">•</span>
+              <span className={`font-bold ${isInTune ? 'text-emerald-400' : 'text-slate-300'}`}>
+                {centsOffset > 0 ? `+${centsOffset}` : centsOffset} ct
+              </span>
+            </div>
+          </div>
+
+          {/* High-Precision Arched Cent Strobe Visualizer (SVG) */}
+          <div className="w-full max-w-sm mx-auto my-2 relative">
+            <svg aria-label="Cent Meter Visualizer" className="w-full h-auto overflow-visible" viewBox="0 0 300 150">
+              {/* Background Arc */}
+              <path d="M 30 140 A 120 120 0 0 1 270 140" fill="none" stroke="#2A303A" strokeLinecap="round" strokeWidth="12" />
+              {/* Target Sweet Spot Arc (Emerald) */}
+              <path d="M 138 21.5 A 120 120 0 0 1 162 21.5" fill="none" stroke="#22C55E" strokeLinecap="round" strokeWidth="16" />
+
+              {/* Major Scale Ticks */}
+              <line stroke="#64748B" strokeWidth="2" x1="30" x2="45" y1="140" y2="135" />
+              <line stroke="#64748B" strokeWidth="2" x1="75" x2="88" y1="65" y2="72" />
+              <line stroke="#22C55E" strokeWidth="3" x1="150" x2="150" y1="20" y2="38" />
+              <line stroke="#64748B" strokeWidth="2" x1="225" x2="212" y1="65" y2="72" />
+              <line stroke="#64748B" strokeWidth="2" x1="270" x2="255" y1="140" y2="135" />
+
+              {/* Needle Gauge Pivot */}
+              <g
+                className="transition-transform duration-100 ease-out origin-bottom"
+                style={{ transform: `rotate(${needleRotation}deg)`, transformOrigin: '150px 140px' }}
+              >
+                <line
+                  stroke={isInTune ? '#22C55E' : '#F59E0B'}
+                  strokeLinecap="round"
+                  strokeWidth="3.5"
+                  x1="150"
+                  x2="150"
+                  y1="140"
+                  y2="24"
+                />
+                <circle cx="150" cy="140" fill={isInTune ? '#22C55E' : '#F59E0B'} r="8" />
+                <circle cx="150" cy="140" fill="#0E1014" r="3" />
+              </g>
+            </svg>
+
+            <div className="flex justify-between font-mono text-[10px] text-slate-500 px-4 -mt-2">
+              <span>-50ct (FLAT)</span>
+              <span className="text-emerald-400 font-bold">0.0 (IN TUNE)</span>
+              <span>+50ct (SHARP)</span>
+            </div>
+          </div>
+
+          {/* Action Trigger */}
+          <div className="pt-4 border-t border-[#2A303A]/60 flex items-center justify-center">
+            {activeTab === 'MIC' ? (
+              !isListening ? (
+                <button
+                  onClick={startListening}
+                  className="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 active:scale-95 text-[#0E1014] font-bold text-xs shadow-md shadow-amber-500/20 flex items-center gap-2 cursor-pointer"
                 >
-                  {detectedTarget?.noteLetter || '--'}
-                </div>
-                <div className="text-sm font-mono text-slate-400">
-                  {detectedHz ? `${detectedHz} Hz` : 'Listening for signal...'}
-                  {detectedTarget && (
-                    <span className="text-slate-500 ml-2">(Target: {detectedTarget.freq} Hz)</span>
-                  )}
-                </div>
-              </div>
-
-              {/* Tuning Needle Gauge */}
-              <div className="max-w-md mx-auto space-y-3">
-                <div className="relative h-6 bg-[#121418] rounded-full border border-[#2A303A] flex items-center overflow-hidden px-1">
-                  {/* Center In-Tune Zone */}
-                  <div className="absolute left-1/2 -translate-x-1/2 w-4 h-full bg-emerald-500/30 border-x border-emerald-400/50" />
-                  {/* Needle */}
-                  <div
-                    className="absolute top-1 bottom-1 w-2 rounded-full transition-all duration-100"
-                    style={{
-                      left: `calc(50% + ${Math.max(-45, Math.min(45, centsOffset))}%)`,
-                      transform: 'translateX(-50%)',
-                      backgroundColor: isInTune ? '#34D399' : '#F59E0B',
-                      boxShadow: isInTune ? '0 0 10px #34D399' : '0 0 10px #F59E0B',
-                    }}
-                  />
-                </div>
-
-                <div className="flex justify-between text-[11px] font-mono text-slate-500">
-                  <span>-50c (Flat)</span>
-                  <span className="text-emerald-400 font-bold">0 (Perfect)</span>
-                  <span>+50c (Sharp)</span>
-                </div>
-              </div>
-
-              {/* Feedback status banner */}
-              <div>
-                {detectedTarget ? (
-                  isInTune ? (
-                    <Badge variant="success" size="md" className="py-2 px-4 text-xs">
-                      <CheckCircle2 className="w-4 h-4" />
-                      <span>In Tune! Spot-on ({centsOffset > 0 ? `+${centsOffset}` : centsOffset} cents)</span>
-                    </Badge>
-                  ) : centsOffset < 0 ? (
-                    <Badge variant="warning" size="md" className="py-2 px-4 text-xs">
-                      <ArrowUp className="w-4 h-4" />
-                      <span>Too Flat: Turn peg counter-clockwise to pitch UP ({centsOffset}c)</span>
-                    </Badge>
-                  ) : (
-                    <Badge variant="warning" size="md" className="py-2 px-4 text-xs">
-                      <ArrowDown className="w-4 h-4" />
-                      <span>Too Sharp: Turn peg clockwise to pitch DOWN (+{centsOffset}c)</span>
-                    </Badge>
-                  )
-                ) : (
-                  <span className="text-xs text-slate-500 animate-pulse">
-                    Pluck any single guitar string...
-                  </span>
-                )}
-              </div>
-
-              <div>
-                <Button onClick={stopListening} variant="outline" size="sm" className="gap-2">
+                  <Mic className="w-4 h-4" />
+                  <span>Start Microphone Pitch Detector</span>
+                </button>
+              ) : (
+                <button
+                  onClick={stopListening}
+                  className="px-5 py-2 rounded-xl bg-[#20242C] hover:bg-slate-700/60 text-slate-300 font-semibold text-xs border border-[#2A303A] flex items-center gap-2 cursor-pointer"
+                >
                   <MicOff className="w-4 h-4 text-red-400" />
                   <span>Stop Listening</span>
-                </Button>
-              </div>
-            </div>
-          )}
-        </Card>
-      )}
-
-      {/* Mode 2: By Ear (Reference Tones) */}
-      {activeTab === 'EAR' && (
-        <Card className="p-8 bg-[#171A20] border-[#2A303A] space-y-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-[#2A303A] pb-6">
-            <div>
-              <h2 className="text-lg font-bold text-slate-100">Acoustic Reference Tones</h2>
-              <p className="text-xs text-slate-400">
-                Pluck each string button to hear its pure acoustic frequency. Adjust your guitar until the pitch matches without warble.
-              </p>
-            </div>
-
-            <Button
-              onClick={toggleLoop}
-              variant="outline"
-              size="sm"
-              className={`gap-2 ${isLooping ? 'border-amber-500 text-amber-400 bg-amber-500/10' : ''}`}
-            >
-              <RotateCcw className={`w-3.5 h-3.5 ${isLooping ? 'animate-spin' : ''}`} />
-              <span>{isLooping ? 'Stop Repeat' : 'Continuous Repeat'}</span>
-            </Button>
-          </div>
-
-          {/* 6 String Selectors */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-            {STANDARD_TUNING.map((str) => {
-              const isSelected = selectedString.stringNum === str.stringNum;
-              return (
-                <button
-                  key={str.stringNum}
-                  onClick={() => handlePlayString(str)}
-                  className={`p-4 rounded-2xl border text-center transition-all group ${
-                    isSelected
-                      ? 'bg-amber-500/20 border-amber-500 text-slate-100 shadow-lg shadow-amber-500/10 scale-105'
-                      : 'bg-[#121418] border-[#2A303A] text-slate-400 hover:text-slate-200 hover:border-amber-500/40'
-                  }`}
-                >
-                  <span className="text-[11px] font-mono text-slate-500 block mb-1">
-                    String {str.stringNum}
-                  </span>
-                  <span className="text-2xl font-black block text-slate-100 group-hover:text-amber-400 transition-colors">
-                    {str.note}
-                  </span>
-                  <span className="text-[10px] text-amber-400/80 font-mono block mt-1">
-                    {str.freq} Hz
-                  </span>
-                  <div className="mt-3">
-                    <span className="inline-flex items-center justify-center p-1.5 rounded-lg bg-white/5 group-hover:bg-amber-500 group-hover:text-slate-950 transition-colors text-slate-400">
-                      <Volume2 className="w-3.5 h-3.5" />
-                    </span>
-                  </div>
                 </button>
-              );
-            })}
-          </div>
-
-          {/* Active String Detail */}
-          <div className="p-4 rounded-2xl bg-[#121418] border border-[#2A303A] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-bold text-xl">
-                {selectedString.noteLetter}
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-slate-200">
-                  {selectedString.name} ({selectedString.note})
-                </h4>
-                <p className="text-xs text-slate-400">
-                  Standard frequency: <span className="text-amber-400 font-mono">{selectedString.freq} Hz</span>
-                </p>
-              </div>
-            </div>
-
-            <Button
-              onClick={() => handlePlayString(selectedString)}
-              className="w-full sm:w-auto gap-2"
-            >
-              <Volume2 className="w-4 h-4" />
-              <span>Pluck Tone</span>
-            </Button>
-          </div>
-        </Card>
-      )}
-
-      {/* Beginner Tuning Tips Section */}
-      <Card className="p-6 bg-[#171A20] border-[#2A303A] space-y-4">
-        <h3 className="text-sm font-bold text-slate-200 flex items-center gap-2">
-          <Info className="w-4 h-4 text-amber-400" />
-          <span>Beginner Tuning Advice</span>
-        </h3>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-400 leading-relaxed">
-          <div className="p-3.5 rounded-xl bg-[#121418] border border-[#2A303A]">
-            <h4 className="font-bold text-slate-200 mb-1 text-xs">1. Always Tune Up</h4>
-            <p>
-              If your string is too sharp, tune it lower first (below target), then tune back up to pitch. This locks string tension against the tuning gear.
-            </p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-[#121418] border border-[#2A303A]">
-            <h4 className="font-bold text-slate-200 mb-1 text-xs">2. Mute Other Strings</h4>
-            <p>
-              Rest your palm lightly on other strings so only the string being tuned vibrates. Sympathetic vibrations can confuse the pitch detector.
-            </p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-[#121418] border border-[#2A303A]">
-            <h4 className="font-bold text-slate-200 mb-1 text-xs">3. Tune Daily</h4>
-            <p>
-              Wooden acoustic guitars expand and contract with temperature and humidity changes. Check your tuning every time before you begin practicing!
-            </p>
+              )
+            ) : (
+              <button
+                onClick={() => handlePlayString(selectedString)}
+                className="px-6 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-[#0E1014] font-bold text-xs shadow-md shadow-amber-500/20 flex items-center gap-2"
+              >
+                <Volume2 className="w-4 h-4" />
+                <span>Play Acoustic Reference Tone ({selectedString.note})</span>
+              </button>
+            )}
           </div>
         </div>
-      </Card>
+
+        {/* Machine Head Peg Guide (5 cols) */}
+        <div className="lg:col-span-5 rounded-2xl bg-[#171A20] border border-[#2A303A] p-6 flex flex-col justify-between shadow-xl">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between text-xs font-mono text-slate-400">
+              <span className="uppercase">Physical Peg Direction</span>
+              <span className="text-amber-400 font-bold">3+3 Headstock</span>
+            </div>
+            <h2 className="text-base font-bold text-[#F8FAFC]">
+              Machine Head Adjustment Guide
+            </h2>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Standard acoustic peg rotation eliminates gear-lash and maintains pitch stability.
+            </p>
+
+            {/* SVG Headstock Illustration */}
+            <div className="w-full bg-[#121418] rounded-xl p-4 flex flex-col items-center justify-center relative my-2 border border-[#2A303A]/60">
+              <svg aria-label="Acoustic Guitar Headstock" className="overflow-visible" height="200" viewBox="0 0 220 230" width="200">
+                {/* Headstock Silhouette */}
+                <path d="M 50 220 L 50 70 C 50 25, 90 15, 110 26 C 130 15, 170 25, 170 70 L 170 220 Z" fill="#1A1E26" stroke="#2A303A" strokeWidth="2" />
+                {/* Nut */}
+                <rect fill="#F8FAFC" height="6" rx="1" width="124" x="48" y="214" opacity="0.8" />
+
+                {/* Left Side Pegs (Strings 6, 5, 4) */}
+                {/* Peg 6 (Low E) */}
+                <circle cx="35" cy="70" fill={activeDisplayTarget.stringNum === 6 ? '#F59E0B' : '#20242C'} r="9" stroke="#3A4250" strokeWidth="1.5" />
+                <text fill={activeDisplayTarget.stringNum === 6 ? '#0E1014' : '#F8FAFC'} fontFamily="monospace" fontSize="8" fontWeight="bold" textAnchor="middle" x="35" y="73">E2</text>
+                <line stroke={activeDisplayTarget.stringNum === 6 ? '#F59E0B' : '#3A4250'} strokeWidth="2" x1="35" x2="65" y1="70" y2="70" />
+
+                {/* Peg 5 (A2) */}
+                <circle cx="35" cy="115" fill={activeDisplayTarget.stringNum === 5 ? '#F59E0B' : '#20242C'} r="9" stroke="#3A4250" strokeWidth="1.5" />
+                <text fill={activeDisplayTarget.stringNum === 5 ? '#0E1014' : '#F8FAFC'} fontFamily="monospace" fontSize="8" fontWeight="bold" textAnchor="middle" x="35" y="118">A2</text>
+                <line stroke={activeDisplayTarget.stringNum === 5 ? '#F59E0B' : '#3A4250'} strokeWidth="2" x1="35" x2="72" y1="115" y2="115" />
+
+                {/* Peg 4 (D3) */}
+                <circle cx="35" cy="160" fill={activeDisplayTarget.stringNum === 4 ? '#F59E0B' : '#20242C'} r="9" stroke="#3A4250" strokeWidth="1.5" />
+                <text fill={activeDisplayTarget.stringNum === 4 ? '#0E1014' : '#F8FAFC'} fontFamily="monospace" fontSize="8" fontWeight="bold" textAnchor="middle" x="35" y="163">D3</text>
+                <line stroke={activeDisplayTarget.stringNum === 4 ? '#F59E0B' : '#3A4250'} strokeWidth="1.8" x1="35" x2="80" y1="160" y2="160" />
+
+                {/* Right Side Pegs (Strings 3, 2, 1) */}
+                {/* Peg 3 (G3) */}
+                <circle cx="185" cy="160" fill={activeDisplayTarget.stringNum === 3 ? '#F59E0B' : '#20242C'} r="9" stroke="#3A4250" strokeWidth="1.5" />
+                <text fill={activeDisplayTarget.stringNum === 3 ? '#0E1014' : '#F8FAFC'} fontFamily="monospace" fontSize="8" fontWeight="bold" textAnchor="middle" x="185" y="163">G3</text>
+                <line stroke={activeDisplayTarget.stringNum === 3 ? '#F59E0B' : '#3A4250'} strokeWidth="1.5" x1="185" x2="140" y1="160" y2="160" />
+
+                {/* Peg 2 (B3) */}
+                <circle cx="185" cy="115" fill={activeDisplayTarget.stringNum === 2 ? '#F59E0B' : '#20242C'} r="9" stroke="#3A4250" strokeWidth="1.5" />
+                <text fill={activeDisplayTarget.stringNum === 2 ? '#0E1014' : '#F8FAFC'} fontFamily="monospace" fontSize="8" fontWeight="bold" textAnchor="middle" x="185" y="118">B3</text>
+                <line stroke={activeDisplayTarget.stringNum === 2 ? '#F59E0B' : '#3A4250'} strokeWidth="1.2" x1="185" x2="148" y1="115" y2="115" />
+
+                {/* Peg 1 (High e4) */}
+                <circle cx="185" cy="70" fill={activeDisplayTarget.stringNum === 1 ? '#F59E0B' : '#20242C'} r="9" stroke="#3A4250" strokeWidth="1.5" />
+                <text fill={activeDisplayTarget.stringNum === 1 ? '#0E1014' : '#F8FAFC'} fontFamily="monospace" fontSize="8" fontWeight="bold" textAnchor="middle" x="185" y="73">e4</text>
+                <line stroke={activeDisplayTarget.stringNum === 1 ? '#F59E0B' : '#3A4250'} strokeWidth="1" x1="185" x2="155" y1="70" y2="70" />
+
+                {/* Strings to Nut */}
+                <line stroke="#F59E0B" strokeWidth="2.5" x1="65" x2="65" y1="70" y2="214" />
+                <line stroke="#475569" strokeWidth="2.0" x1="72" x2="80" y1="115" y2="214" />
+                <line stroke="#475569" strokeWidth="1.6" x1="80" x2="95" y1="160" y2="214" />
+                <line stroke="#475569" strokeWidth="1.4" x1="140" x2="125" y1="160" y2="214" />
+                <line stroke="#475569" strokeWidth="1.2" x1="148" x2="140" y1="115" y2="214" />
+                <line stroke="#475569" strokeWidth="1.0" x1="155" x2="155" y1="70" y2="214" />
+              </svg>
+            </div>
+
+            {/* Instruction pill */}
+            <div className="p-3 rounded-xl bg-[#20242C] border border-[#2A303A] flex items-center justify-between text-xs font-mono">
+              <span className="text-amber-400 font-bold">
+                {centsOffset < 0 ? '⟳ Tighten Peg' : '⟲ Loosen Peg'}
+              </span>
+              <span className="text-emerald-400 font-medium">
+                {centsOffset < 0 ? 'Tune UP to pitch' : 'Tune DOWN to pitch'}
+              </span>
+            </div>
+          </div>
+
+          <div className="p-3 rounded-xl bg-[#20242C]/70 border border-[#2A303A] text-xs text-slate-400 mt-3">
+            <span className="text-amber-400 font-bold block mb-0.5">Anti-Backlash Tip:</span>
+            Always tune upwards into pitch. If sharp, drop below target pitch first, then tighten upwards to final tension.
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Bottom Row: 6-String Isolation & Audio Reference Palette */}
+      <div className="rounded-2xl bg-[#171A20] border border-[#2A303A] p-6 shadow-xl space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#2A303A] pb-3">
+          <div>
+            <h3 className="text-sm font-bold text-[#F8FAFC]">
+              String Isolation & Pure Acoustic Reference Tones
+            </h3>
+            <p className="text-xs text-slate-400">
+              Click any string card to pluck its synthesized dual-oscillator acoustic waveform.
+            </p>
+          </div>
+          <span className="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
+            A440 Calibrated
+          </span>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+          {STANDARD_TUNING.map((str) => {
+            const isSelected = activeDisplayTarget.stringNum === str.stringNum;
+            return (
+              <button
+                key={str.stringNum}
+                onClick={() => handlePlayString(str)}
+                className={`p-3.5 rounded-xl border text-center transition-all cursor-pointer flex flex-col justify-between ${
+                  isSelected
+                    ? 'border-amber-500 bg-[#20242C] shadow-[0_0_12px_rgba(245,158,11,0.25)]'
+                    : 'border-[#2A303A] bg-[#121418] hover:border-slate-500 hover:bg-[#1A1E26]'
+                }`}
+              >
+                <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 mb-1">
+                  <span>STR {str.stringNum}</span>
+                  {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />}
+                </div>
+                <div className="my-1">
+                  <span className={`text-2xl font-black font-mono block ${isSelected ? 'text-amber-400' : 'text-[#F8FAFC]'}`}>
+                    {str.note}
+                  </span>
+                  <span className="text-[10px] font-mono text-slate-400">{str.freq.toFixed(1)} Hz</span>
+                </div>
+                <div className="mt-2 py-1 rounded bg-[#20242C] text-[10px] font-mono uppercase text-slate-300 flex items-center justify-center gap-1 border border-[#2A303A]">
+                  <Volume2 className="w-3 h-3 text-amber-400" />
+                  <span>Pluck</span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 }

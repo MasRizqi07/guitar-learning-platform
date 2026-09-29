@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-container-highest":"#32353b","on-tertiary-fixed-variant":"#930013","error-container":"#93000a","surface-container-high":"#272a30","surface-variant":"#32353b","background":"#101319","tertiary":"#ffbcb7","on-surface":"#e1e2eb","tertiary-fixed":"#ffdad7","on-error":"#690005","on-secondary-fixed-variant":"#005321","on-secondary":"#003915","on-background":"#e1e2eb","surface-container-low":"#191c22","on-primary":"#472a00","on-surface-variant":"#d8c3ad","inverse-primary":"#855300","surface-container-lowest":"#0b0e14","primary":"#ffc174","on-tertiary-container":"#8d0012","on-tertiary":"#68000a","surface-tint":"#ffb95f","surface-container":"#1d2026","secondary-container":"#00b954","outline-variant":"#534434","surface-dim":"#101319","on-primary-container":"#613b00","inverse-on-surface":"#2d3037","on-secondary-fixed":"#002109","outline":"#a08e7a","tertiary-container":"#ff938c","on-tertiary-fixed":"#410004","on-primary-fixed":"#2a1700","inverse-surface":"#e1e2eb","on-secondary-container":"#004119","primary-fixed-dim":"#ffb95f","tertiary-fixed-dim":"#ffb3ad","secondary":"#4ae176","surface-bright":"#363940","primary-fixed":"#ffddb8","secondary-fixed":"#6bff8f","on-primary-fixed-variant":"#653e00","secondary-fixed-dim":"#4ae176","error":"#ffb4ab","on-error-container":"#ffdad6","surface":"#101319","primary-container":"#f59e0b"},borderRadius:{DEFAULT:"0.125rem",lg:"0.25rem",xl:"0.5rem",full:"0.75rem"},spacing:{margin:"2rem","margin-mobile":"1rem","space-md":"0.75rem","space-lg":"1.25rem","space-sm":"0.5rem",gutter:"1.25rem","space-xs":"0.25rem","gutter-mobile":"0.75rem","space-xl":"2rem"},fontFamily:{"mono-fret":["JetBrains Mono"],"body-sm":["Geist"],"body-lg":["Geist"],"display-lg-mobile":["Geist"],"headline-sm":["Geist"],"headline-md":["Geist"],"headline-xl":["Geist"],"headline-xl-mobile":["Geist"],"body-md":["Geist"],"label-caps":["JetBrains Mono"],"display-lg":["Geist"],"mono-metric":["JetBrains Mono"]},fontSize:{"mono-fret":["14px",{lineHeight:"16px",letterSpacing:"0em",fontWeight:"500"}],"body-sm":["12px",{lineHeight:"18px",letterSpacing:"0em",fontWeight:"400"}],"body-lg":["16px",{lineHeight:"24px",letterSpacing:"-0.01em",fontWeight:"400"}],"display-lg-mobile":["34px",{lineHeight:"38px",letterSpacing:"-0.025em",fontWeight:"700"}],"headline-sm":["16px",{lineHeight:"22px",letterSpacing:"-0.015em",fontWeight:"600"}],"headline-md":["20px",{lineHeight:"26px",letterSpacing:"-0.02em",fontWeight:"600"}],"headline-xl":["32px",{lineHeight:"38px",letterSpacing:"-0.025em",fontWeight:"600"}],"headline-xl-mobile":["26px",{lineHeight:"32px",letterSpacing:"-0.02em",fontWeight:"600"}],"body-md":["14px",{lineHeight:"20px",letterSpacing:"-0.005em",fontWeight:"400"}],"label-caps":["11px",{lineHeight:"14px",letterSpacing:"0.06em",fontWeight:"600"}],"display-lg":["48px",{lineHeight:"52px",letterSpacing:"-0.03em",fontWeight:"700"}],"mono-metric":["24px",{lineHeight:"28px",letterSpacing:"-0.03em",fontWeight:"600"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary-container"><aside class="fixed left-0 top-0 h-screen w-72 bg-surface-container-lowest z-50 flex flex-col justify-between shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col flex-1 overflow-y-auto"><div class="h-16 px-space-lg flex items-center gap-space-md bg-surface-container-low"><div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-on-primary font-headline-sm font-bold shadow-[0_0_16px_2px_rgba(245,158,11,0.28)]"><span class="material-symbols-outlined text-[20px]">graphic_eq</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface tracking-tight leading-none">FretFlow</span><span class="font-label-caps text-label-caps text-primary uppercase tracking-wider mt-1">Studio Backoffice</span></div></div><div class="px-space-md py-space-sm"><span class="px-space-sm font-label-caps text-label-caps text-outline uppercase tracking-wider">Workspace</span></div><nav class="flex flex-col gap-space-xs px-space-md" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-xl shadow-[0_0_16px_2px_rgba(245,158,11,0.28)]"><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">dashboard</span><span class="font-body-md text-body-md">Overview</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="curriculum-management" href="#"><span class="material-symbols-outlined text-[18px]">auto_stories</span><span class="font-body-md text-body-md">Curriculum Management</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="quizzes-and-question-bank" href="#"><span class="material-symbols-outlined text-[18px]">quiz</span><span class="font-body-md text-body-md">Quizzes & Question Bank</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="chord-and-scale-cms" href="#"><span class="material-symbols-outlined text-[18px]">queue_music</span><span class="font-body-md text-body-md">Chord & Scale CMS</span></a><a aria-current="page" class="flex items-center gap-space-md px-space-md py-space-sm transition-all bg-primary-container text-on-primary-container font-semibold rounded-xl shadow-[0_0_16px_2px_rgba(245,158,11,0.28)]" data-path="media-asset-manager" href="#"><span class="material-symbols-outlined text-[18px]">folder_zip</span><span class="font-body-md text-body-md">Media Asset Manager</span></a></nav><div class="px-space-md pt-space-lg pb-space-sm"><span class="px-space-sm font-label-caps text-label-caps text-outline uppercase tracking-wider">Governance</span></div><nav class="flex flex-col gap-space-xs px-space-md" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-xl shadow-[0_0_16px_2px_rgba(245,158,11,0.28)]"><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="user-directory-and-rbac" href="#"><span class="material-symbols-outlined text-[18px]">badge</span><span class="font-body-md text-body-md">User Directory & RBAC</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="support-inbox" href="#"><span class="material-symbols-outlined text-[18px]">inbox</span><span class="font-body-md text-body-md">Support Inbox</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="security-and-audit-logs" href="#"><span class="material-symbols-outlined text-[18px]">verified_user</span><span class="font-body-md text-body-md">Security & Audit Logs</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="platform-settings" href="#"><span class="material-symbols-outlined text-[18px]">tune</span><span class="font-body-md text-body-md">Platform Settings</span></a></nav></div><div class="p-space-md bg-surface-container-low"><div class="bg-surface-container-lowest p-space-md rounded-xl flex flex-col gap-space-xs"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Edge Telemetry</span><span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_16px_2px_rgba(34,197,94,0.32)] animate-pulse"></span></div><div class="font-mono-fret text-[11px] text-on-surface leading-tight break-all">fretflow-assets-prod</div><div class="flex items-center justify-between text-outline text-[11px] font-mono-fret"><span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px] text-secondary">cloud_done</span> US-East</span><span class="text-secondary font-mono-fret">18ms RTT</span></div></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 px-space-lg flex items-center justify-between gap-space-lg"><div class="flex-1 max-w-xl"><div class="flex items-center gap-space-md bg-surface-container-low px-space-md py-space-xs rounded-xl focus-within:ring-1 focus-within:ring-primary"><span class="material-symbols-outlined text-outline text-[18px]">search</span><input class="w-full bg-transparent font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none" placeholder="Search audio clips, SVG chord diagrams, video demonstrations..." type="text"/><kbd class="font-label-caps text-label-caps px-space-xs py-0.5 bg-surface-container-high rounded text-outline border-none">⌘K</kbd></div></div><div class="flex items-center gap-space-lg"><div class="hidden xl:flex items-center gap-space-xs px-space-md py-space-xs rounded-xl bg-surface-container-low"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span><span class="font-label-caps text-label-caps text-primary uppercase">Production R2</span></div><div class="hidden md:flex flex-col w-44 gap-1"><div class="flex items-center justify-between font-label-caps text-label-caps text-on-surface-variant"><span>Storage Pool</span><span class="font-mono-fret text-on-surface">8.4%</span></div><div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden"><div class="h-full bg-primary-container rounded-full" style="width: 8.4%"></div></div><span class="font-mono-fret text-[10px] text-outline text-right leading-none">4.2 GB / 50 GB</span></div><div class="h-8 w-px bg-surface-container-highest"></div><div class="flex items-center gap-space-md"><div class="flex flex-col text-right hidden sm:flex"><span class="font-headline-sm text-headline-sm text-on-surface leading-tight">Marcus Vance</span><span class="font-label-caps text-[10px] text-primary uppercase tracking-wide">Admin / Content Lead</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-[0_0_16px_2px_rgba(245,158,11,0.28)]"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="relative pt-16 bg-background flex-1 w-full px-space-xl py-space-xl"><div class="flex flex-col w-full">
+<!-- TOP CONSOLE / BREADCRUMB & UTILITY BAR -->
+<div class="flex flex-col gap-space-md mb-space-lg">
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<!-- Breadcrumb Hierarchy -->
+<div class="flex items-center gap-space-xs font-label-caps text-label-caps tracking-wider text-outline uppercase">
+<span>Admin Console</span>
+<span class="material-symbols-outlined text-[14px] text-surface-container-highest">chevron_right</span>
+<span>Content Operations</span>
+<span class="material-symbols-outlined text-[14px] text-surface-container-highest">chevron_right</span>
+<span class="text-primary font-semibold">Media Asset Library</span>
+</div>
+<!-- Live Storage Meter & Ingestion Node Badge -->
+<div class="flex items-center gap-space-md">
+<div class="hidden lg:flex items-center gap-space-sm bg-surface-container-low px-space-md py-1.5 rounded-xl shadow-sm">
+<span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_12px_2px_rgba(74,225,118,0.35)] animate-pulse"></span>
+<span class="font-mono-fret text-[11px] text-on-surface-variant uppercase">R2 Object Store:</span>
+<span class="font-mono-fret text-[11px] text-on-surface font-semibold">r2-prod-assets-iad</span>
+</div>
+<div class="flex items-center gap-space-sm bg-surface-container px-space-md py-1.5 rounded-xl">
+<span class="material-symbols-outlined text-primary text-[16px]">pie_chart</span>
+<span class="font-mono-fret text-body-sm text-on-surface">4.2 GB <span class="text-outline">/ 50 GB</span></span>
+<span class="font-label-caps text-[10px] text-primary bg-primary/10 px-1.5 py-0.5 rounded-sm">8.4%</span>
+<button class="ml-space-xs font-label-caps text-[10px] uppercase text-outline hover:text-on-surface transition-colors cursor-pointer">Manage</button>
+</div>
+</div>
+</div>
+<!-- Main Toolbar Row: Action, Filters, View Switches -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-md items-center bg-surface-container-low p-space-md rounded-xl shadow-md">
+<!-- Filter Chips Dock -->
+<div class="xl:col-span-8 flex flex-wrap items-center gap-space-xs">
+<button class="px-space-md py-1.5 rounded-xl font-label-caps text-label-caps tracking-wide uppercase transition-all bg-primary-container text-on-primary-container font-semibold shadow-[0_0_16px_2px_rgba(245,158,11,0.28)] flex items-center gap-1.5 cursor-pointer" id="filter-all">
+<span class="w-1.5 h-1.5 rounded-full bg-on-primary-container animate-pulse"></span>
+<span>All Media</span>
+<span class="font-mono-fret text-[10px] opacity-80">(184)</span>
+</button>
+<button class="px-space-md py-1.5 rounded-xl font-label-caps text-label-caps tracking-wide uppercase transition-all bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high flex items-center gap-1.5 cursor-pointer">
+<span>Audio Plucks</span>
+<span class="font-mono-fret text-[10px] text-outline">(48)</span>
+</button>
+<button class="px-space-md py-1.5 rounded-xl font-label-caps text-label-caps tracking-wide uppercase transition-all bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high flex items-center gap-1.5 cursor-pointer">
+<span>SVG Diagrams</span>
+<span class="font-mono-fret text-[10px] text-outline">(72)</span>
+</button>
+<button class="px-space-md py-1.5 rounded-xl font-label-caps text-label-caps tracking-wide uppercase transition-all bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high flex items-center gap-1.5 cursor-pointer">
+<span>Video Guides</span>
+<span class="font-mono-fret text-[10px] text-outline">(34)</span>
+</button>
+<button class="px-space-md py-1.5 rounded-xl font-label-caps text-label-caps tracking-wide uppercase transition-all bg-surface-container text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high flex items-center gap-1.5 cursor-pointer">
+<span>Thumbnails</span>
+<span class="font-mono-fret text-[10px] text-outline">(30)</span>
+</button>
+</div>
+<!-- Right Alignment: View Mode & Upload Trigger -->
+<div class="xl:col-span-4 flex items-center justify-between xl:justify-end gap-space-md">
+<!-- View Toggle Buttons -->
+<div class="flex items-center bg-surface-container p-0.5 rounded-xl shadow-inner">
+<button class="p-1.5 rounded-lg bg-surface-container-high text-primary shadow-sm flex items-center justify-center cursor-pointer" title="Grid View">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+</button>
+<button class="p-1.5 rounded-lg text-outline hover:text-on-surface transition-colors flex items-center justify-center cursor-pointer" title="Table List View">
+<span class="material-symbols-outlined text-[18px]">view_headline</span>
+</button>
+</div>
+<!-- Primary Amber Upload Action -->
+<button class="px-space-lg py-2.5 bg-primary-container hover:bg-primary-tint text-on-primary-container rounded-xl font-headline-sm text-body-md font-semibold flex items-center gap-space-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_2px_4px_rgba(0,0,0,0.4)] active:translate-y-0.5 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[20px]">cloud_upload</span>
+<span>Upload Media Assets</span>
+</button>
+</div>
+</div>
+<!-- Drag & Drop Quick Ingest Dropzone Banner -->
+<div class="relative overflow-hidden group bg-surface-container-lowest hover:bg-surface-container-low transition-all rounded-xl p-space-lg flex flex-col sm:flex-row items-center justify-between gap-space-md cursor-pointer shadow-sm">
+<div class="absolute -right-12 -top-12 w-48 h-48 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex items-center gap-space-lg">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary group-hover:scale-105 group-hover:text-primary transition-all shadow-[0_0_16px_2px_rgba(245,158,11,0.15)]">
+<span class="material-symbols-outlined text-[26px]">upload_file</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface tracking-tight">Drop curriculum audio, vector fret diagrams, or videos here</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Instant chunked upload to Cloudflare R2 Edge with auto-generated lossless WebP/AAC variants</span>
+</div>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<span class="font-mono-fret text-[11px] text-outline bg-surface-container px-space-md py-1 rounded-lg">WAV • MP3 • SVG • MP4</span>
+<button class="px-space-md py-1.5 bg-surface-container-high hover:bg-surface-bright text-on-surface rounded-lg font-label-caps text-label-caps uppercase transition-colors">Browse Local</button>
+</div>
+</div>
+</div>
+<!-- MAIN WORKSPACE SPLIT: GRID VIEW (LEFT) + ACTIVE DETAIL MODAL / SLIDE PANEL (RIGHT) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- LEFT: ASSET GRID SECTION (8 COLS ON DESKTOP) -->
+<div class="lg:col-span-7 xl:col-span-8 flex flex-col gap-space-lg">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="font-label-caps text-label-caps text-outline uppercase tracking-wider">Catalog Stream</span>
+<span class="font-mono-fret text-[11px] text-secondary font-semibold bg-secondary/10 px-2 py-0.5 rounded-full">Synchronized (Edge R2)</span>
+</div>
+<span class="font-label-caps text-label-caps text-outline uppercase">Showing 6 of 184 assets</span>
+</div>
+<!-- BENTO / CARD ASSET GRID -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- CARD 1: Audio Pluck -->
+<div class="group flex flex-col bg-surface-container-low hover:bg-surface-container transition-all duration-150 rounded-xl overflow-hidden shadow-md">
+<!-- Audio Waveform Visualizer Preview -->
+<div class="relative h-40 bg-surface-container-lowest p-space-md flex flex-col justify-between overflow-hidden">
+<div class="flex items-center justify-between z-10">
+<span class="font-label-caps text-[10px] text-primary bg-primary/10 px-2 py-0.5 rounded uppercase font-semibold">audio/wav</span>
+<span class="font-mono-fret text-[11px] text-outline bg-surface-container-high px-2 py-0.5 rounded">00:03</span>
+</div>
+<!-- Dynamic Audio Spectrum Graphic -->
+<div class="flex items-end justify-between gap-1 h-16 px-space-sm my-auto">
+<div class="w-1 bg-surface-container-highest rounded-t-sm h-3"></div>
+<div class="w-1 bg-surface-container-highest rounded-t-sm h-6"></div>
+<div class="w-1 bg-primary/70 rounded-t-sm h-12"></div>
+<div class="w-1 bg-primary rounded-t-sm h-16 shadow-[0_0_8px_#f59e0b]"></div>
+<div class="w-1 bg-primary rounded-t-sm h-14"></div>
+<div class="w-1 bg-primary/80 rounded-t-sm h-10"></div>
+<div class="w-1 bg-surface-container-highest rounded-t-sm h-7"></div>
+<div class="w-1 bg-surface-container-highest rounded-t-sm h-11"></div>
+<div class="w-1 bg-primary/60 rounded-t-sm h-9"></div>
+<div class="w-1 bg-surface-container-highest rounded-t-sm h-4"></div>
+<div class="w-1 bg-surface-container-highest rounded-t-sm h-8"></div>
+<div class="w-1 bg-surface-container-highest rounded-t-sm h-3"></div>
+<div class="w-1 bg-surface-container-highest rounded-t-sm h-5"></div>
+<div class="w-1 bg-surface-container-highest rounded-t-sm h-2"></div>
+</div>
+<!-- Player Bar Overlay -->
+<div class="flex items-center justify-between z-10 pt-1">
+<div class="flex items-center gap-2">
+<button class="w-7 h-7 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-[0_0_12px_2px_rgba(245,158,11,0.3)] hover:scale-105 transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">play_arrow</span>
+</button>
+<span class="font-mono-fret text-[11px] text-on-surface">48kHz / 24-bit PCM</span>
+</div>
+<span class="font-label-caps text-[10px] text-outline uppercase">Acoustic Nylon</span>
+</div>
+</div>
+<!-- Metadata & Reference Footer -->
+<div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low">
+<div class="flex items-start justify-between gap-space-sm">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold truncate leading-tight" title="audio_g_major_acoustic_pluck.wav">
+                audio_g_major_acoustic_pluck.wav
+              </span>
+<button class="text-outline hover:text-on-surface cursor-pointer p-0.5">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs font-mono-fret text-[11px] text-outline">
+<span>284 KB</span>
+<span>•</span>
+<span>Sep 19, 2026</span>
+<span>•</span>
+<span class="text-on-surface-variant truncate">Alex Chen</span>
+</div>
+<div class="pt-1 flex items-center gap-1.5 flex-wrap">
+<span class="font-label-caps text-[9px] uppercase text-outline">Ref In:</span>
+<span class="font-label-caps text-[10px] bg-surface-container-high hover:bg-surface-bright text-primary px-2 py-0.5 rounded cursor-pointer transition-colors">Lesson 03 (G Major)</span>
+<span class="font-label-caps text-[10px] bg-surface-container-high hover:bg-surface-bright text-on-surface-variant px-2 py-0.5 rounded cursor-pointer transition-colors">Lesson 08</span>
+</div>
+</div>
+</div>
+<!-- CARD 2: SVG Chord Diagram (Selected state for detail modal inspection) -->
+<div class="group flex flex-col bg-surface-container rounded-xl overflow-hidden shadow-xl ring-2 ring-primary-container relative">
+<!-- Active Highlight Indicator Marker -->
+<div class="absolute top-2 right-2 z-20 flex items-center gap-1 bg-primary text-on-primary font-label-caps text-[9px] font-bold px-2 py-0.5 rounded-full shadow-md uppercase">
+<span class="w-1.5 h-1.5 rounded-full bg-on-primary animate-ping"></span>
+            Active Inspect
+          </div>
+<!-- Vector Preview Window (Guitar Fretboard Grid Graphic) -->
+<div class="relative h-40 bg-surface-container-lowest p-space-md flex items-center justify-center">
+<!-- Inline SVG Guitar Fretboard Diagram for G Major -->
+<svg class="h-28 w-36 text-outline" fill="none" viewbox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+<!-- Nut line (Top heavy) -->
+<line stroke="#a08e7a" stroke-linecap="round" stroke-width="4" x1="15" x2="105" y1="20" y2="20"></line>
+<!-- Fret wires -->
+<line stroke="#32353b" stroke-width="1.5" x1="15" x2="105" y1="40" y2="40"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="15" x2="105" y1="60" y2="60"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="15" x2="105" y1="80" y2="80"></line>
+<!-- Strings 6 to 1 -->
+<line stroke="#534434" stroke-width="2.5" x1="15" x2="15" y1="20" y2="90"></line>
+<line stroke="#534434" stroke-width="2" x1="33" x2="33" y1="20" y2="90"></line>
+<line stroke="#534434" stroke-width="1.5" x1="51" x2="51" y1="20" y2="90"></line>
+<line stroke="#534434" stroke-width="1" x1="69" x2="69" y1="20" y2="90"></line>
+<line stroke="#534434" stroke-width="1" x1="87" x2="87" y1="20" y2="90"></line>
+<line stroke="#534434" stroke-width="0.8" x1="105" x2="105" y1="20" y2="90"></line>
+<!-- Finger Marker 1: String 6 Fret 3 (Amber Root note) -->
+<circle class="shadow-lg" cx="15" cy="70" fill="#f59e0b" r="6"></circle>
+<text fill="#101319" font-size="8" font-weight="700" text-anchor="middle" x="15" y="73">2</text>
+<!-- Finger Marker 2: String 5 Fret 2 -->
+<circle cx="33" cy="50" fill="#e1e2eb" r="5.5"></circle>
+<text fill="#101319" font-size="7" font-weight="700" text-anchor="middle" x="33" y="53">1</text>
+<!-- Open String O marks -->
+<circle cx="51" cy="12" fill="none" r="3" stroke="#a08e7a" stroke-width="1"></circle>
+<circle cx="69" cy="12" fill="none" r="3" stroke="#a08e7a" stroke-width="1"></circle>
+<circle cx="87" cy="12" fill="none" r="3" stroke="#a08e7a" stroke-width="1"></circle>
+<!-- Finger Marker 3: String 1 Fret 3 -->
+<circle cx="105" cy="70" fill="#e1e2eb" r="5.5"></circle>
+<text fill="#101319" font-size="7" font-weight="700" text-anchor="middle" x="105" y="73">3</text>
+</svg>
+<div class="absolute bottom-2 left-3">
+<span class="font-mono-fret text-[10px] text-outline uppercase">Vector (Lossless)</span>
+</div>
+<div class="absolute bottom-2 right-3">
+<span class="font-label-caps text-[9px] bg-primary/20 text-primary px-1.5 py-0.5 rounded font-bold">G MAJOR</span>
+</div>
+</div>
+<!-- Metadata & Reference Footer -->
+<div class="p-space-md flex flex-col gap-space-sm bg-surface-container">
+<div class="flex items-start justify-between gap-space-sm">
+<span class="font-headline-sm text-body-md text-primary font-semibold truncate leading-tight" title="svg_g_major_open_voicing.svg">
+                svg_g_major_open_voicing.svg
+              </span>
+<span class="material-symbols-outlined text-[18px] text-primary">visibility</span>
+</div>
+<div class="flex items-center gap-space-xs font-mono-fret text-[11px] text-on-surface-variant">
+<span>18.4 KB</span>
+<span>•</span>
+<span>Sep 14, 2026</span>
+<span>•</span>
+<span>image/svg+xml</span>
+</div>
+<div class="pt-1 flex items-center gap-1.5 flex-wrap">
+<span class="font-label-caps text-[9px] uppercase text-outline">Ref In:</span>
+<span class="font-label-caps text-[10px] bg-primary-container/20 text-primary px-2 py-0.5 rounded flex items-center gap-1 font-semibold">
+<span class="material-symbols-outlined text-[12px]">link</span>
+                Mod 02 > Lesson 3, Chord CMS
+              </span>
+</div>
+</div>
+</div>
+<!-- CARD 3: Video Demonstration Guide -->
+<div class="group flex flex-col bg-surface-container-low hover:bg-surface-container transition-all duration-150 rounded-xl overflow-hidden shadow-md">
+<!-- Video Frame Preview with Placeholder -->
+<div class="relative h-40 bg-surface-container-lowest overflow-hidden">
+<img class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-300" data-alt="Close up high contrast cinematic shot of a guitarists hand executing a rhythmic downstroke across guitar strings in a moody dark studio setting with warm amber backlighting and precise fret highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkYYPsyiD6ZL7taJw9JTKfVYr3AivL4J6REOZhMG6cW2BJ2sGBLHS30lDLqOu7nPLvVqvBe12FAYHpcG3tvxKucaG1vRKf00QX7Q4tIn_cvbi8WxTMnyHcINMvy82fATsPgKnZADgly5CzCIZ6laGnpCH6It2-ZR1gw99dcZDAiN_3ra3VE5XVMDamlmLqpVfPGXme0tDHp8615aROzDJeGPYcnwFJyPp3cjrjTm9KYCYhdBklgyo"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-black/40"></div>
+<div class="absolute top-2 left-2">
+<span class="font-label-caps text-[10px] text-on-surface bg-surface-container-lowest/80 backdrop-blur-md px-2 py-0.5 rounded uppercase font-semibold">1080p60</span>
+</div>
+<div class="absolute top-2 right-2">
+<span class="font-mono-fret text-[11px] text-on-surface bg-surface-container-lowest/80 backdrop-blur-md px-2 py-0.5 rounded">01:24</span>
+</div>
+<!-- Centered Video Play Glyph -->
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-10 h-10 rounded-full bg-surface/90 text-primary flex items-center justify-center shadow-lg group-hover:bg-primary group-hover:text-on-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<!-- Metadata & Reference Footer -->
+<div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low">
+<div class="flex items-start justify-between gap-space-sm">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold truncate leading-tight" title="video_downstroke_cadence_60bpm.mp4">
+                video_downstroke_cadence_60bpm.mp4
+              </span>
+<button class="text-outline hover:text-on-surface cursor-pointer p-0.5">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs font-mono-fret text-[11px] text-outline">
+<span>24.8 MB</span>
+<span>•</span>
+<span>video/mp4</span>
+<span>•</span>
+<span>H.264</span>
+</div>
+<div class="pt-1 flex items-center gap-1.5 flex-wrap">
+<span class="font-label-caps text-[9px] uppercase text-outline">Ref In:</span>
+<span class="font-label-caps text-[10px] bg-surface-container-high hover:bg-surface-bright text-on-surface-variant px-2 py-0.5 rounded cursor-pointer transition-colors">Lesson 16 (Downstroke Basics)</span>
+</div>
+</div>
+</div>
+<!-- CARD 4: Audio Metronome Pulse -->
+<div class="group flex flex-col bg-surface-container-low hover:bg-surface-container transition-all duration-150 rounded-xl overflow-hidden shadow-md">
+<div class="relative h-40 bg-surface-container-lowest p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-[10px] text-secondary bg-secondary/10 px-2 py-0.5 rounded uppercase font-semibold">Loopable Tick</span>
+<span class="font-mono-fret text-[11px] text-outline bg-surface-container-high px-2 py-0.5 rounded">00:01</span>
+</div>
+<div class="flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-outline text-[32px] group-hover:text-primary transition-colors">graphic_eq</span>
+<span class="font-mono-metric text-mono-metric text-on-surface tracking-tight">60 <span class="text-outline text-body-sm">BPM</span></span>
+</div>
+<div class="flex items-center justify-between text-outline text-[11px] font-mono-fret">
+<span>44.1kHz mono</span>
+<span class="text-primary font-semibold">Engine Asset</span>
+</div>
+</div>
+<div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low">
+<div class="flex items-start justify-between gap-space-sm">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold truncate leading-tight" title="audio_click_metronome_60bpm.wav">
+                audio_click_metronome_60bpm.wav
+              </span>
+<button class="text-outline hover:text-on-surface cursor-pointer p-0.5">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs font-mono-fret text-[11px] text-outline">
+<span>96 KB</span>
+<span>•</span>
+<span>audio/wav</span>
+<span>•</span>
+<span>Sep 01, 2026</span>
+</div>
+<div class="pt-1 flex items-center gap-1.5 flex-wrap">
+<span class="font-label-caps text-[9px] uppercase text-outline">Ref In:</span>
+<span class="font-label-caps text-[10px] bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded">Practice Room Engine</span>
+</div>
+</div>
+</div>
+<!-- CARD 5: SVG Fretboard Scale Neck -->
+<div class="group flex flex-col bg-surface-container-low hover:bg-surface-container transition-all duration-150 rounded-xl overflow-hidden shadow-md">
+<div class="relative h-40 bg-surface-container-lowest p-space-md flex items-center justify-center">
+<div class="w-full flex flex-col gap-2">
+<div class="flex items-center justify-between font-label-caps text-[9px] text-outline uppercase">
+<span>Frets 0-12</span>
+<span class="text-primary">A Minor Pentatonic</span>
+</div>
+<!-- Neck vector visualization line -->
+<div class="w-full h-8 bg-surface-container-high rounded flex items-center justify-around px-2 relative">
+<div class="w-2.5 h-2.5 rounded-full bg-primary ring-2 ring-primary/40"></div>
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-primary ring-2 ring-primary/40"></div>
+<div class="w-2 h-2 rounded-full bg-outline"></div>
+</div>
+<div class="flex justify-between font-mono-fret text-[9px] text-outline">
+<span>R</span>
+<span>b3</span>
+<span>4</span>
+<span>5</span>
+<span>b7</span>
+</div>
+</div>
+<div class="absolute bottom-2 right-3">
+<span class="font-label-caps text-[9px] bg-surface-container px-1.5 py-0.5 rounded text-outline uppercase">SVG 15-Fret</span>
+</div>
+</div>
+<div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low">
+<div class="flex items-start justify-between gap-space-sm">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold truncate leading-tight" title="svg_a_minor_pentatonic_neck.svg">
+                svg_a_minor_pentatonic_neck.svg
+              </span>
+<button class="text-outline hover:text-on-surface cursor-pointer p-0.5">
+<span class="material-symbols-outlined text-[16px]">more_vert</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs font-mono-fret text-[11px] text-outline">
+<span>42 KB</span>
+<span>•</span>
+<span>image/svg+xml</span>
+<span>•</span>
+<span>Aug 28, 2026</span>
+</div>
+<div class="pt-1 flex items-center gap-1.5 flex-wrap">
+<span class="font-label-caps text-[9px] uppercase text-outline">Ref In:</span>
+<span class="font-label-caps text-[10px] bg-surface-container-high text-on-surface-variant px-2 py-0.5 rounded">Fretboard Explorer</span>
+</div>
+</div>
+</div>
+<!-- CARD 6: Unreferenced Audio (Safe to Delete) -->
+<div class="group flex flex-col bg-surface-container-low hover:bg-surface-container transition-all duration-150 rounded-xl overflow-hidden shadow-md">
+<div class="relative h-40 bg-surface-container-lowest p-space-md flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-[10px] text-secondary bg-secondary/10 px-2 py-0.5 rounded uppercase font-semibold">Unattached Asset</span>
+<span class="font-mono-fret text-[11px] text-outline bg-surface-container-high px-2 py-0.5 rounded">00:05</span>
+</div>
+<div class="flex items-center justify-center opacity-40">
+<span class="material-symbols-outlined text-[40px] text-outline">mic</span>
+</div>
+<div class="flex items-center justify-between text-outline text-[11px] font-mono-fret">
+<span>Raw scratch audio</span>
+<span class="text-secondary font-mono-fret">Orphaned</span>
+</div>
+</div>
+<div class="p-space-md flex flex-col gap-space-sm bg-surface-container-low">
+<div class="flex items-start justify-between gap-space-sm">
+<span class="font-headline-sm text-body-md text-on-surface font-semibold truncate leading-tight" title="audio_scratch_tuning_hum_test.wav">
+                audio_scratch_tuning_hum_test.wav
+              </span>
+<button class="text-error hover:text-on-error cursor-pointer p-0.5" title="Safe to Purge">
+<span class="material-symbols-outlined text-[16px]">delete_outline</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs font-mono-fret text-[11px] text-outline">
+<span>512 KB</span>
+<span>•</span>
+<span>audio/wav</span>
+<span>•</span>
+<span>Aug 14, 2026</span>
+</div>
+<div class="pt-1 flex items-center gap-1.5 flex-wrap">
+<span class="font-label-caps text-[9px] uppercase text-outline">Ref In:</span>
+<span class="font-label-caps text-[10px] bg-secondary-container/20 text-secondary px-2 py-0.5 rounded font-semibold">None (0 lessons linked)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT: INSPECTOR & INTEGRITY SAFEGUARD PANEL (SLIDE-OVER / DOCKED) -->
+<div class="lg:col-span-5 xl:col-span-4 flex flex-col gap-space-md sticky top-20">
+<!-- Panel Header Card -->
+<div class="bg-surface-container p-space-lg rounded-xl shadow-xl flex flex-col gap-space-lg">
+<!-- Header & Edge Status -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-caps text-[10px] bg-primary/10 text-primary px-2 py-0.5 rounded font-bold uppercase">SVG Vector</span>
+<span class="font-label-caps text-[10px] bg-surface-container-high text-outline px-2 py-0.5 rounded uppercase">Lossless</span>
+</div>
+<div class="flex items-center gap-1.5 text-secondary font-mono-fret text-[11px]">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary shadow-[0_0_8px_#22c55e]"></span>
+<span>Cloudflare R2 • Cached</span>
+</div>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight break-all mt-1">
+            svg_g_major_open_voicing.svg
+          </span>
+<span class="font-body-sm text-body-sm text-outline">Interactive fretboard voicing artifact for curriculum chord diagrams</span>
+</div>
+<!-- Rendered Vector Viewport with Zoom Trigger -->
+<div class="relative bg-surface-container-lowest rounded-xl p-space-lg flex flex-col items-center justify-center min-h-[200px] overflow-hidden group">
+<div class="absolute top-2 right-2 flex items-center gap-1 bg-surface-container-high/80 backdrop-blur-sm p-1 rounded-lg">
+<button class="p-1 hover:text-primary text-outline transition-colors" title="Inspect Raw XML">
+<span class="material-symbols-outlined text-[16px]">code</span>
+</button>
+<button class="p-1 hover:text-primary text-outline transition-colors" title="Fit to Screen">
+<span class="material-symbols-outlined text-[16px]">fit_screen</span>
+</button>
+</div>
+<!-- Scaled Master Vector View -->
+<svg class="h-36 w-44 text-outline" fill="none" viewbox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+<line stroke="#a08e7a" stroke-linecap="round" stroke-width="4" x1="15" x2="105" y1="20" y2="20"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="15" x2="105" y1="40" y2="40"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="15" x2="105" y1="60" y2="60"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="15" x2="105" y1="80" y2="80"></line>
+<line stroke="#534434" stroke-width="2.5" x1="15" x2="15" y1="20" y2="90"></line>
+<line stroke="#534434" stroke-width="2" x1="33" x2="33" y1="20" y2="90"></line>
+<line stroke="#534434" stroke-width="1.5" x1="51" x2="51" y1="20" y2="90"></line>
+<line stroke="#534434" stroke-width="1" x1="69" x2="69" y1="20" y2="90"></line>
+<line stroke="#534434" stroke-width="1" x1="87" x2="87" y1="20" y2="90"></line>
+<line stroke="#534434" stroke-width="0.8" x1="105" x2="105" y1="20" y2="90"></line>
+<circle cx="15" cy="70" fill="#f59e0b" r="7"></circle>
+<text fill="#101319" font-size="9" font-weight="700" text-anchor="middle" x="15" y="73.5">2</text>
+<circle cx="33" cy="50" fill="#e1e2eb" r="6.5"></circle>
+<text fill="#101319" font-size="8" font-weight="700" text-anchor="middle" x="33" y="53.5">1</text>
+<circle cx="51" cy="12" fill="none" r="3" stroke="#a08e7a" stroke-width="1.2"></circle>
+<circle cx="69" cy="12" fill="none" r="3" stroke="#a08e7a" stroke-width="1.2"></circle>
+<circle cx="87" cy="12" fill="none" r="3" stroke="#a08e7a" stroke-width="1.2"></circle>
+<circle cx="105" cy="70" fill="#e1e2eb" r="6.5"></circle>
+<text fill="#101319" font-size="8" font-weight="700" text-anchor="middle" x="105" y="73.5">3</text>
+</svg>
+<span class="font-mono-fret text-[10px] text-outline mt-2">Displaying native SVG coordinate path #fretflow-chd-01</span>
+</div>
+<!-- File Metadata Matrix -->
+<div class="flex flex-col gap-space-sm bg-surface-container-low p-space-md rounded-xl">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="font-label-caps text-label-caps text-outline uppercase">Edge CDN Public Endpoint</span>
+<button class="font-label-caps text-[10px] uppercase text-primary hover:underline flex items-center gap-1 cursor-pointer" id="copy-url-btn">
+<span class="material-symbols-outlined text-[13px]">content_copy</span>
+<span>Copy URL</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest p-2 rounded font-mono-fret text-[11px] text-on-surface break-all select-all">
+            https://cdn.fretflow.io/assets/curriculum/svg_g_major_open_voicing.svg
+          </div>
+<div class="grid grid-cols-2 gap-space-sm pt-2 text-[11px] font-mono-fret">
+<div class="flex flex-col">
+<span class="text-outline uppercase text-[9px] font-label-caps">Storage Key</span>
+<span class="text-on-surface truncate">curriculum/chords/...</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline uppercase text-[9px] font-label-caps">Byte Size</span>
+<span class="text-on-surface">18.42 KB</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline uppercase text-[9px] font-label-caps">Dimensions</span>
+<span class="text-on-surface">400 × 520 px (Scalable)</span>
+</div>
+<div class="flex flex-col">
+<span class="text-outline uppercase text-[9px] font-label-caps">ETag (MD5)</span>
+<span class="text-on-surface">"4a7c29be1900..."</span>
+</div>
+</div>
+<div class="pt-2 text-outline text-[11px] font-mono-fret flex items-center justify-between">
+<span>Uploader: <span class="text-on-surface">Alex Chen (Content Lead)</span></span>
+<span>Sep 14, 2026</span>
+</div>
+</div>
+<!-- RELATIONAL SAFEGUARD: USAGE TRACKER -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">hub</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Active Embeddings</span>
+</div>
+<span class="font-mono-fret text-[11px] text-primary font-bold bg-primary/10 px-2 py-0.5 rounded-full">3 References</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline">
+            This asset is linked inside published student lessons. Renaming or modifying may trigger live learner cache re-validation.
+          </p>
+<!-- List of Linked Lessons / CMS Records -->
+<div class="flex flex-col gap-space-xs mt-1">
+<!-- Reference Item 1 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-secondary text-[16px]">menu_book</span>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-body-sm text-on-surface font-medium truncate">Mod 02 > Lesson 03: Mastering G Major</span>
+<span class="font-label-caps text-[10px] text-outline uppercase">Section 2: CHORD_DIAGRAM_HERO</span>
+</div>
+</div>
+<a class="font-label-caps text-[10px] text-primary hover:underline uppercase flex items-center shrink-0" href="#">
+<span>Edit</span>
+<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
+</a>
+</div>
+<!-- Reference Item 2 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-secondary text-[16px]">menu_book</span>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-body-sm text-on-surface font-medium truncate">Mod 03 > Lesson 11: Chord Transition C to G</span>
+<span class="font-label-caps text-[10px] text-outline uppercase">Section 1: Voicing Overview</span>
+</div>
+</div>
+<a class="font-label-caps text-[10px] text-primary hover:underline uppercase flex items-center shrink-0" href="#">
+<span>Edit</span>
+<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
+</a>
+</div>
+<!-- Reference Item 3 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-primary text-[16px]">database</span>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-body-sm text-on-surface font-medium truncate">Chord & Scale CMS: G Major Open</span>
+<span class="font-mono-fret text-[10px] text-outline">ID: chd_g_maj_open_voicing_01</span>
+</div>
+</div>
+<a class="font-label-caps text-[10px] text-primary hover:underline uppercase flex items-center shrink-0" href="#">
+<span>Inspect</span>
+<span class="material-symbols-outlined text-[12px]">arrow_outward</span>
+</a>
+</div>
+</div>
+</div>
+<!-- PROTECTED ACTIONS & DESTRUCTION SAFEGUARD -->
+<div class="pt-space-md flex flex-col gap-space-sm">
+<!-- Download & Non-Destructive Update -->
+<div class="grid grid-cols-2 gap-space-sm">
+<button class="px-space-md py-2 bg-surface-container-high hover:bg-surface-bright text-on-surface rounded-xl font-label-caps text-label-caps uppercase transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>Download</span>
+</button>
+<button class="px-space-md py-2 bg-surface-container-high hover:bg-surface-bright text-on-surface rounded-xl font-label-caps text-label-caps uppercase transition-colors flex items-center justify-center gap-1.5 cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">sync_alt</span>
+<span>Replace File</span>
+</button>
+</div>
+<!-- LOCKED / DISABLED DESTRUCTION BUTTON WITH AUDIT NOTICE -->
+<div class="flex flex-col gap-2">
+<button class="w-full px-space-md py-2.5 bg-surface-container-lowest text-outline rounded-xl font-label-caps text-label-caps uppercase flex items-center justify-center gap-2 cursor-not-allowed opacity-60" disabled="">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span>Delete Asset (Protected)</span>
+</button>
+<!-- Warning Notice Container -->
+<div class="p-space-sm bg-error-container/30 rounded-xl flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-error text-[18px] shrink-0 mt-0.5">shield_locked</span>
+<div class="flex flex-col">
+<span class="font-headline-sm text-body-sm text-error font-semibold">Integrity Lock Engaged</span>
+<span class="font-body-sm text-[11px] text-on-surface-variant leading-tight mt-0.5">
+                  Asset cannot be deleted while linked to <strong class="text-on-surface">3 active lessons</strong>. Remove or reassign dependencies in the curriculum builder before purging.
+                </span>
+</div>
+</div>
+<!-- Audit Trail Logging Tag -->
+<div class="flex items-center justify-center gap-1.5 text-outline font-label-caps text-[10px] uppercase pt-1">
+<span class="material-symbols-outlined text-[12px]">verified</span>
+<span>All updates logged to AdminAuditLog</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple copy to clipboard feedback micro-interaction
+  document.getElementById('copy-url-btn')?.addEventListener('click', function() {
+    const btn = this;
+    const originalText = btn.innerHTML;
+    navigator.clipboard.writeText('https://cdn.fretflow.io/assets/curriculum/svg_g_major_open_voicing.svg');
+    btn.innerHTML = '<span class="material-symbols-outlined text-[13px] text-secondary">check</span> <span class="text-secondary font-bold">Copied!</span>';
+    setTimeout(() => {
+      btn.innerHTML = originalText;
+    }, 2000);
+  });
+</script></main></div></body></html>

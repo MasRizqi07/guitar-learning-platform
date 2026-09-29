@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FretFlow — Onboarding & Placement</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Geist', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              bg: '#0E1014',
+              surface: '#171A20',
+              elevated: '#20242C',
+              border: '#2A303A',
+              borderHover: '#3E4654',
+              amber: '#F59E0B',
+              amberHover: '#D97706',
+              emerald: '#22C55E',
+              danger: '#EF4444',
+              textPrimary: '#F8FAFC',
+              textMuted: '#94A3B8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0E1014;
+      color: #F8FAFC;
+      font-family: 'Geist', sans-serif;
+    }
+
+    /* Ambient radial glow */
+    .ambient-glow {
+      background: radial-gradient(circle at 50% 25%, rgba(245, 158, 11, 0.12) 0%, rgba(245, 158, 11, 0.03) 40%, rgba(14, 16, 20, 0) 75%);
+    }
+
+    /* Subtle grid pattern overlay */
+    .fret-grid-bg {
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    /* Interactive state styles */
+    .goal-card {
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .goal-card:hover {
+      transform: translateY(-2px);
+    }
+    .goal-card.selected {
+      border-color: #F59E0B;
+      background: #1C2028;
+      box-shadow: 0 0 0 1px #F59E0B, 0 10px 25px -5px rgba(245, 158, 11, 0.15);
+    }
+    .goal-card.selected .check-badge {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .goal-card.selected .card-icon-wrap {
+      background-color: rgba(245, 158, 11, 0.18);
+      border-color: rgba(245, 158, 11, 0.4);
+      color: #F59E0B;
+    }
+
+    /* Daily target button */
+    .target-pill {
+      transition: all 0.18s ease;
+    }
+    .target-pill.active {
+      background: #F59E0B;
+      color: #0E1014;
+      font-weight: 700;
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.35);
+    }
+
+    /* Sound pulse waveform keyframes */
+    @keyframes soundwave {
+      0%, 100% { height: 6px; }
+      50% { height: 18px; }
+    }
+    .wave-bar {
+      animation: soundwave 1.2s ease-in-out infinite;
+    }
+    .wave-bar:nth-child(2) { animation-delay: 0.15s; }
+    .wave-bar:nth-child(3) { animation-delay: 0.3s; }
+    .wave-bar:nth-child(4) { animation-delay: 0.45s; }
+    .wave-bar:nth-child(5) { animation-delay: 0.2s; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between items-center p-4 sm:p-6 fret-grid-bg ambient-glow relative overflow-x-hidden selection:bg-brand-amber selection:text-black">
+
+  <!-- Ambient Top Glow Light Beam -->
+  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[700px] h-[340px] pointer-events-none bg-gradient-to-b from-[#F59E0B]/10 via-[#F59E0B]/5 to-transparent blur-3xl -z-10"></div>
+
+  <!-- Micro Top Brand Bar -->
+  <header class="w-full max-w-xl flex items-center justify-between pt-2 pb-4">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-lg bg-[#171A20] border border-[#F59E0B]/40 flex items-center justify-center shadow-[0_0_12px_rgba(245,158,11,0.2)]">
+        <svg class="w-4 h-4 text-brand-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="2" />
+          <path d="M12 2v2" /><path d="M12 20v2" />
+          <path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" />
+          <path d="M2 12h2" /><path d="M20 12h2" />
+        </svg>
+      </div>
+      <div class="flex items-baseline gap-1.5">
+        <span class="text-base font-extrabold tracking-tight text-white">Fret<span class="text-brand-amber">Flow</span></span>
+        <span class="text-[10px] font-mono uppercase tracking-wider text-brand-textMuted px-1.5 py-0.5 rounded bg-white/5 border border-white/10">Placement Engine</span>
+      </div>
+    </div>
+
+    <!-- Auth Exit / Login Link -->
+    <a href="#login" class="text-xs font-medium text-brand-textMuted hover:text-white transition-colors flex items-center gap-1 py-1 px-2.5 rounded-md hover:bg-white/5">
+      <span>Already have an account?</span>
+      <span class="text-brand-amber font-semibold hover:underline">Log in</span>
+    </a>
+  </header>
+
+  <!-- Central Card Shell (max-w-xl) -->
+  <main class="w-full max-w-xl bg-brand-surface/90 backdrop-blur-xl border border-brand-border rounded-2xl p-6 sm:p-8 shadow-2xl relative my-auto">
+    
+    <!-- Top Stepper Header -->
+    <div class="flex items-center justify-between mb-4">
+      <button type="button" class="group flex items-center gap-2 text-xs font-semibold text-brand-textMuted hover:text-white transition-colors py-1.5 px-2.5 -ml-2 rounded-lg hover:bg-white/5">
+        <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5 text-brand-textMuted group-hover:text-brand-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span>Back</span>
+      </button>
+
+      <!-- Step Counter & Progress Label -->
+      <div class="flex items-center gap-2">
+        <span class="text-[11px] font-mono tracking-widest text-brand-amber uppercase font-semibold bg-brand-amber/10 border border-brand-amber/20 px-2 py-0.5 rounded-full">
+          Step 2 of 5
+        </span>
+        <span class="text-xs text-brand-textMuted font-medium">Placement Calibration</span>
+      </div>
+    </div>
+
+    <!-- Animated Smooth Progress Bar -->
+    <div class="w-full bg-[#0E1014] h-2 rounded-full overflow-hidden mb-7 p-0.5 border border-white/5">
+      <div class="bg-gradient-to-r from-brand-amberHover to-brand-amber h-full rounded-full transition-all duration-500 ease-out shadow-[0_0_10px_rgba(245,158,11,0.5)]" style="width: 40%;"></div>
+    </div>
+
+    <!-- Title & Subtitle Block -->
+    <div class="mb-6">
+      <h1 class="text-2xl sm:text-[28px] font-extrabold tracking-[-0.03em] text-white leading-tight mb-2">
+        What is your main guitar goal?
+      </h1>
+      <p class="text-sm sm:text-base text-brand-textMuted leading-relaxed">
+        Choose the target that fits your vibe. We will tailor your deterministic roadmap and starting chord drills.
+      </p>
+    </div>
+
+    <!-- Interactive Goal Cards Form -->
+    <div class="space-y-3 mb-7" role="radiogroup" aria-label="Guitar Learning Goal">
+
+      <!-- Card 1: Play Favorite Songs (Selected State by default) -->
+      <label class="goal-card selected relative flex items-start gap-4 p-4 rounded-xl border border-brand-border bg-brand-surface cursor-pointer select-none">
+        <input type="radio" name="learning_goal" value="favorite_songs" class="sr-only" checked>
+        
+        <!-- Left Visual Icon Box -->
+        <div class="card-icon-wrap w-11 h-11 rounded-lg bg-brand-elevated border border-brand-border flex-shrink-0 flex items-center justify-center transition-colors">
+          <!-- Acoustic Guitar Icon -->
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m19 11-4-4"/>
+            <path d="m15 7 1-1a3 3 0 0 1 4.24 0l.76.76a3 3 0 0 1 0 4.24l-1 1"/>
+            <path d="m8 18 7-7"/>
+            <path d="m14 12-8.5 8.5a2.12 2.12 0 0 1-3-3L11 9"/>
+            <circle cx="9" cy="15" r="1"/>
+          </svg>
+        </div>
+
+        <!-- Copy Details -->
+        <div class="flex-1 pr-6">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-bold text-white tracking-tight">Play Favorite Songs</span>
+            <span class="text-[10px] font-mono uppercase bg-brand-amber/15 text-brand-amber px-1.5 py-0.5 rounded font-bold border border-brand-amber/30">Most Popular</span>
+          </div>
+          <p class="text-xs text-brand-textMuted mt-1 leading-normal">
+            Jump straight into real tunes using 4 essential open chords (G, C, Em, D) and standard strumming cadences.
+          </p>
+        </div>
+
+        <!-- Selected Top-Right Checkmark Badge -->
+        <div class="check-badge absolute top-3.5 right-3.5 w-5 h-5 rounded-full bg-brand-amber text-black flex items-center justify-center shadow-md transition-all">
+          <svg class="w-3.5 h-3.5 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+      </label>
+
+      <!-- Card 2: Learn from Complete Scratch -->
+      <label class="goal-card relative flex items-start gap-4 p-4 rounded-xl border border-brand-border bg-brand-surface hover:border-[#3E4654] hover:bg-brand-elevated cursor-pointer select-none">
+        <input type="radio" name="learning_goal" value="from_scratch" class="sr-only">
+        
+        <div class="card-icon-wrap w-11 h-11 rounded-lg bg-brand-elevated border border-brand-border flex-shrink-0 flex items-center justify-center text-brand-textMuted transition-colors">
+          <!-- Seedling Icon -->
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 10v12"/>
+            <path d="M4 14a8 8 0 0 1 8-8 8 8 0 0 1 8 8v1a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/>
+            <path d="M9 10a5 5 0 0 1 5-5"/>
+          </svg>
+        </div>
+
+        <div class="flex-1 pr-6">
+          <span class="text-sm font-bold text-white tracking-tight">Learn from Complete Scratch</span>
+          <p class="text-xs text-brand-textMuted mt-1 leading-normal">
+            Zero experience assumed. Fretboard anatomy, finger posture, pain-free ergonomics, and clean single-string plucking.
+          </p>
+        </div>
+
+        <div class="check-badge opacity-0 scale-75 absolute top-3.5 right-3.5 w-5 h-5 rounded-full bg-brand-amber text-black flex items-center justify-center shadow-md transition-all">
+          <svg class="w-3.5 h-3.5 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+      </label>
+
+      <!-- Card 3: Master Chord Transitions -->
+      <label class="goal-card relative flex items-start gap-4 p-4 rounded-xl border border-brand-border bg-brand-surface hover:border-[#3E4654] hover:bg-brand-elevated cursor-pointer select-none">
+        <input type="radio" name="learning_goal" value="chord_transitions" class="sr-only">
+        
+        <div class="card-icon-wrap w-11 h-11 rounded-lg bg-brand-elevated border border-brand-border flex-shrink-0 flex items-center justify-center text-brand-textMuted transition-colors">
+          <!-- Repeat / Transition Switch Icon -->
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m16 3 4 4-4 4"/>
+            <path d="M20 7H4"/>
+            <path d="m8 21-4-4 4-4"/>
+            <path d="M4 17h16"/>
+          </svg>
+        </div>
+
+        <div class="flex-1 pr-6">
+          <span class="text-sm font-bold text-white tracking-tight">Master Chord Transitions</span>
+          <p class="text-xs text-brand-textMuted mt-1 leading-normal">
+            Eliminate hesitation and fret buzz between C, G, and D with guided metronome cadences and anchor-finger technique.
+          </p>
+        </div>
+
+        <div class="check-badge opacity-0 scale-75 absolute top-3.5 right-3.5 w-5 h-5 rounded-full bg-brand-amber text-black flex items-center justify-center shadow-md transition-all">
+          <svg class="w-3.5 h-3.5 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+      </label>
+
+      <!-- Card 4: Understand Rhythm & Theory -->
+      <label class="goal-card relative flex items-start gap-4 p-4 rounded-xl border border-brand-border bg-brand-surface hover:border-[#3E4654] hover:bg-brand-elevated cursor-pointer select-none">
+        <input type="radio" name="learning_goal" value="rhythm_theory" class="sr-only">
+        
+        <div class="card-icon-wrap w-11 h-11 rounded-lg bg-brand-elevated border border-brand-border flex-shrink-0 flex items-center justify-center text-brand-textMuted transition-colors">
+          <!-- Metronome / Pulse Icon -->
+          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 2-7.5 16.5A1.5 1.5 0 0 0 5.86 21h12.28a1.5 1.5 0 0 0 1.36-2.5L12 2Z"/>
+            <path d="m9 15 6-7"/>
+            <circle cx="15" cy="8" r="1.5" fill="currentColor"/>
+          </svg>
+        </div>
+
+        <div class="flex-1 pr-6">
+          <span class="text-sm font-bold text-white tracking-tight">Understand Rhythm & Theory</span>
+          <p class="text-xs text-brand-textMuted mt-1 leading-normal">
+            Internalize 4/4 meter, steady down/up strokes, note roots, and why chords fit together logically on the fretboard.
+          </p>
+        </div>
+
+        <div class="check-badge opacity-0 scale-75 absolute top-3.5 right-3.5 w-5 h-5 rounded-full bg-brand-amber text-black flex items-center justify-center shadow-md transition-all">
+          <svg class="w-3.5 h-3.5 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </div>
+      </label>
+
+    </div>
+
+    <!-- Step 4 Preview: Daily Practice Target Picker -->
+    <div class="bg-brand-bg/80 border border-brand-border rounded-xl p-4 mb-7">
+      <div class="flex items-center justify-between mb-2.5">
+        <div class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-brand-amber" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span class="text-xs font-bold text-white uppercase tracking-wider">Commitment Target</span>
+        </div>
+        <span class="text-[11px] font-mono text-brand-textMuted">Adaptive Pace Model</span>
+      </div>
+
+      <!-- Segmented Buttons Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" role="group" aria-label="Daily Practice Target">
+        
+        <!-- 10 Min -->
+        <button type="button" class="target-pill flex flex-col items-center justify-center py-2 px-1.5 rounded-lg border border-brand-border bg-brand-surface text-brand-textMuted hover:text-white hover:border-brand-borderHover text-center">
+          <span class="text-xs font-bold font-mono">10 Min</span>
+          <span class="text-[10px] opacity-75 font-normal">Quick Start</span>
+        </button>
+
+        <!-- 15 Min (Active Recommended) -->
+        <button type="button" class="target-pill active flex flex-col items-center justify-center py-2 px-1.5 rounded-lg border border-brand-amber bg-brand-amber text-brand-bg text-center">
+          <span class="text-xs font-bold font-mono">15 Min</span>
+          <span class="text-[10px] font-semibold">Recommended</span>
+        </button>
+
+        <!-- 30 Min -->
+        <button type="button" class="target-pill flex flex-col items-center justify-center py-2 px-1.5 rounded-lg border border-brand-border bg-brand-surface text-brand-textMuted hover:text-white hover:border-brand-borderHover text-center">
+          <span class="text-xs font-bold font-mono">30 Min</span>
+          <span class="text-[10px] opacity-75 font-normal">Focused Pace</span>
+        </button>
+
+        <!-- 45 Min -->
+        <button type="button" class="target-pill flex flex-col items-center justify-center py-2 px-1.5 rounded-lg border border-brand-border bg-brand-surface text-brand-textMuted hover:text-white hover:border-brand-borderHover text-center">
+          <span class="text-xs font-bold font-mono">45 Min</span>
+          <span class="text-[10px] opacity-75 font-normal">Deep Dive</span>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Fixed Action Footer Inside Card -->
+    <div class="pt-2 border-t border-brand-border/60">
+      
+      <!-- Primary Continue Button with Wave Animation Effect -->
+      <button type="button" id="continue-btn" class="w-full h-12 bg-gradient-to-r from-brand-amber to-brand-amberHover hover:brightness-110 active:scale-[0.99] text-brand-bg font-extrabold text-sm tracking-tight rounded-xl shadow-[0_4px_20px_rgba(245,158,11,0.3)] transition-all flex items-center justify-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-amber focus:ring-offset-2 focus:ring-offset-brand-surface">
+        <span>Continue to Skill Assessment</span>
+        
+        <!-- Animated Soundwave Icon Indicator -->
+        <div class="flex items-center gap-0.5 h-5 px-1">
+          <span class="wave-bar w-0.5 bg-brand-bg rounded-full"></span>
+          <span class="wave-bar w-0.5 bg-brand-bg rounded-full"></span>
+          <span class="wave-bar w-0.5 bg-brand-bg rounded-full"></span>
+          <span class="wave-bar w-0.5 bg-brand-bg rounded-full"></span>
+          <span class="wave-bar w-0.5 bg-brand-bg rounded-full"></span>
+        </div>
+
+        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1 stroke-[2.5]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14"/>
+          <path d="m12 5 7 7-7 7"/>
+        </svg>
+      </button>
+
+      <!-- Trust & Anti-Tutorial-Hell Microcopy -->
+      <div class="flex items-center justify-center gap-3 mt-3.5 text-[11px] font-mono text-brand-textMuted">
+        <span class="flex items-center gap-1">
+          <svg class="w-3 h-3 text-brand-emerald" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          No Credit Card Required
+        </span>
+        <span class="text-white/20">•</span>
+        <span>Placement Takes &lt; 2 Minutes</span>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Clean Bottom Safety / Progress Footer -->
+  <footer class="w-full max-w-xl text-center py-3 text-xs text-brand-textMuted flex items-center justify-between">
+    <span class="font-mono text-[11px]">FretFlow OS v2.4</span>
+    <span class="hover:text-white transition-colors cursor-pointer">Deterministic Curriculum Engine</span>
+    <span class="text-brand-emerald flex items-center gap-1 font-mono text-[11px]">
+      <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald animate-pulse"></span>
+      Ready to calibrate
+    </span>
+  </footer>
+
+  <!-- Interactive Demo Logic for Previewing Card Selection & Target Switching -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Goal Cards selection logic
+      const cards = document.querySelectorAll('.goal-card');
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          cards.forEach(c => {
+            c.classList.remove('selected');
+            const radio = c.querySelector('input[type="radio"]');
+            if (radio) radio.checked = false;
+            const badge = c.querySelector('.check-badge');
+            if (badge) {
+              badge.classList.add('opacity-0', 'scale-75');
+            }
+            const icon = c.querySelector('.card-icon-wrap');
+            if (icon) {
+              icon.classList.remove('text-brand-amber');
+              icon.classList.add('text-brand-textMuted');
+            }
+          });
+
+          card.classList.add('selected');
+          const radio = card.querySelector('input[type="radio"]');
+          if (radio) radio.checked = true;
+          const badge = card.querySelector('.check-badge');
+          if (badge) {
+            badge.classList.remove('opacity-0', 'scale-75');
+          }
+          const icon = card.querySelector('.card-icon-wrap');
+          if (icon) {
+            icon.classList.remove('text-brand-textMuted');
+            icon.classList.add('text-brand-amber');
+          }
+        });
+      });
+
+      // Daily Target Picker selection logic
+      const targetPills = document.querySelectorAll('.target-pill');
+      targetPills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          targetPills.forEach(p => {
+            p.classList.remove('active', 'bg-brand-amber', 'text-brand-bg', 'border-brand-amber');
+            p.classList.add('bg-brand-surface', 'text-brand-textMuted', 'border-brand-border');
+          });
+          pill.classList.add('active', 'bg-brand-amber', 'text-brand-bg', 'border-brand-amber');
+          pill.classList.remove('bg-brand-surface', 'text-brand-textMuted', 'border-brand-border');
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

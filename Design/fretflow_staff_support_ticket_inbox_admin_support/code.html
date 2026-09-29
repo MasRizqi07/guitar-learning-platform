@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"primary":"#ffc174","surface-dim":"#101319","surface-tint":"#ffb95f","on-surface-variant":"#d8c3ad","background":"#101319","primary-fixed":"#ffddb8","on-surface":"#e1e2eb","error-container":"#93000a","primary-container":"#f59e0b","on-tertiary-fixed":"#410004","surface-variant":"#32353b","on-secondary-container":"#004119","on-secondary-fixed":"#002109","surface-container":"#1d2026","inverse-primary":"#855300","error":"#ffb4ab","on-tertiary":"#68000a","surface-bright":"#363940","inverse-surface":"#e1e2eb","tertiary-fixed-dim":"#ffb3ad","surface":"#101319","tertiary-container":"#ff938c","outline-variant":"#534434","primary-fixed-dim":"#ffb95f","on-secondary-fixed-variant":"#005321","secondary-fixed-dim":"#4ae176","on-error":"#690005","on-background":"#e1e2eb","secondary-container":"#00b954","surface-container-high":"#272a30","tertiary":"#ffbcb7","tertiary-fixed":"#ffdad7","on-primary-fixed-variant":"#653e00","on-error-container":"#ffdad6","on-primary":"#472a00","inverse-on-surface":"#2d3037","secondary":"#4ae176","surface-container-highest":"#32353b","secondary-fixed":"#6bff8f","on-primary-fixed":"#2a1700","surface-container-lowest":"#0b0e14","on-primary-container":"#613b00","surface-container-low":"#191c22","on-tertiary-fixed-variant":"#930013","on-secondary":"#003915","on-tertiary-container":"#8d0012","outline":"#a08e7a"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"gutter":"1.25rem","margin-mobile":"1rem","space-sm":"0.5rem","gutter-mobile":"0.75rem","space-xl":"2rem","space-md":"0.75rem","margin":"2rem","space-lg":"1.25rem","space-xs":"0.25rem"},"fontFamily":{"display-lg-mobile":["Geist"],"body-lg":["Geist"],"headline-md":["Geist"],"display-lg":["Geist"],"headline-xl-mobile":["Geist"],"mono-fret":["JetBrains Mono"],"body-sm":["Geist"],"mono-metric":["JetBrains Mono"],"body-md":["Geist"],"headline-sm":["Geist"],"headline-xl":["Geist"],"label-caps":["JetBrains Mono"]},"fontSize":{"display-lg-mobile":["34px",{"lineHeight":"38px","letterSpacing":"-0.025em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"400"}],"headline-md":["20px",{"lineHeight":"26px","letterSpacing":"-0.02em","fontWeight":"600"}],"display-lg":["48px",{"lineHeight":"52px","letterSpacing":"-0.03em","fontWeight":"700"}],"headline-xl-mobile":["26px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"mono-fret":["14px",{"lineHeight":"16px","letterSpacing":"0em","fontWeight":"500"}],"body-sm":["12px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"400"}],"mono-metric":["24px",{"lineHeight":"28px","letterSpacing":"-0.03em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"-0.005em","fontWeight":"400"}],"headline-sm":["16px",{"lineHeight":"22px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-xl":["32px",{"lineHeight":"38px","letterSpacing":"-0.025em","fontWeight":"600"}],"label-caps":["11px",{"lineHeight":"14px","letterSpacing":"0.06em","fontWeight":"600"}]}}}};</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest z-50 flex flex-col justify-between py-space-lg shadow-[1px_0_12px_rgba(0,0,0,0.4)]"><div class="flex flex-col gap-space-lg"><div class="px-space-lg flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[26px]">tune</span><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface font-bold leading-none">Fret<span class="text-primary">Ops</span></span><span class="font-label-caps text-label-caps text-on-surface-variant">CONSOLE V2.4</span></div></div><nav class="flex flex-col gap-1 px-space-sm" data-active-classes="bg-surface-container-high text-primary font-headline-sm"><a class="flex items-center gap-space-md px-space-md py-space-sm rounded text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="staff-ops-overview" href="#"><span class="material-symbols-outlined text-[20px]">dashboard</span>Overview</a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="curriculum-management" href="#"><span class="material-symbols-outlined text-[20px]">music_note</span>Curriculum</a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="quizzes-assessment" href="#"><span class="material-symbols-outlined text-[20px]">quiz</span>Quizzes</a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="user-directory" href="#"><span class="material-symbols-outlined text-[20px]">group</span>User Directory</a><a aria-current="page" class="flex items-center justify-between px-space-md py-space-sm rounded transition-colors bg-surface-container-high text-primary font-headline-sm" data-path="support-ticket-inbox" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-[20px]">inbox</span>Support Inbox</div><span class="px-1.5 py-0.5 rounded bg-primary-container text-on-primary-container font-label-caps text-label-caps">14</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="audit-logs" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span>Audit Logs</a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded text-on-surface-variant font-body-md text-body-md hover:bg-surface-container hover:text-on-surface transition-colors" data-path="system-settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span>Settings</a></nav></div><div class="px-space-md"><div class="bg-surface-container-low p-space-md rounded flex items-center justify-between"><div class="flex flex-col"><span class="font-label-caps text-label-caps text-on-surface-variant">LATENCY ENGINE</span><span class="font-mono-fret text-mono-fret text-secondary flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary inline-block"></span> 12ms OK</span></div><span class="material-symbols-outlined text-on-surface-variant text-[18px]">speed</span></div></div></aside><div class="pl-64"><header class="fixed top-0 left-64 right-0 h-16 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)] z-40 flex items-center justify-between px-margin"><div class="flex items-center gap-space-lg flex-1 max-w-lg"><div class="relative w-full"><span class="material-symbols-outlined absolute left-space-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span><input class="w-full h-9 pl-9 pr-space-md bg-surface-container-low text-on-surface font-body-sm text-body-sm rounded placeholder-on-surface-variant focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Search learners, ticket IDs, or lessons..." type="text"/></div></div><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-xs bg-surface-container-low px-space-md py-1 rounded"><span class="w-2 h-2 rounded-full bg-secondary"></span><span class="font-label-caps text-label-caps text-secondary">AGENT READY</span></div><button class="flex items-center justify-center w-9 h-9 rounded bg-surface-container hover:bg-surface-container-high transition-colors text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[20px]">headset_mic</span></button><div class="flex items-center gap-space-md pl-space-md"><div class="text-right hidden sm:block"><div class="font-headline-sm text-headline-sm text-on-surface leading-tight">Alex Mercer</div><div class="font-label-caps text-label-caps text-on-surface-variant">TIER-2 AUDIO OPS</div></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full text-on-surface">
+<div class="flex flex-col lg:flex-row w-full gap-space-lg p-margin min-w-0">
+<!-- LEFT COLUMN: Ticket Queue (~380px) -->
+<div class="w-full lg:w-[410px] flex-shrink-0 flex flex-col gap-space-md">
+<!-- Queue Header Panel -->
+<div class="bg-surface-container-low p-space-md rounded-xl shadow-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-on-surface">Support Queue</span>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded-full bg-primary-container/20 text-primary">14 Open, 3 Pending</span>
+</div>
+<button class="p-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" title="Refresh Queue">
+<span class="material-symbols-outlined text-[18px]">sync</span>
+</button>
+</div>
+<!-- Filter Quick Tabs -->
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1">
+<button class="px-2.5 py-1 rounded bg-surface-container-high text-primary font-label-caps text-label-caps whitespace-nowrap">All (17)</button>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-caps text-label-caps whitespace-nowrap transition-colors">Unassigned (6)</button>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-secondary font-label-caps text-label-caps whitespace-nowrap transition-colors">Audio & DSP (5)</button>
+<button class="px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-error font-label-caps text-label-caps whitespace-nowrap transition-colors">High Priority (3)</button>
+</div>
+<!-- Search Bar -->
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[16px]">filter_list</span>
+<input class="w-full h-8 pl-8 pr-2.5 bg-surface-container-lowest text-on-surface font-body-sm text-body-sm rounded-lg placeholder-on-surface-variant/60 focus:outline-none focus:ring-1 focus:ring-primary shadow-inner" placeholder="Filter by ticket ID, user, or issue..." type="text"/>
+</div>
+</div>
+<!-- Ticket Items List -->
+<div class="flex flex-col gap-2.5 overflow-y-auto">
+<!-- Ticket T-104 (SELECTED / ACTIVE) -->
+<div class="p-space-md rounded-xl bg-surface-container-high shadow-lg transition-all cursor-pointer relative" style="box-shadow: 0 0 16px 2px rgba(245, 158, 11, 0.22);">
+<div class="absolute -left-1 top-3 bottom-3 w-1.5 rounded-full bg-primary"></div>
+<div class="flex items-center justify-between mb-1.5">
+<div class="flex items-center gap-1.5">
+<span class="font-mono-fret text-mono-fret font-bold text-primary">T-104</span>
+<span class="px-1.5 py-0.5 rounded bg-error-container text-error font-label-caps text-label-caps">URGENT</span>
+<span class="flex items-center gap-1 px-1.5 py-0.5 rounded bg-surface-container-highest text-secondary font-label-caps text-label-caps">
+<span class="material-symbols-outlined text-[13px]">graphic_eq</span>Audio/Tuner
+              </span>
+</div>
+<span class="font-mono-fret text-body-sm text-on-surface-variant">14m ago</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface font-semibold mb-1 leading-snug">Microphone pitch frozen on Chrome iOS</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mb-2.5">
+            Tuner needle gets stuck at 82Hz Low E and doesn't respond to D string when plucking repeatedly...
+          </p>
+<div class="flex items-center justify-between pt-1.5 bg-surface-container-lowest/50 px-2 py-1 rounded">
+<div class="flex items-center gap-1.5">
+<div class="w-4 h-4 rounded-full bg-primary flex items-center justify-center text-[10px] font-bold text-on-primary">A</div>
+<span class="font-body-sm text-body-sm text-on-surface font-medium truncate max-w-[140px]">Adi Pratama</span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">(Beginner)</span>
+</div>
+<div class="flex items-center gap-1 text-primary text-[12px] font-mono-fret">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+              Assigned Marcus
+            </div>
+</div>
+</div>
+<!-- Ticket T-103 -->
+<div class="p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer shadow-sm">
+<div class="flex items-center justify-between mb-1.5">
+<div class="flex items-center gap-1.5">
+<span class="font-mono-fret text-mono-fret text-on-surface-variant">T-103</span>
+<span class="px-1.5 py-0.5 rounded bg-primary-container/20 text-primary font-label-caps text-label-caps">MEDIUM</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-caps text-label-caps">Curriculum</span>
+</div>
+<span class="font-mono-fret text-body-sm text-on-surface-variant">42m ago</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface mb-1 leading-snug">Lesson 3 Section 4 Practice Drill not registering 60s completion</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mb-2">
+            Completed the speed drill twice at 90 BPM with 0 errors but the continue button remains disabled...
+          </p>
+<div class="flex items-center justify-between text-body-sm text-on-surface-variant">
+<span>Maya Indah</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Unassigned</span>
+</div>
+</div>
+<!-- Ticket T-102 -->
+<div class="p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer shadow-sm">
+<div class="flex items-center justify-between mb-1.5">
+<div class="flex items-center gap-1.5">
+<span class="font-mono-fret text-mono-fret text-on-surface-variant">T-102</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-caps text-label-caps">LOW</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-caps text-label-caps">Account/Auth</span>
+</div>
+<span class="font-mono-fret text-body-sm text-on-surface-variant">2h ago</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface mb-1 leading-snug">Forgot 2FA backup codes after switching to new device</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mb-2">
+            Lost Google Authenticator seed while migrating phone. Requesting identity verification bypass.
+          </p>
+<div class="flex items-center justify-between text-body-sm text-on-surface-variant">
+<span>Budi Santoso</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Tier-1 Queue</span>
+</div>
+</div>
+<!-- Ticket T-101 -->
+<div class="p-space-md rounded-xl bg-surface-container-low hover:bg-surface-container transition-all cursor-pointer shadow-sm">
+<div class="flex items-center justify-between mb-1.5">
+<div class="flex items-center gap-1.5">
+<span class="font-mono-fret text-mono-fret text-on-surface-variant">T-101</span>
+<span class="px-1.5 py-0.5 rounded bg-primary-container/20 text-primary font-label-caps text-label-caps">MEDIUM</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-caps text-label-caps">Content</span>
+</div>
+<span class="font-mono-fret text-body-sm text-on-surface-variant">3h ago</span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface mb-1 leading-snug">Chord diagram for B7 shows finger 4 on wrong fret</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mb-2">
+            The fret matrix highlights fret 3 instead of fret 2 on high E string. Confuses beginners.
+          </p>
+<div class="flex items-center justify-between text-body-sm text-on-surface-variant">
+<span>Rian Putra</span>
+<span class="font-label-caps text-label-caps text-secondary">Verified Bug</span>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Active Ticket Workspace (Flex-1) -->
+<div class="flex-1 flex flex-col gap-space-md min-w-0">
+<!-- Top Control Bar -->
+<div class="bg-surface-container-low p-space-md rounded-xl shadow-md flex flex-col gap-space-sm">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<!-- Breadcrumb -->
+<div class="flex items-center gap-2">
+<span class="font-label-caps text-label-caps text-on-surface-variant">SUPPORT INBOX</span>
+<span class="text-on-surface-variant/40">/</span>
+<span class="font-mono-fret text-mono-fret text-primary font-bold">T-104</span>
+<span class="text-on-surface-variant/40">/</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Audio DSP Issue</span>
+</div>
+<!-- Quick Actions -->
+<div class="flex items-center gap-2">
+<button class="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-body-sm text-body-sm flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px] text-error">assignment_return</span>
+              Escalate to Eng
+            </button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-body-sm text-body-sm flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[16px] text-secondary">check_circle</span>
+              Close Ticket
+            </button>
+</div>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-space-md pt-2 bg-surface-container-lowest/60 p-2.5 rounded-lg">
+<!-- Lifecycle Switcher -->
+<div class="flex items-center gap-1 bg-surface-container p-1 rounded-lg">
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface font-label-caps text-label-caps transition-colors">OPEN</button>
+<button class="px-2.5 py-1 rounded bg-primary text-on-primary font-label-caps text-label-caps font-bold shadow-sm">IN_PROGRESS</button>
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface font-label-caps text-label-caps transition-colors">WAITING_USER</button>
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface font-label-caps text-label-caps transition-colors">RESOLVED</button>
+</div>
+<!-- Assignee & Priority -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-2 bg-surface-container px-2.5 py-1 rounded-lg">
+<span class="material-symbols-outlined text-[16px] text-primary">person</span>
+<span class="font-body-sm text-body-sm text-on-surface">Assigned: <strong class="text-primary font-semibold">Marcus Vance</strong> (Lead)</span>
+</div>
+<div class="flex items-center gap-1.5 bg-error-container/30 px-2.5 py-1 rounded-lg">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-error">PRIORITY: URGENT</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Customer Info Snapshot Card (Compact Bar) -->
+<div class="bg-surface-container-low p-space-md rounded-xl shadow-md flex flex-wrap lg:flex-nowrap items-center justify-between gap-space-md">
+<!-- Learner Profile -->
+<div class="flex items-center gap-space-sm min-w-[200px]">
+<div class="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-lg">AP</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm text-on-surface">Adi Pratama</span>
+<span class="material-symbols-outlined text-secondary text-[16px]" title="Verified Student">verified</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">ID: #LRN-98421 • MEMBER SINCE MAR 24</span>
+</div>
+</div>
+<!-- Metrics Dividers -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-md flex-1 bg-surface-container-lowest/80 p-2.5 rounded-lg text-left">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant">LEVEL & XP</span>
+<span class="font-mono-metric text-mono-fret text-primary font-bold">640 XP <span class="text-body-sm text-on-surface-variant font-normal">(Lvl 4)</span></span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant">ACTIVE LESSON</span>
+<span class="font-body-sm text-body-sm text-on-surface truncate">Mod 02: G Major (3/5)</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant">DEVICE & OS</span>
+<span class="font-body-sm text-body-sm text-on-surface truncate">iPhone 15 Pro • iOS 17.5.1</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant">AUDIO DSP HEALTH</span>
+<span class="font-mono-fret text-mono-fret text-secondary">48kHz • Err 0.002%</span>
+</div>
+</div>
+</div>
+<!-- Message Thread / Timeline -->
+<div class="flex flex-col gap-space-md p-space-md bg-surface-container-low rounded-xl shadow-md min-h-[380px] overflow-y-auto">
+<!-- 1. Student Submission -->
+<div class="flex items-start gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">AP</div>
+<div class="flex-1 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-on-surface">Adi Pratama</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-label-caps text-label-caps">Learner</span>
+</div>
+<span class="font-mono-fret text-body-sm text-on-surface-variant">Today at 14:18 (14m ago)</span>
+</div>
+<div class="bg-surface-container p-space-md rounded-xl text-on-surface font-body-md text-body-md shadow-inner leading-relaxed">
+              Hi support team, I was trying to tune my acoustic guitar for the G Major lesson. The tuner works for Low E, but when I pluck string 5 (A) or string 4 (D), the needle freezes and doesn't detect pitch. Refreshing didn't fix it. I'm on iOS Chrome.
+            </div>
+<!-- Telemetry Pill -->
+<div class="flex items-center gap-2 px-space-md py-1.5 rounded-lg bg-surface-container-lowest text-secondary font-mono-fret text-body-sm shadow-inner overflow-x-auto">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+<span>Client Attached Telemetry: WebAudio Engine v2.4 • SampleRate 48kHz • BufferSize 2048 • MicPermission: Granted</span>
+</div>
+</div>
+</div>
+<!-- 2. Automated System Event -->
+<div class="flex items-center gap-space-sm justify-center my-1">
+<div class="h-[1px] flex-1 bg-surface-container-highest"></div>
+<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-caps text-label-caps shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-primary">auto_mode</span>
+            Ticket T-104 routed to Audio DSP Queue. Status changed to IN_PROGRESS by Marcus Vance (12m ago)
+          </div>
+<div class="h-[1px] flex-1 bg-surface-container-highest"></div>
+</div>
+<!-- 3. Internal Staff Note -->
+<div class="flex items-start gap-space-sm bg-primary/10 p-space-md rounded-xl shadow-md relative">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">MV</div>
+<div class="flex-1 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">Marcus Vance</span>
+<span class="flex items-center gap-1 px-2 py-0.5 rounded bg-primary text-on-primary font-label-caps text-label-caps font-bold">
+<span class="material-symbols-outlined text-[13px]">lock</span>INTERNAL STAFF NOTE • ONLY VISIBLE TO STAFF
+                </span>
+</div>
+<span class="font-mono-fret text-body-sm text-primary">8m ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface leading-relaxed">
+              Known issue on iOS 17.5 WebKit audio buffer starvation when battery saver is on. Marcus checked audio logs; user has low power mode enabled which throttles WebAudio workers. Instruct to disable low power mode or switch to Safari.
+            </p>
+</div>
+</div>
+</div>
+<!-- Dual Mode Reply Box -->
+<div class="bg-surface-container-low rounded-xl shadow-lg flex flex-col overflow-hidden">
+<!-- Tab Selector -->
+<div class="flex items-center justify-between px-space-md pt-space-sm bg-surface-container-lowest">
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 px-4 py-2 font-headline-sm text-body-md rounded-t-lg bg-surface-container text-primary font-semibold transition-colors" id="tabPublic" onclick="switchReplyTab('public')">
+<span class="material-symbols-outlined text-[18px]">reply</span>
+              Public Reply
+            </button>
+<button class="flex items-center gap-2 px-4 py-2 font-headline-sm text-body-md rounded-t-lg text-on-surface-variant hover:text-on-surface transition-colors" id="tabInternal" onclick="switchReplyTab('internal')">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+              Internal Staff Note
+            </button>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant flex items-center gap-1" id="replyModeIndicator">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+            Learner will receive email and push notification
+          </span>
+</div>
+<!-- Formatting & Canned Toolbar -->
+<div class="flex flex-wrap items-center justify-between px-space-md py-1.5 bg-surface-container-high gap-2">
+<div class="flex items-center gap-1">
+<button class="p-1 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Bold"><span class="material-symbols-outlined text-[18px]">format_bold</span></button>
+<button class="p-1 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Code"><span class="material-symbols-outlined text-[18px]">code</span></button>
+<button class="p-1 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Link"><span class="material-symbols-outlined text-[18px]">link</span></button>
+<button class="p-1 rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface transition-colors" title="Attach Telemetry"><span class="material-symbols-outlined text-[18px]">attach_file</span></button>
+</div>
+<!-- Canned Responses Quick Chips -->
+<div class="flex items-center gap-1.5 overflow-x-auto">
+<span class="font-label-caps text-label-caps text-on-surface-variant mr-1">CANNED:</span>
+<button class="px-2 py-0.5 rounded bg-surface-container hover:bg-surface text-primary font-label-caps text-label-caps transition-colors" onclick="insertCanned('ios')">iOS Audio Fix</button>
+<button class="px-2 py-0.5 rounded bg-surface-container hover:bg-surface text-on-surface font-label-caps text-label-caps transition-colors" onclick="insertCanned('drill')">Drill Unlock</button>
+<button class="px-2 py-0.5 rounded bg-surface-container hover:bg-surface text-on-surface font-label-caps text-label-caps transition-colors" onclick="insertCanned('mic')">Mic Permissions</button>
+</div>
+</div>
+<!-- Compose Textarea -->
+<div class="p-space-md bg-surface-container">
+<textarea class="w-full bg-surface-container-lowest text-on-surface font-body-md text-body-md p-space-md rounded-lg placeholder-on-surface-variant/60 focus:outline-none focus:ring-1 focus:ring-primary shadow-inner resize-none" id="replyText" placeholder="Compose message to Adi Pratama... Learner will receive email notification and in-app alert." rows="4"></textarea>
+</div>
+<!-- Action Footer -->
+<div class="flex flex-wrap items-center justify-between p-space-md bg-surface-container-high gap-space-sm">
+<div class="flex items-center gap-2">
+<label class="flex items-center gap-1.5 cursor-pointer">
+<input checked="" class="accent-primary rounded" type="checkbox"/>
+<span class="font-body-sm text-body-sm text-on-surface">Auto-attach diagnostic logs</span>
+</label>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 rounded-lg bg-surface-container-highest hover:bg-surface-bright text-on-surface font-headline-sm text-body-md transition-colors">
+              Send & Resolve
+            </button>
+<button class="px-5 py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-headline-sm text-body-md font-bold transition-all shadow-md flex items-center gap-2" style="box-shadow: 0 0 12px rgba(245, 158, 11, 0.35);">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span id="sendBtnLabel">Send Public Reply & Keep In Progress</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  function switchReplyTab(mode) {
+    const tabPub = document.getElementById('tabPublic');
+    const tabInt = document.getElementById('tabInternal');
+    const area = document.getElementById('replyText');
+    const indicator = document.getElementById('replyModeIndicator');
+    const sendLabel = document.getElementById('sendBtnLabel');
+
+    if (mode === 'internal') {
+      tabPub.className = "flex items-center gap-2 px-4 py-2 font-headline-sm text-body-md rounded-t-lg text-on-surface-variant hover:text-on-surface transition-colors";
+      tabInt.className = "flex items-center gap-2 px-4 py-2 font-headline-sm text-body-md rounded-t-lg bg-primary/20 text-primary font-semibold transition-colors";
+      area.placeholder = "Write an internal staff note... This will NOT be shared with the learner.";
+      indicator.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Only visible to FretOps staff members';
+      indicator.className = "font-label-caps text-label-caps text-primary flex items-center gap-1";
+      sendLabel.textContent = "Post Internal Staff Note";
+    } else {
+      tabPub.className = "flex items-center gap-2 px-4 py-2 font-headline-sm text-body-md rounded-t-lg bg-surface-container text-primary font-semibold transition-colors";
+      tabInt.className = "flex items-center gap-2 px-4 py-2 font-headline-sm text-body-md rounded-t-lg text-on-surface-variant hover:text-on-surface transition-colors";
+      area.placeholder = "Compose message to Adi Pratama... Learner will receive email notification and in-app alert.";
+      indicator.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Learner will receive email and push notification';
+      indicator.className = "font-label-caps text-label-caps text-on-surface-variant flex items-center gap-1";
+      sendLabel.textContent = "Send Public Reply & Keep In Progress";
+    }
+  }
+
+  function insertCanned(type) {
+    const area = document.getElementById('replyText');
+    if (type === 'ios') {
+      area.value = "Hi Adi,\n\nThanks for reaching out! On iOS 17.5 Chrome, this pitch detection lock can occur when Low Power Mode is turned on, as iOS throttles the WebAudio buffer frequency. \n\nPlease try turning off Low Power Mode under Settings > Battery, or launch the lesson inside Safari. Let us know if the Low E and D string start tracking accurately!";
+    } else if (type === 'drill') {
+      area.value = "Hi Adi,\n\nWe have re-synchronized your practice drill telemetry for Module 2. Please refresh your page and the continue button should now be enabled!";
+    } else if (type === 'mic') {
+      area.value = "Hi Adi,\n\nPlease verify that Chrome has microphone access under iOS Settings > Chrome > Microphone = Allowed, and make sure no background voice memo is running.";
+    }
+    area.focus();
+  }
+</script></main></div></body></html>

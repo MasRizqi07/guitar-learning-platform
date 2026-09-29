@@ -28,9 +28,16 @@ export const emailVerificationSendSchema = z.object({
   email: z.string().trim().toLowerCase().email('Invalid email address').optional(),
 });
 
+export const changePasswordSchema = z.object({
+  currentPassword: z.string().min(1, 'Current password is required'),
+  newPassword: z.string().min(6, 'New password must be at least 6 characters').max(128, 'Password too long'),
+});
+
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type PasswordResetRequestInput = z.infer<typeof passwordResetRequestSchema>;
 export type PasswordResetConfirmInput = z.infer<typeof passwordResetConfirmSchema>;
 export type EmailVerificationConfirmInput = z.infer<typeof emailVerificationConfirmSchema>;
 export type EmailVerificationSendInput = z.infer<typeof emailVerificationSendSchema>;
+export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
+

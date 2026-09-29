@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-fixed-dim": "#ffb3ad", "on-error": "#690005", "on-tertiary": "#68000a", "inverse-primary": "#855300", "on-secondary-fixed-variant": "#005321", "tertiary-fixed": "#ffdad7", "secondary-fixed": "#6bff8f", "on-surface": "#e1e2eb", "surface": "#101319", "primary-container": "#f59e0b", "surface-container-lowest": "#0b0e14", "on-secondary": "#003915", "surface-variant": "#32353b", "outline-variant": "#534434", "primary-fixed": "#ffddb8", "secondary-container": "#00b954", "secondary": "#4ae176", "inverse-surface": "#e1e2eb", "tertiary-container": "#ff938c", "surface-container": "#1d2026", "surface-container-high": "#272a30", "on-primary-container": "#613b00", "on-tertiary-fixed": "#410004", "on-surface-variant": "#d8c3ad", "surface-tint": "#ffb95f", "on-primary": "#472a00", "background": "#101319", "primary-fixed-dim": "#ffb95f", "primary": "#ffc174", "error": "#ffb4ab", "surface-container-highest": "#32353b", "secondary-fixed-dim": "#4ae176", "surface-container-low": "#191c22", "surface-dim": "#101319", "on-tertiary-fixed-variant": "#930013", "on-secondary-fixed": "#002109", "tertiary": "#ffbcb7", "outline": "#a08e7a", "on-error-container": "#ffdad6", "on-background": "#e1e2eb", "surface-bright": "#363940", "on-primary-fixed": "#2a1700", "on-secondary-container": "#004119", "on-tertiary-container": "#8d0012", "error-container": "#93000a", "on-primary-fixed-variant": "#653e00", "inverse-on-surface": "#2d3037" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-xl": "2rem", "gutter": "1.25rem", "gutter-mobile": "0.75rem", "space-xs": "0.25rem", "margin": "2rem", "space-sm": "0.5rem", "margin-mobile": "1rem", "space-md": "0.75rem", "space-lg": "1.25rem" }, "fontFamily": { "headline-xl": [ "Geist" ], "body-lg": [ "Geist" ], "headline-sm": [ "Geist" ], "display-lg": [ "Geist" ], "headline-md": [ "Geist" ], "body-sm": [ "Geist" ], "mono-fret": [ "JetBrains Mono" ], "body-md": [ "Geist" ], "display-lg-mobile": [ "Geist" ], "mono-metric": [ "JetBrains Mono" ], "label-caps": [ "JetBrains Mono" ], "headline-xl-mobile": [ "Geist" ] }, "fontSize": { "headline-xl": [ "32px", { "lineHeight": "38px", "letterSpacing": "-0.025em", "fontWeight": "600" } ], "body-lg": [ "16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "400" } ], "headline-sm": [ "16px", { "lineHeight": "22px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "display-lg": [ "48px", { "lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "700" } ], "headline-md": [ "20px", { "lineHeight": "26px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "body-sm": [ "12px", { "lineHeight": "18px", "letterSpacing": "0em", "fontWeight": "400" } ], "mono-fret": [ "14px", { "lineHeight": "16px", "letterSpacing": "0em", "fontWeight": "500" } ], "body-md": [ "14px", { "lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "400" } ], "display-lg-mobile": [ "34px", { "lineHeight": "38px", "letterSpacing": "-0.025em", "fontWeight": "700" } ], "mono-metric": [ "24px", { "lineHeight": "28px", "letterSpacing": "-0.03em", "fontWeight": "600" } ], "label-caps": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "600" } ], "headline-xl-mobile": [ "26px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low border-r border-outline-variant/30 z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-16 px-space-lg flex items-center gap-space-sm border-b border-outline-variant/20 bg-surface-container-lowest/60"><img alt="FretFlow Guitar Platform Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WupnvPwKzOLghcjgS1e9BiW2-TQwGi1UzhnnioRgha9X8Dw0sC6j-xW8QcuMnQFpVgwb0lorUOkaiJ6kCsAKeqieJb0_0KxM_0Qp0ZnqpNWQruArJ2RZMWLqfpfuaMoOkcPYJynG9Bw1kz_WGh_f_CdSfP9o9LPH2PRCl_xqtUSsB5tEHnjOUo6WBeTGI7z0nmdNsJ-uBk7eJAjEZK84pkC3kVqRJA-cgFdzxirUBoBwaei1YKdCwN"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary tracking-tight">FretFlow</span><span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Acoustic &amp; Electric</span></div></div><div class="px-space-md pt-space-lg pb-space-sm"><span class="px-space-sm font-label-caps text-label-caps uppercase text-on-surface-variant tracking-wider">Navigation Engine</span></div><nav class="flex flex-col gap-space-xs px-space-md" data-active-classes="bg-surface-container-high text-primary font-bold shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_16px_rgba(245,158,11,0.15)] border-l-2 border-primary"><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="dashboard" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">grid_view</span><span class="font-body-md text-body-md">Dashboard</span></div><span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded-full bg-primary-container/20 text-primary border border-primary/30 flex items-center gap-0.5">🔥 5d</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="learning-path" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">alt_route</span><span class="font-body-md text-body-md">Learning Path</span></div><span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant">42%</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="focus-practice-room" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">timer</span><span class="font-body-md text-body-md">Practice Room</span></div><span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded-full bg-secondary-container/20 text-secondary border border-secondary/30">15m goal</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="guitar-tuner-and-library" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">graphic_eq</span><span class="font-body-md text-body-md">Tuner &amp; Library</span></div><span class="material-symbols-outlined text-on-surface-variant text-[16px]">queue_music</span></a><a class="flex items-center justify-between px-space-md py-space-sm rounded-xl text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-all group" data-path="progress-and-achievements" href="#"><div class="flex items-center gap-space-sm"><span class="material-symbols-outlined text-[20px] transition-transform group-hover:scale-105">military_tech</span><span class="font-body-md text-body-md">Progress</span></div><span class="font-label-caps text-label-caps px-space-xs py-0.5 rounded-full bg-primary-container/15 text-primary">+640 XP</span></a></nav></div><div class="p-space-md m-space-md rounded-xl bg-surface-container border border-outline-variant/30 flex flex-col gap-space-xs"><div class="flex items-center justify-between"><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Daily Target</span><span class="font-mono-fret text-mono-fret text-secondary">66%</span></div><div class="w-full h-1.5 rounded-full bg-surface-container-lowest overflow-hidden"><div class="h-full bg-secondary rounded-full w-2/3 shadow-[0_0_8px_rgba(74,225,118,0.5)]"></div></div><div class="flex justify-between items-center text-on-surface-variant font-label-caps text-label-caps pt-space-xs"><span>10 of 15 min complete</span><span class="text-primary font-mono-fret">🔥 5d</span></div></div></aside><div class="pl-72 flex flex-col min-h-screen"><header class="fixed top-0 left-72 right-0 h-16 bg-surface-container-lowest/80 backdrop-blur-xl border-b border-outline-variant/20 z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><img alt="FretFlow Guitar Platform Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WupnvPwKzOLghcjgS1e9BiW2-TQwGi1UzhnnioRgha9X8Dw0sC6j-xW8QcuMnQFpVgwb0lorUOkaiJ6kCsAKeqieJb0_0KxM_0Qp0ZnqpNWQruArJ2RZMWLqfpfuaMoOkcPYJynG9Bw1kz_WGh_f_CdSfP9o9LPH2PRCl_xqtUSsB5tEHnjOUo6WBeTGI7z0nmdNsJ-uBk7eJAjEZK84pkC3kVqRJA-cgFdzxirUBoBwaei1YKdCwN"/><div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-high border border-outline-variant/40"><span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span><span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Active:</span><span class="font-headline-sm text-headline-sm text-on-surface text-sm font-semibold">Module 02: Basic Chords</span></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container border border-outline-variant/30"><span class="material-symbols-outlined text-secondary text-[18px]">check_circle</span><span class="font-mono-fret text-mono-fret text-on-surface text-xs">10 / 15 min</span></div><div class="flex items-center gap-1 px-space-sm py-1 rounded-full bg-primary-container/20 border border-primary/40 text-primary font-mono-metric text-xs"><span class="material-symbols-outlined text-primary text-[16px]">local_fire_department</span><span class="font-bold font-mono-fret text-mono-fret text-xs">5 Days</span></div><div class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container border border-outline-variant/30"><span class="material-symbols-outlined text-primary text-[18px]">verified</span><span class="font-mono-fret text-mono-fret text-xs text-on-surface">Lvl 4 • 640 XP</span></div><div class="flex items-center gap-space-sm pl-space-xs"><div class="flex flex-col text-right hidden sm:flex"><span class="font-headline-sm text-headline-sm text-xs text-on-surface">Alex</span><span class="font-label-caps text-label-caps text-[10px] text-on-surface-variant uppercase">Beginner</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface flex-1"><div class="flex flex-col w-full">
+<div class="w-full px-space-lg py-space-md flex flex-col gap-space-lg">
+<!-- Top Sticky Status Bar -->
+<section class="sticky top-16 z-30 -mx-space-lg px-space-lg py-space-sm bg-surface-container-lowest/90 backdrop-blur-md shadow-md flex flex-col lg:flex-row lg:items-center lg:justify-between gap-space-md">
+<div class="flex items-center gap-space-md min-w-0">
+<div class="flex items-center gap-space-xs shrink-0">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary shadow-[0_0_8px_rgba(74,225,118,0.7)] animate-pulse"></span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider hidden sm:inline">Engine v2.4</span>
+</div>
+<div class="min-w-0 flex flex-col">
+<h1 class="font-headline-sm text-headline-sm text-on-surface truncate tracking-tight">
+            Welcome back, <span class="text-primary font-bold">Alex</span>. Keep the rhythm going.
+          </h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant hidden md:block">
+            Next target: G Major 3rd-finger anchor precision test at 60 BPM.
+          </p>
+</div>
+</div>
+<div class="flex items-center flex-wrap gap-space-xs shrink-0">
+<!-- Streak Capsule -->
+<div class="flex items-center gap-1.5 px-space-md py-1 rounded-full bg-primary-container/20 text-primary shadow-[0_0_12px_rgba(245,158,11,0.2)]">
+<span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-label-caps text-label-caps uppercase text-primary">5 Days Active</span>
+</div>
+<!-- XP Counter -->
+<div class="flex items-center gap-1.5 px-space-md py-1 rounded-full bg-secondary-container/20 text-secondary">
+<span class="material-symbols-outlined text-[17px] text-secondary" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-mono-metric text-mono-fret font-bold text-secondary">420 XP</span>
+</div>
+<!-- Level Indicator -->
+<div class="hidden sm:flex items-center gap-1.5 px-space-md py-1 rounded-full bg-surface-container-high text-on-surface">
+<span class="material-symbols-outlined text-primary text-[17px]">military_tech</span>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">Lvl 3 • Chord Apprentice</span>
+</div>
+<!-- User Profile Pill -->
+<button class="h-10 pl-1 pr-space-sm rounded-full bg-surface-container hover:bg-surface-container-high transition-colors flex items-center gap-space-xs text-left cursor-pointer" type="button">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary font-bold flex items-center justify-center font-headline-sm text-xs">
+            AL
+          </div>
+<div class="hidden md:flex flex-col text-right leading-tight pr-1">
+<span class="font-headline-sm text-headline-sm text-xs text-on-surface">Alex Mercer</span>
+<span class="font-label-caps text-label-caps text-[10px] text-secondary">Acoustic Core</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span>
+</button>
+</div>
+</section>
+<!-- Main Grid Workspace -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-stretch">
+<!-- HERO ACTION CARD: One Clear Next Action (Col 8) -->
+<section class="lg:col-span-8 rounded-xl bg-surface-container p-space-lg flex flex-col justify-between shadow-xl relative overflow-hidden group">
+<!-- Glow accents -->
+<div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-primary/10 blur-3xl pointer-events-none"></div>
+<div class="absolute -bottom-24 -right-24 w-72 h-72 rounded-full bg-secondary/10 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-space-md">
+<!-- Eyebrow Pill Cluster -->
+<div class="flex items-center justify-between flex-wrap gap-space-xs">
+<div class="inline-flex items-center gap-2 px-space-sm py-1 rounded-full bg-primary-container/20 text-primary">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-primary">One Clear Next Action</span>
+</div>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant bg-surface-container-high px-space-sm py-1 rounded">
+              Module 02 • Basic Chords
+            </span>
+</div>
+<!-- Split Content & Chord Graphic -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-lg items-center pt-space-xs">
+<!-- Text & Instructions -->
+<div class="md:col-span-7 flex flex-col gap-space-xs">
+<h2 class="font-headline-xl text-headline-xl text-on-surface tracking-tight">
+                Lesson 3: Mastering the G Major Open Chord
+              </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                Lock in clean 3rd-finger pressure on high E, relax your thumb anchor behind fret 2, and eliminate string-buzz at 60 BPM.
+              </p>
+<!-- Progress bar -->
+<div class="flex flex-col gap-space-xs pt-space-sm">
+<div class="flex items-center justify-between text-body-sm font-label-caps">
+<span class="text-on-surface">Step 3 of 5 In Progress</span>
+<span class="text-primary font-mono-fret">60% Complete</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container-lowest overflow-hidden shadow-inner">
+<div class="h-full bg-gradient-to-r from-primary to-primary-fixed-dim rounded-full w-3/5 shadow-[0_0_12px_rgba(245,158,11,0.6)] transition-all duration-500"></div>
+</div>
+</div>
+</div>
+<!-- Fretboard Visual Chord Card -->
+<div class="md:col-span-5 flex flex-col items-center justify-center p-space-md rounded-lg bg-surface-container-low shadow-inner">
+<div class="flex items-center justify-between w-full px-2 pb-2">
+<span class="font-headline-sm text-headline-sm text-primary tracking-wide">G Major</span>
+<span class="font-label-caps text-label-caps uppercase text-secondary bg-secondary-container/20 px-2 py-0.5 rounded">Standard Tuning</span>
+</div>
+<!-- SVG Chord Diagram (G Major) -->
+<div class="w-full max-w-[210px] aspect-[4/5] flex items-center justify-center">
+<svg aria-label="G Major Chord Diagram" class="w-full h-full text-on-surface-variant select-none" viewbox="0 0 160 190">
+<!-- Nut -->
+<rect fill="#a08e7a" height="6" rx="2" width="110" x="25" y="24"></rect>
+<!-- Strings (E A D G B E) -->
+<line stroke="#534434" stroke-width="2.6" x1="30" x2="30" y1="30" y2="165"></line>
+<line stroke="#534434" stroke-width="2.2" x1="52" x2="52" y1="30" y2="165"></line>
+<line stroke="#534434" stroke-width="1.8" x1="74" x2="74" y1="30" y2="165"></line>
+<line stroke="#534434" stroke-width="1.5" x1="96" x2="96" y1="30" y2="165"></line>
+<line stroke="#534434" stroke-width="1.2" x1="118" x2="118" y1="30" y2="165"></line>
+<line stroke="#534434" stroke-width="1.0" x1="135" x2="135" y1="30" y2="165"></line>
+<!-- Frets -->
+<line stroke="#32353b" stroke-width="1.5" x1="30" x2="135" y1="75" y2="75"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="30" x2="135" y1="120" y2="120"></line>
+<line stroke="#32353b" stroke-width="1.5" x1="30" x2="135" y1="165" y2="165"></line>
+<!-- Nut Open/Mute markers -->
+<circle cx="74" cy="14" fill="none" r="3.5" stroke="#a08e7a" stroke-width="1.5"></circle>
+<circle cx="96" cy="14" fill="none" r="3.5" stroke="#a08e7a" stroke-width="1.5"></circle>
+<circle cx="118" cy="14" fill="none" r="3.5" stroke="#a08e7a" stroke-width="1.5"></circle>
+<!-- Finger Placements with Amber and Secondary glow -->
+<!-- Fret 3, String 6 (G) - Finger 2/3 -->
+<circle class="shadow-lg" cx="30" cy="142" fill="#f59e0b" r="10"></circle>
+<text fill="#0b0e14" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle" x="30" y="146">2</text>
+<!-- Fret 2, String 5 (B) - Finger 1 -->
+<circle cx="52" cy="98" fill="#f59e0b" r="10"></circle>
+<text fill="#0b0e14" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle" x="52" y="102">1</text>
+<!-- Fret 3, String 1 (High G) - Finger 3/4 -->
+<circle cx="135" cy="142" fill="#4ae176" r="10"></circle>
+<text fill="#003915" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle" x="135" y="146">3</text>
+<!-- String labels -->
+<text fill="#a08e7a" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="30" y="182">E</text>
+<text fill="#a08e7a" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="52" y="182">A</text>
+<text fill="#a08e7a" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="74" y="182">D</text>
+<text fill="#a08e7a" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="96" y="182">G</text>
+<text fill="#a08e7a" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="118" y="182">B</text>
+<text fill="#a08e7a" font-family="JetBrains Mono" font-size="10" text-anchor="middle" x="135" y="182">e</text>
+</svg>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px] uppercase pt-1">Frets 1-3 Position</span>
+</div>
+</div>
+</div>
+<!-- Action CTAs -->
+<div class="relative z-10 pt-space-lg flex flex-col sm:flex-row items-stretch sm:items-center gap-space-sm">
+<button class="h-12 px-space-lg rounded-xl bg-primary-container text-on-primary-container font-headline-sm text-headline-sm flex items-center justify-center gap-space-sm hover:brightness-110 active:scale-[0.99] transition-all shadow-[0_4px_16px_rgba(245,158,11,0.35)] cursor-pointer" type="button">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<span>Resume Lesson (Step 3 of 5)</span>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded-full bg-on-primary-container/20 text-on-primary-container font-bold">+20 XP</span>
+</button>
+<button class="h-12 px-space-md rounded-xl bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline-sm text-headline-sm text-sm flex items-center justify-center gap-space-xs transition-colors cursor-pointer" type="button">
+<span class="material-symbols-outlined text-[18px]">library_books</span>
+<span>Review Step 2 Notes</span>
+</button>
+<button class="h-12 px-space-md rounded-xl bg-surface-container-high hover:bg-surface-bright text-on-surface-variant hover:text-on-surface font-headline-sm text-headline-sm text-sm flex items-center justify-center gap-space-xs transition-colors cursor-pointer" type="button">
+<span class="material-symbols-outlined text-[18px]">accessibility_new</span>
+<span>Fingering Anatomy</span>
+</button>
+</div>
+</section>
+<!-- DAILY PRACTICE GOAL WIDGET (Col 4) -->
+<section class="lg:col-span-4 rounded-xl bg-surface-container p-space-lg flex flex-col justify-between shadow-xl">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">timer</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Daily Practice Goal</h2>
+</div>
+<span class="font-label-caps text-label-caps uppercase bg-surface-container-highest px-space-xs py-1 rounded text-on-surface-variant">
+            Adaptive Target
+          </span>
+</div>
+<!-- Circular Dial Gauge Display -->
+<div class="flex flex-col items-center justify-center py-space-sm">
+<div class="relative w-44 h-44 flex items-center justify-center">
+<!-- Progress Ring SVG -->
+<svg class="w-full h-full -rotate-90 transform" viewbox="0 0 120 120">
+<!-- Background Track -->
+<circle cx="60" cy="60" fill="transparent" r="50" stroke="#272a30" stroke-width="10"></circle>
+<!-- Progress Stroke (66.6% of 314 = ~209 stroke-dasharray) -->
+<circle class="transition-all duration-1000 ease-out shadow-[0_0_12px_rgba(245,158,11,0.5)]" cx="60" cy="60" fill="transparent" r="50" stroke="#f59e0b" stroke-dasharray="314" stroke-dashoffset="106" stroke-linecap="round" stroke-width="10"></circle>
+</svg>
+<!-- Inner Telemetry Metrics -->
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center select-none">
+<span class="font-mono-metric text-mono-metric text-on-surface tracking-tight font-bold">10 / 15</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest pt-0.5">MINUTES</span>
+<span class="font-mono-fret text-secondary font-bold text-xs pt-1">66% Achieved</span>
+</div>
+</div>
+<div class="mt-space-sm px-space-md py-space-xs rounded-full bg-primary-container/15 text-primary text-center flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">local_fire_department</span>
+<span class="font-body-sm text-body-sm font-semibold">5 minutes left to lock today's streak!</span>
+</div>
+</div>
+<!-- Quick Launch CTA -->
+<button class="w-full h-12 rounded-xl bg-surface-container-high hover:bg-surface-bright text-primary font-headline-sm text-headline-sm flex items-center justify-center gap-space-sm transition-all shadow-md group cursor-pointer" type="button">
+<span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-12">file_map_stack</span>
+<span>Launch 5-Min Warmup</span>
+<span class="material-symbols-outlined text-[18px] transition-transform group-hover:translate-x-1">arrow_forward</span>
+</button>
+</section>
+</div>
+<!-- Row 2: Practice Shortcuts & Tool Utilities (3-Col Grid) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Utility A: Acoustic Digital Tuner -->
+<div class="rounded-xl bg-surface-container p-space-lg flex flex-col justify-between shadow-lg hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[22px]">graphic_eq</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Digital Strobe Tuner</h3>
+</div>
+<span class="font-label-caps text-label-caps uppercase px-space-xs py-0.5 rounded bg-secondary-container/20 text-secondary">
+              DSP Active
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Direct microphone pitch estimation with sub-cent accuracy.
+          </p>
+<!-- Cent Meter & Pitch Dial -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col items-center gap-space-xs shadow-inner">
+<div class="flex items-baseline justify-between w-full">
+<span class="font-headline-xl text-headline-xl text-secondary font-mono-metric font-bold">E2</span>
+<span class="font-label-caps text-label-caps text-secondary font-mono-fret">82.4 Hz • In Tune</span>
+</div>
+<!-- Strobe cent meter visual -->
+<div class="w-full flex items-center gap-1 py-1">
+<span class="h-2 flex-1 rounded bg-surface-container-highest"></span>
+<span class="h-2 flex-1 rounded bg-surface-container-highest"></span>
+<span class="h-2.5 flex-1 rounded bg-surface-variant"></span>
+<span class="h-4 w-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(74,225,118,0.8)]"></span>
+<span class="h-2.5 flex-1 rounded bg-surface-variant"></span>
+<span class="h-2 flex-1 rounded bg-surface-container-highest"></span>
+<span class="h-2 flex-1 rounded bg-surface-container-highest"></span>
+</div>
+<div class="flex justify-between w-full text-[10px] font-label-caps text-on-surface-variant">
+<span>-50 ct</span>
+<span class="text-secondary font-bold">0.0</span>
+<span>+50 ct</span>
+</div>
+</div>
+</div>
+<button class="mt-space-md w-full h-11 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline-sm text-headline-sm text-sm flex items-center justify-between px-space-md transition-colors cursor-pointer" type="button">
+<span>Open Strobe Tuner</span>
+<span class="material-symbols-outlined text-[18px]">east</span>
+</button>
+</div>
+<!-- Utility B: Chord Transition Trainer -->
+<div class="rounded-xl bg-surface-container p-space-lg flex flex-col justify-between shadow-lg hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">swap_horiz</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Chord Transition Drill</h3>
+</div>
+<span class="font-label-caps text-label-caps uppercase px-space-xs py-0.5 rounded bg-primary-container/20 text-primary">
+              64 BPM
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Beat 4 snap switch engine. Eliminate hesitation pauses.
+          </p>
+<!-- Cadence visual widget -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex items-center justify-around shadow-inner">
+<div class="flex flex-col items-center">
+<span class="font-headline-md text-headline-md text-on-surface font-bold">C Maj</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Bar 1</span>
+</div>
+<div class="flex flex-col items-center text-primary">
+<span class="material-symbols-outlined text-[24px] animate-pulse">sync_alt</span>
+<span class="font-label-caps text-label-caps uppercase text-[10px] text-primary">Beat 4.5</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-headline-md text-headline-md text-primary font-bold">G Maj</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Bar 2</span>
+</div>
+</div>
+<div class="flex items-center justify-between text-body-sm text-on-surface-variant px-1">
+<span>Accuracy record</span>
+<span class="font-mono-fret text-secondary font-bold">94% on Beat 1</span>
+</div>
+</div>
+<button class="mt-space-md w-full h-11 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline-sm text-headline-sm text-sm flex items-center justify-between px-space-md transition-colors cursor-pointer" type="button">
+<span>Start 2-Min Transition Drill</span>
+<span class="material-symbols-outlined text-[18px]">east</span>
+</button>
+</div>
+<!-- Utility C: Interactive 15-Fret Neck -->
+<div class="rounded-xl bg-surface-container p-space-lg flex flex-col justify-between shadow-lg hover:bg-surface-container-high transition-colors">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">view_timeline</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Interactive 15-Fret Neck</h3>
+</div>
+<span class="font-label-caps text-label-caps uppercase px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface-variant">
+              Scales
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Pentatonic &amp; Blues Scale Overlays with real-time root highlights.
+          </p>
+<!-- Mini Neck Preview Graphic -->
+<div class="p-space-md rounded-lg bg-surface-container-low flex flex-col justify-center gap-1.5 shadow-inner select-none">
+<div class="flex items-center justify-between text-label-caps text-[10px] text-on-surface-variant">
+<span>NUT</span>
+<span>3</span>
+<span>5</span>
+<span>7</span>
+<span>9</span>
+<span>12</span>
+</div>
+<div class="relative w-full h-8 bg-surface-container-lowest rounded flex items-center px-1 overflow-hidden">
+<div class="absolute inset-y-0 left-0 w-1 bg-outline-variant"></div>
+<div class="absolute inset-y-0 left-1/4 w-[1px] bg-surface-variant"></div>
+<div class="absolute inset-y-0 left-2/4 w-[1px] bg-surface-variant"></div>
+<div class="absolute inset-y-0 left-3/4 w-[1px] bg-surface-variant"></div>
+<!-- Dot Markers -->
+<span class="absolute left-[22%] w-3 h-3 rounded-full bg-primary flex items-center justify-center text-[8px] font-bold text-on-primary">R</span>
+<span class="absolute left-[48%] w-3 h-3 rounded-full bg-secondary flex items-center justify-center text-[8px] font-bold text-on-secondary">3</span>
+<span class="absolute left-[72%] w-3 h-3 rounded-full bg-secondary flex items-center justify-center text-[8px] font-bold text-on-secondary">5</span>
+</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant text-[10px] text-center pt-0.5">
+              G Minor Pentatonic Box 1 Active
+            </span>
+</div>
+</div>
+<button class="mt-space-md w-full h-11 rounded-lg bg-surface-container-high hover:bg-surface-bright text-on-surface font-headline-sm text-headline-sm text-sm flex items-center justify-between px-space-md transition-colors cursor-pointer" type="button">
+<span>Explore Scale Maps</span>
+<span class="material-symbols-outlined text-[18px]">east</span>
+</button>
+</div>
+</section>
+<!-- Row 3: Verified Learning Feed & XP Activity Ledger (Col 12) -->
+<section class="rounded-xl bg-surface-container p-space-lg shadow-xl flex flex-col gap-space-md">
+<!-- Ledger Header -->
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-space-xs pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Verified Activity Ledger</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Cryptographically signed learning transactions and practice intervals</p>
+</div>
+</div>
+<div class="flex items-center gap-space-xs self-start sm:self-auto">
+<span class="font-label-caps text-label-caps uppercase text-secondary bg-secondary-container/20 px-space-sm py-1 rounded flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+            Server Authoritative • Idempotent
+          </span>
+</div>
+</div>
+<!-- Activity Items -->
+<div class="flex flex-col gap-space-xs">
+<!-- Item 1 -->
+<div class="p-space-md rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors flex flex-col md:flex-row md:items-center md:justify-between gap-space-sm">
+<div class="flex items-start gap-space-md min-w-0">
+<div class="w-10 h-10 rounded-lg bg-secondary-container/20 text-secondary shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">check_circle</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-headline-sm text-headline-sm text-sm text-on-surface truncate">Lesson Completed: Module 02 • Lesson 02 (A Minor Architecture)</span>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded bg-surface-container-highest text-secondary text-[10px]">Verified (100% Quiz)</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Completed clean transition check on fret 1 and 2 at standard pitch.</span>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-md shrink-0 pl-14 md:pl-0">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Today at 09:42 AM</span>
+<span class="font-mono-metric text-mono-fret font-bold px-space-sm py-1 rounded bg-secondary-container/20 text-secondary">+20 XP</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="p-space-md rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors flex flex-col md:flex-row md:items-center md:justify-between gap-space-sm">
+<div class="flex items-start gap-space-md min-w-0">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 text-primary shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">speed</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-headline-sm text-headline-sm text-sm text-on-surface truncate">Focus Practice Session: C → G Transition Loop</span>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded bg-surface-container-highest text-primary text-[10px]">Anti-Cheat Verified</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">120-second continuous tempo threshold locked at 60 BPM with 0 drops.</span>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-md shrink-0 pl-14 md:pl-0">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Today at 09:28 AM</span>
+<span class="font-mono-metric text-mono-fret font-bold px-space-sm py-1 rounded bg-secondary-container/20 text-secondary">+10 XP</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="p-space-md rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors flex flex-col md:flex-row md:items-center md:justify-between gap-space-sm">
+<div class="flex items-start gap-space-md min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest text-on-surface shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">tune</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-headline-sm text-headline-sm text-sm text-on-surface truncate">Daily Tuning Calibration: All 6 Strings Calibrated</span>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded bg-surface-container-highest text-on-surface-variant text-[10px]">Autocorrelation Passed</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Harmonic variance &lt; 0.4 cents measured across standard 440 Hz reference.</span>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-md shrink-0 pl-14 md:pl-0">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Today at 09:15 AM</span>
+<span class="font-mono-metric text-mono-fret font-bold px-space-sm py-1 rounded bg-secondary-container/20 text-secondary">+5 XP</span>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="p-space-md rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors flex flex-col md:flex-row md:items-center md:justify-between gap-space-sm">
+<div class="flex items-start gap-space-md min-w-0">
+<div class="w-10 h-10 rounded-lg bg-primary-container/20 text-primary shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-[22px]">workspace_premium</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-headline-sm text-headline-sm text-sm text-on-surface truncate">Yesterday Milestone: 4-Day Streak Bonus Awarded</span>
+<span class="font-label-caps text-label-caps px-2 py-0.5 rounded bg-primary-container/20 text-primary text-[10px]">Block #1042</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Multi-day consistency multiplier applied to weekly performance pool.</span>
+</div>
+</div>
+<div class="flex items-center justify-between md:justify-end gap-space-md shrink-0 pl-14 md:pl-0">
+<span class="font-label-caps text-label-caps text-on-surface-variant">Yesterday at 08:30 PM</span>
+<span class="font-mono-metric text-mono-fret font-bold px-space-sm py-1 rounded bg-primary-container/20 text-primary">+50 XP</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div></main></div></body></html>

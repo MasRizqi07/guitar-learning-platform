@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GuitarLab — Learn Guitar. One Step at a Time.</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Geist', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              bg: '#0E1014',
+              surface: '#171A20',
+              elevated: '#20242C',
+              border: '#2A303A',
+              borderLight: '#3A4250',
+              amber: '#F59E0B',
+              amberHover: '#D97706',
+              amberGlow: 'rgba(245, 158, 11, 0.22)',
+              green: '#22C55E',
+              red: '#EF4444',
+              muted: '#94A3B8',
+              text: '#F8FAFC'
+            }
+          },
+          animation: {
+            'pulse-subtle': 'pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float-slow': 'floatSlow 6s ease-in-out infinite',
+            'float-reverse': 'floatReverse 7s ease-in-out infinite',
+            'glow-wave': 'glowWave 2.5s ease-in-out infinite',
+            'ping-slow': 'pingSlow 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+          },
+          keyframes: {
+            pulseSubtle: {
+              '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+              '50%': { opacity: '0.85', transform: 'scale(1.02)' },
+            },
+            floatSlow: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            floatReverse: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(8px)' },
+            },
+            glowWave: {
+              '0%, 100%': { opacity: '0.3', transform: 'scale(0.98)' },
+              '50%': { opacity: '0.7', transform: 'scale(1.04)' },
+            },
+            pingSlow: {
+              '75%, 100%': { transform: 'scale(1.6)', opacity: '0' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0E1014;
+      color: #F8FAFC;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      overflow-x: hidden;
+    }
+    .hero-glow-radial {
+      background: radial-gradient(circle at 50% 25%, rgba(245, 158, 11, 0.13) 0%, rgba(14, 16, 20, 0) 65%);
+    }
+    .grid-lines {
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .fret-wire {
+      box-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    }
+    .glass-panel {
+      background: rgba(23, 26, 32, 0.78);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(42, 48, 58, 0.85);
+    }
+    .glass-panel-elevated {
+      background: rgba(32, 36, 44, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(58, 66, 80, 0.9);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 20px rgba(245, 158, 11, 0.05);
+    }
+    .custom-gradient-text {
+      background: linear-gradient(135deg, #F8FAFC 20%, #F59E0B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .amber-gradient-text {
+      background: linear-gradient(135deg, #FCD34D 0%, #F59E0B 70%, #D97706 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="selection:bg-amber-500/30 selection:text-amber-200">
+
+  <!-- Ambient Backdrop Lights -->
+  <div class="fixed inset-0 pointer-events-none hero-glow-radial z-0"></div>
+  <div class="fixed inset-0 pointer-events-none grid-lines opacity-60 z-0"></div>
+
+  <!-- 1. Glassmorphic Sticky Header -->
+  <header class="sticky top-0 z-50 w-full transition-all duration-300">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-3 pb-3">
+      <nav class="glass-panel rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between shadow-2xl shadow-black/40">
+        
+        <!-- Left: Headstock Logo + Brand -->
+        <a href="#top" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-brand-amber/50 rounded-lg py-1 px-1.5 transition-colors">
+          <div class="relative w-9 h-9 rounded-xl bg-gradient-to-br from-brand-surface to-brand-elevated border border-brand-border flex items-center justify-center shadow-inner group-hover:border-brand-amber/60 transition-colors">
+            <!-- Minimalist Guitar Headstock SVG -->
+            <svg class="w-5 h-5 text-brand-amber transform group-hover:scale-110 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 3h12l-2 15a4 4 0 0 1-4 4h0a4 4 0 0 1-4-4L6 3z" fill="rgba(245,158,11,0.1)"/>
+              <line x1="4" y1="6" x2="6" y2="6"/>
+              <line x1="18" y1="6" x2="20" y2="6"/>
+              <line x1="4" y1="10" x2="6" y2="10"/>
+              <line x1="18" y1="10" x2="20" y2="10"/>
+              <line x1="4" y1="14" x2="6" y2="14"/>
+              <line x1="18" y1="14" x2="20" y2="14"/>
+              <circle cx="12" cy="11" r="2" fill="currentColor"/>
+              <line x1="12" y1="13" x2="12" y2="21" stroke-width="1.5" stroke="#94A3B8"/>
+            </svg>
+            <div class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-brand-green"></div>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-lg font-bold tracking-tight text-brand-text flex items-center gap-1">
+              Guitar<span class="text-brand-amber">Lab</span>
+            </span>
+            <span class="text-[9px] font-mono tracking-wider text-brand-muted uppercase -mt-1">Precision Academy</span>
+          </div>
+        </a>
+
+        <!-- Center Nav -->
+        <div class="hidden md:flex items-center gap-1 lg:gap-2 text-sm font-medium text-brand-muted">
+          <a href="#curriculum" class="px-3.5 py-1.5 rounded-lg hover:text-brand-text hover:bg-white/5 transition-colors focus:ring-1 focus:ring-brand-amber/40 focus:outline-none">Curriculum</a>
+          <a href="#practice" class="px-3.5 py-1.5 rounded-lg hover:text-brand-text hover:bg-white/5 transition-colors focus:ring-1 focus:ring-brand-amber/40 focus:outline-none flex items-center gap-1.5">
+            Practice Room
+            <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-brand-amber/10 text-brand-amber border border-brand-amber/30">DSP 44.1k</span>
+          </a>
+          <a href="#tuner" class="px-3.5 py-1.5 rounded-lg hover:text-brand-text hover:bg-white/5 transition-colors focus:ring-1 focus:ring-brand-amber/40 focus:outline-none">Interactive Tuner</a>
+          <a href="#library" class="px-3.5 py-1.5 rounded-lg hover:text-brand-text hover:bg-white/5 transition-colors focus:ring-1 focus:ring-brand-amber/40 focus:outline-none">Chord Library</a>
+        </div>
+
+        <!-- Right: Actions -->
+        <div class="flex items-center gap-3">
+          <a href="#login" class="text-sm font-medium text-brand-muted hover:text-brand-text px-3 py-2 rounded-lg transition-colors focus:outline-none focus:ring-1 focus:ring-brand-border">
+            Log in
+          </a>
+          <a href="#start" class="relative group inline-flex items-center justify-center px-4 sm:px-5 py-2 rounded-xl text-sm font-semibold text-brand-bg bg-brand-amber hover:bg-brand-amberHover transition-all shadow-[0_0_20px_rgba(245,158,11,0.35)] hover:shadow-[0_0_25px_rgba(245,158,11,0.55)] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-brand-amber focus:ring-offset-2 focus:ring-offset-brand-bg">
+            <span class="relative z-10 flex items-center gap-1.5">
+              Start Learning Free
+              <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </span>
+          </a>
+        </div>
+
+      </nav>
+    </div>
+  </header>
+
+  <!-- 2. Hero Section -->
+  <section id="top" class="relative z-10 pt-12 pb-24 lg:pt-20 lg:pb-32 overflow-hidden">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      
+      <!-- Top Tagline Pill -->
+      <div class="flex justify-center mb-6">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-surface border border-brand-border shadow-lg shadow-black/40 text-xs font-mono text-brand-muted">
+          <span class="w-2 h-2 rounded-full bg-brand-amber animate-ping-slow"></span>
+          <span class="text-brand-text font-semibold">V2.4 Precision Engine</span>
+          <span class="text-brand-border">|</span>
+          <span class="text-brand-amber">No YouTube Rabbit Holes</span>
+        </div>
+      </div>
+
+      <!-- Main Heading & Subhead -->
+      <div class="text-center max-w-4xl mx-auto space-y-6">
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.08] text-brand-text">
+          Learn Guitar. <br class="hidden sm:inline"/>
+          <span class="amber-gradient-text drop-shadow-[0_0_35px_rgba(245,158,11,0.3)]">One Step</span> at a Time.
+        </h1>
+        <p class="text-lg sm:text-xl text-brand-muted font-normal max-w-2xl mx-auto leading-relaxed">
+          Structured deterministic roadmap, guided focus practice sessions with real-time audio synthesis, and zero tutorial-hell confusion.
+        </p>
+
+        <!-- Action Row -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-3">
+          <a href="#start" class="w-full sm:w-auto px-7 py-3.5 rounded-xl font-semibold text-base text-brand-bg bg-brand-amber hover:bg-brand-amberHover transition-all shadow-[0_0_30px_rgba(245,158,11,0.4)] hover:shadow-[0_0_40px_rgba(245,158,11,0.6)] flex items-center justify-center gap-2 group active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-brand-amber">
+            <span>Start Your Journey (Free)</span>
+            <svg class="w-5 h-5 text-brand-bg transform group-hover:translate-x-1 transition-transform animate-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          
+          <a href="#curriculum" class="w-full sm:w-auto px-7 py-3.5 rounded-xl font-medium text-base text-brand-text bg-brand-surface/80 hover:bg-brand-elevated border border-brand-border hover:border-brand-borderLight transition-all flex items-center justify-center gap-2 focus:outline-none focus:ring-1 focus:ring-brand-muted">
+            <svg class="w-4 h-4 text-brand-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+              <polyline points="2 17 12 22 22 17"></polyline>
+              <polyline points="2 12 12 17 22 12"></polyline>
+            </svg>
+            <span>Explore 6-Module Roadmap</span>
+          </a>
+        </div>
+
+        <!-- Micro stats under button -->
+        <div class="pt-2 flex items-center justify-center gap-6 text-xs text-brand-muted font-mono">
+          <span class="flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-brand-green" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            Zero Hardware Setup
+          </span>
+          <span class="text-brand-border">•</span>
+          <span class="flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-brand-green" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            Web Audio Tuner Built-in
+          </span>
+          <span class="text-brand-border hidden sm:inline">•</span>
+          <span class="hidden sm:flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-brand-amber" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            Server Verified XP
+          </span>
+        </div>
+      </div>
+
+      <!-- Hero Visual: Interactive 3D-styled Dark Mock Preview of Dashboard -->
+      <div class="mt-14 lg:mt-20 relative max-w-5xl mx-auto">
+        
+        <!-- Glow Backdrop -->
+        <div class="absolute -inset-4 bg-gradient-to-r from-brand-amber/20 via-brand-amber/5 to-emerald-500/10 rounded-3xl blur-2xl opacity-60 -z-10 transform -rotate-1"></div>
+
+        <!-- Master Canvas Window Container -->
+        <div class="glass-panel-elevated rounded-2xl p-3 sm:p-5 border border-brand-border/90 shadow-2xl relative">
+          
+          <!-- Mock Window Titlebar -->
+          <div class="flex items-center justify-between pb-4 mb-4 border-b border-brand-border/70 text-xs font-mono text-brand-muted">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
+              <span class="ml-2 text-brand-muted/70 hidden sm:inline">fretflow.app/dashboard</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="px-2 py-0.5 rounded bg-brand-surface border border-brand-border text-[11px] text-brand-green flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse"></span> DSP Engine Active
+              </span>
+              <span class="text-brand-muted">Standard E (E-A-D-G-B-E)</span>
+            </div>
+          </div>
+
+          <!-- Mock Dashboard Inner Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            
+            <!-- Left Col: Priority Next Action Banner (7 cols) -->
+            <div class="lg:col-span-7 space-y-4">
+              
+              <!-- Primary Recommendation Hero Box -->
+              <div class="rounded-xl bg-gradient-to-br from-brand-surface to-[#1a1f29] border border-brand-amber/40 p-5 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-36 h-36 bg-brand-amber/10 rounded-full blur-2xl pointer-events-none"></div>
+                
+                <div class="flex items-center justify-between mb-3">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-amber/15 text-brand-amber border border-brand-amber/30 text-xs font-semibold">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand-amber"></span> Next Clear Action
+                  </span>
+                  <span class="text-xs font-mono text-brand-muted">Est. 4 min</span>
+                </div>
+
+                <div class="space-y-1.5">
+                  <span class="text-xs font-mono text-brand-muted uppercase tracking-wider">Module 02 • Lesson 03</span>
+                  <h3 class="text-xl sm:text-2xl font-bold text-brand-text tracking-tight">Mastering the G Major Open Chord</h3>
+                  <p class="text-xs sm:text-sm text-brand-muted line-clamp-2">
+                    Refine clean 3rd-finger ring pressure on high E, eliminate fret buzz on inner strings, and lock into the 60 BPM tempo loop.
+                  </p>
+                </div>
+
+                <!-- Progress inside card -->
+                <div class="mt-4 pt-3 border-t border-brand-border/60 flex items-center justify-between">
+                  <div class="w-1/2 space-y-1">
+                    <div class="flex justify-between text-[11px] font-mono text-brand-muted">
+                      <span>Step 2 of 5</span>
+                      <span class="text-brand-amber font-semibold">40%</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-brand-elevated rounded-full overflow-hidden">
+                      <div class="h-full bg-brand-amber rounded-full w-[40%]"></div>
+                    </div>
+                  </div>
+                  <button class="px-4 py-2 rounded-lg bg-brand-amber hover:bg-brand-amberHover text-brand-bg font-semibold text-xs transition-colors flex items-center gap-1 shadow-md shadow-brand-amber/20">
+                    <span>Continue</span>
+                    <span class="font-mono text-[10px] bg-black/20 px-1 py-0.2 rounded">+20 XP</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Secondary Row: Quick Launchers inside Mock -->
+              <div class="grid grid-cols-2 gap-3">
+                <div class="p-3.5 rounded-xl bg-brand-surface/90 border border-brand-border flex items-center justify-between hover:border-brand-borderLight transition-colors">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-brand-elevated flex items-center justify-center text-brand-amber">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+                    </div>
+                    <div>
+                      <h4 class="text-xs font-semibold text-brand-text">Daily Metronome</h4>
+                      <p class="text-[11px] text-brand-muted font-mono">80 BPM • 4/4</p>
+                    </div>
+                  </div>
+                  <span class="text-xs font-mono text-brand-green font-medium">+15 XP</span>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-brand-surface/90 border border-brand-border flex items-center justify-between hover:border-brand-borderLight transition-colors">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-brand-elevated flex items-center justify-center text-brand-green">
+                      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>
+                    </div>
+                    <div>
+                      <h4 class="text-xs font-semibold text-brand-text">Transition Deck</h4>
+                      <p class="text-[11px] text-brand-muted font-mono">C Maj ⇄ G Maj</p>
+                    </div>
+                  </div>
+                  <span class="text-xs font-mono text-brand-amber font-medium">Cadence 4</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Right Col: Interactive Visual Chord Diagram with Vibrating Waves (5 cols) -->
+            <div class="lg:col-span-5 flex flex-col justify-between space-y-4">
+              
+              <!-- Floating Glass Card: Interactive C Major Chord Deck -->
+              <div class="p-4 rounded-xl bg-brand-surface border border-brand-border/90 relative overflow-hidden shadow-lg">
+                <div class="flex items-center justify-between mb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-brand-amber"></span>
+                    <span class="font-bold text-sm text-brand-text">C Major Grip</span>
+                    <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-brand-elevated text-brand-muted">Open Position</span>
+                  </div>
+                  <span class="text-[11px] font-mono text-brand-green flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand-green"></span> Strum Active
+                  </span>
+                </div>
+
+                <!-- SVG Interactive Chord Diagram with Strum Vibration lines -->
+                <div class="relative bg-brand-elevated/70 rounded-lg p-3 flex flex-col items-center">
+                  
+                  <!-- Strum Wave Glow Pulse -->
+                  <div class="absolute inset-0 bg-gradient-to-b from-brand-amber/5 via-transparent to-brand-green/5 pointer-events-none animate-pulse-subtle"></div>
+
+                  <svg class="w-44 h-40 overflow-visible" viewBox="0 0 180 150">
+                    <!-- Fret Nut (Thick Header) -->
+                    <rect x="25" y="16" width="130" height="5" rx="1.5" fill="#F8FAFC" opacity="0.9"/>
+                    
+                    <!-- Fret Wires -->
+                    <line x1="25" y1="46" x2="155" y2="46" stroke="#475569" stroke-width="1.5"/>
+                    <line x1="25" y1="78" x2="155" y2="78" stroke="#475569" stroke-width="1.5"/>
+                    <line x1="25" y1="110" x2="155" y2="110" stroke="#475569" stroke-width="1.5"/>
+                    <line x1="25" y1="142" x2="155" y2="142" stroke="#475569" stroke-width="1.5"/>
+
+                    <!-- Fret Roman Numerals -->
+                    <text x="12" y="36" fill="#64748B" font-size="10" font-family="monospace">I</text>
+                    <text x="12" y="68" fill="#64748B" font-size="10" font-family="monospace">II</text>
+                    <text x="12" y="100" fill="#64748B" font-size="10" font-family="monospace">III</text>
+
+                    <!-- Vertical Strings with vibrating soundwaves on E, B, G, D, A, E -->
+                    <!-- String 6 (E - Muted X) -->
+                    <text x="25" y="10" fill="#EF4444" font-size="11" font-weight="bold" text-anchor="middle">✕</text>
+                    <line x1="25" y1="20" x2="25" y2="142" stroke="#475569" stroke-width="2.5"/>
+
+                    <!-- String 5 (A - Fret 3, Finger 3 - Ring) -->
+                    <text x="51" y="10" fill="#94A3B8" font-size="10" text-anchor="middle">3</text>
+                    <line x1="51" y1="20" x2="51" y2="142" stroke="#F59E0B" stroke-width="2" class="opacity-80"/>
+                    <circle cx="51" cy="94" r="8" fill="#F59E0B" stroke="#F8FAFC" stroke-width="1.5"/>
+                    <text x="51" y="98" fill="#0E1014" font-size="10" font-weight="bold" text-anchor="middle">3</text>
+
+                    <!-- String 4 (D - Fret 2, Finger 2 - Middle) -->
+                    <text x="77" y="10" fill="#94A3B8" font-size="10" text-anchor="middle">2</text>
+                    <line x1="77" y1="20" x2="77" y2="142" stroke="#F59E0B" stroke-width="1.8" class="opacity-80"/>
+                    <circle cx="77" cy="62" r="8" fill="#F59E0B" stroke="#F8FAFC" stroke-width="1.5"/>
+                    <text x="77" y="66" fill="#0E1014" font-size="10" font-weight="bold" text-anchor="middle">2</text>
+
+                    <!-- String 3 (G - Open O) -->
+                    <text x="103" y="10" fill="#22C55E" font-size="11" font-weight="bold" text-anchor="middle">○</text>
+                    <line x1="103" y1="20" x2="103" y2="142" stroke="#22C55E" stroke-width="1.5" stroke-dasharray="2 1"/>
+
+                    <!-- String 2 (B - Fret 1, Finger 1 - Index) -->
+                    <text x="129" y="10" fill="#94A3B8" font-size="10" text-anchor="middle">1</text>
+                    <line x1="129" y1="20" x2="129" y2="142" stroke="#F59E0B" stroke-width="1.2" class="opacity-80"/>
+                    <circle cx="129" cy="31" r="8" fill="#F59E0B" stroke="#F8FAFC" stroke-width="1.5"/>
+                    <text x="129" y="35" fill="#0E1014" font-size="10" font-weight="bold" text-anchor="middle">1</text>
+
+                    <!-- String 1 (High E - Open O) -->
+                    <text x="155" y="10" fill="#22C55E" font-size="11" font-weight="bold" text-anchor="middle">○</text>
+                    <line x1="155" y1="20" x2="155" y2="142" stroke="#22C55E" stroke-width="1.2" stroke-dasharray="2 1"/>
+                  </svg>
+
+                  <!-- Finger placement footer note -->
+                  <div class="flex items-center gap-3 text-[10px] font-mono text-brand-muted mt-2">
+                    <span>1: Index (B)</span>
+                    <span>2: Middle (D)</span>
+                    <span>3: Ring (A)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Audio Wave Spectrum feedback -->
+              <div class="p-3 rounded-xl bg-brand-surface/90 border border-brand-border flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-brand-green"></div>
+                  <span class="text-xs font-mono text-brand-text font-medium">Harmonic Sustain</span>
+                </div>
+                <!-- Animated Soundwave equalizer bars -->
+                <div class="flex items-end gap-1 h-5">
+                  <span class="w-1 bg-brand-amber rounded-full h-3 animate-pulse"></span>
+                  <span class="w-1 bg-brand-amber rounded-full h-5"></span>
+                  <span class="w-1 bg-brand-green rounded-full h-4 animate-bounce"></span>
+                  <span class="w-1 bg-brand-amber rounded-full h-2"></span>
+                  <span class="w-1 bg-brand-green rounded-full h-4 animate-pulse"></span>
+                  <span class="w-1 bg-brand-amber rounded-full h-5"></span>
+                  <span class="w-1 bg-brand-amber rounded-full h-3"></span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <!-- Floating Badges Over Hero Visual (Desktop Only) -->
+          <!-- Floating Badge 1: Daily Goal 10/15m -->
+          <div class="hidden sm:flex absolute -top-5 -left-5 p-3 rounded-xl glass-panel border border-brand-borderLight shadow-xl items-center gap-3 animate-float-slow">
+            <div class="w-9 h-9 rounded-lg bg-brand-amber/15 border border-brand-amber/30 flex items-center justify-center text-brand-amber">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-brand-text">Daily Target</span>
+                <span class="text-[10px] font-mono text-brand-green bg-brand-green/10 px-1.5 py-0.2 rounded">66%</span>
+              </div>
+              <p class="text-xs font-mono text-brand-muted">10 / 15 min complete</p>
+            </div>
+          </div>
+
+          <!-- Floating Badge 2: Streak 5 Days Fire -->
+          <div class="hidden sm:flex absolute -bottom-6 -right-4 p-3 rounded-xl glass-panel border border-brand-borderLight shadow-xl items-center gap-3 animate-float-reverse">
+            <div class="w-9 h-9 rounded-lg bg-orange-500/15 border border-orange-500/30 flex items-center justify-center text-orange-400">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c-.3 0-.6.1-.8.4-1.2 1.4-2.8 3.8-2.8 6.6 0 1.9.8 3.6 2 4.9-.3-.5-.4-1.1-.4-1.7 0-1.8 1.1-3.4 2.5-4.4.2-.1.4-.2.6-.2.4 0 .7.3.7.7 0 2.2 1.4 4 3.4 4.8 1.4.6 2.4 2 2.4 3.6 0 2.8-2.2 5.3-5.6 5.3-3.6 0-6.4-2.8-6.4-6.4 0-3.6 2.4-7 4.4-8.7.3-.2.7-.1.9.2.2.2.3.5.3.7z"/></svg>
+            </div>
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-xs font-bold text-brand-text">5-Day Velocity</span>
+                <span class="w-2 h-2 rounded-full bg-brand-amber"></span>
+              </div>
+              <p class="text-xs font-mono text-brand-amber font-semibold">+50 XP Streak Bonus</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3. Core Learning Loop (Bento Grid Layout) -->
+  <section id="curriculum" class="relative z-10 py-20 lg:py-28 bg-[#0B0D11] border-y border-brand-border">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-brand-surface border border-brand-border text-xs font-mono text-brand-amber">
+          <span>THE CORE LOOP</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold text-brand-text tracking-tight">
+          Engineered for Muscle Memory.
+        </h2>
+        <p class="text-base sm:text-lg text-brand-muted">
+          Our four-phase deterministic cycle takes you from zero to clean strumming without guessing what to play next.
+        </p>
+      </div>
+
+      <!-- Bento Grid (4 Pillars) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6">
+        
+        <!-- Card 1: Step-by-Step Lessons (Roadmap Visual) - 7 cols -->
+        <div class="lg:col-span-7 rounded-2xl bg-brand-surface border border-brand-border p-6 sm:p-8 flex flex-col justify-between hover:border-brand-amber/50 transition-all group relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-48 h-48 bg-brand-amber/5 rounded-full blur-3xl pointer-events-none"></div>
+          
+          <div class="space-y-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-elevated border border-brand-border flex items-center justify-center text-brand-amber group-hover:scale-105 transition-transform">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </div>
+            <h3 class="text-2xl font-bold text-brand-text tracking-tight">01. Step-by-Step Roadmap</h3>
+            <p class="text-sm text-brand-muted max-w-md">
+              30 deterministic lessons across 6 progressive modules. Prerequisite state machines ensure you never tackle advanced chord switches before finger posture is solidified.
+            </p>
+          </div>
+
+          <!-- Roadmap Nodes Visual Mini-UI -->
+          <div class="mt-8 pt-6 border-t border-brand-border/60">
+            <div class="grid grid-cols-3 gap-3">
+              
+              <!-- Node 1: Completed -->
+              <div class="p-3 rounded-xl bg-brand-elevated/70 border border-brand-green/40 flex flex-col justify-between space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-mono text-brand-green font-semibold">UNIT 01</span>
+                  <span class="w-4 h-4 rounded-full bg-brand-green/20 text-brand-green flex items-center justify-center text-[10px]">✓</span>
+                </div>
+                <div class="text-xs font-bold text-brand-text">Guitar Fundamentals</div>
+                <span class="text-[10px] text-brand-muted font-mono">5 / 5 Mastered</span>
+              </div>
+
+              <!-- Node 2: Active Pulse -->
+              <div class="p-3 rounded-xl bg-gradient-to-br from-brand-elevated to-brand-surface border-2 border-brand-amber shadow-lg shadow-brand-amber/10 flex flex-col justify-between space-y-2 relative">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-mono text-brand-amber font-semibold">UNIT 02</span>
+                  <span class="w-2 h-2 rounded-full bg-brand-amber animate-ping"></span>
+                </div>
+                <div class="text-xs font-bold text-brand-text">Basic Open Chords</div>
+                <div class="w-full bg-brand-surface h-1 rounded-full overflow-hidden">
+                  <div class="bg-brand-amber h-full w-[40%]"></div>
+                </div>
+              </div>
+
+              <!-- Node 3: Locked -->
+              <div class="p-3 rounded-xl bg-brand-elevated/30 border border-brand-border/40 opacity-50 flex flex-col justify-between space-y-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-mono text-brand-muted">UNIT 03</span>
+                  <span class="text-xs">🔒</span>
+                </div>
+                <div class="text-xs font-medium text-brand-muted">Chord Transitions</div>
+                <span class="text-[10px] text-brand-muted font-mono">Unlocks at L2.5</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Focus Practice Room - 5 cols -->
+        <div id="practice" class="lg:col-span-5 rounded-2xl bg-brand-surface border border-brand-border p-6 sm:p-8 flex flex-col justify-between hover:border-brand-amber/50 transition-all group relative overflow-hidden">
+          <div class="space-y-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-elevated border border-brand-border flex items-center justify-center text-brand-amber group-hover:scale-105 transition-transform">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <h3 class="text-2xl font-bold text-brand-text tracking-tight">02. Focus Practice Room</h3>
+            <p class="text-sm text-brand-muted">
+              Built-in DSP audio metronome, dual-oscillator acoustic plucked tone synthesis, and strict anti-cheat duration verification (60s – 300s).
+            </p>
+          </div>
+
+          <!-- Metronome & Timer Visualizer -->
+          <div class="mt-8 p-4 rounded-xl bg-brand-elevated border border-brand-border flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="text-3xl font-extrabold font-mono text-brand-amber tracking-tight">80</div>
+              <div>
+                <span class="text-xs font-bold text-brand-text block">BPM METRONOME</span>
+                <span class="text-[11px] font-mono text-brand-muted">Allegro Moderato</span>
+              </div>
+            </div>
+            <!-- Metronome Beat Bar Indicator -->
+            <div class="flex items-center gap-1.5">
+              <span class="w-2.5 h-7 rounded-sm bg-brand-border"></span>
+              <span class="w-2.5 h-7 rounded-sm bg-brand-border"></span>
+              <span class="w-2.5 h-7 rounded-sm bg-brand-border"></span>
+              <span class="w-2.5 h-7 rounded-sm bg-brand-green animate-pulse shadow-[0_0_10px_#22C55E]"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Instant Quizzes - 5 cols -->
+        <div class="lg:col-span-5 rounded-2xl bg-brand-surface border border-brand-border p-6 sm:p-8 flex flex-col justify-between hover:border-brand-amber/50 transition-all group relative overflow-hidden">
+          <div class="space-y-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-elevated border border-brand-border flex items-center justify-center text-brand-amber group-hover:scale-105 transition-transform">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <h3 class="text-2xl font-bold text-brand-text tracking-tight">03. Server-Scored Quizzes</h3>
+            <p class="text-sm text-brand-muted">
+              Immediate feedback without client-side answer tampering. Passing threshold strictly locked at 60% with instant finger placement tips.
+            </p>
+          </div>
+
+          <!-- Quiz Score Mini-Card -->
+          <div class="mt-8 p-4 rounded-xl bg-brand-elevated border border-brand-border flex items-center justify-between">
+            <div class="space-y-0.5">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-brand-text">C Major Composition</span>
+                <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-brand-green/20 text-brand-green font-semibold">PASSED</span>
+              </div>
+              <p class="text-xs text-brand-muted font-mono">3 / 3 Correct Questions</p>
+            </div>
+            <div class="text-right">
+              <span class="text-2xl font-mono font-bold text-brand-green">100%</span>
+              <span class="block text-[10px] text-brand-amber font-mono font-semibold">+10 XP</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4: Measurable Progress (XP Ledger & Streaks) - 7 cols -->
+        <div id="library" class="lg:col-span-7 rounded-2xl bg-brand-surface border border-brand-border p-6 sm:p-8 flex flex-col justify-between hover:border-brand-amber/50 transition-all group relative overflow-hidden">
+          <div class="space-y-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-elevated border border-brand-border flex items-center justify-center text-brand-amber group-hover:scale-105 transition-transform">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            </div>
+            <h3 class="text-2xl font-bold text-brand-text tracking-tight">04. Idempotent XP Ledger & Streaks</h3>
+            <p class="text-sm text-brand-muted max-w-md">
+              No fake progression or vanity numbers. Every completed lesson, practice session, and verified daily streak writes an immutable transaction to your learner record.
+            </p>
+          </div>
+
+          <!-- XP Ledger Rows Mini-UI -->
+          <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3 pt-6 border-t border-brand-border/60">
+            <div class="p-3 rounded-xl bg-brand-elevated/70 border border-brand-border flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="w-2 h-2 rounded-full bg-brand-amber"></span>
+                <div>
+                  <span class="text-xs font-semibold text-brand-text block">Lesson Completed</span>
+                  <span class="text-[10px] font-mono text-brand-muted">G Major Architecture</span>
+                </div>
+              </div>
+              <span class="font-mono text-xs font-bold text-brand-amber">+20 XP</span>
+            </div>
+
+            <div class="p-3 rounded-xl bg-brand-elevated/70 border border-brand-border flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="w-2 h-2 rounded-full bg-brand-green"></span>
+                <div>
+                  <span class="text-xs font-semibold text-brand-text block">Practice Threshold</span>
+                  <span class="text-[10px] font-mono text-brand-muted">12 min transition loop</span>
+                </div>
+              </div>
+              <span class="font-mono text-xs font-bold text-brand-green">+10 XP</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive Tuner Feature Highlight Section -->
+  <section id="tuner" class="py-20 lg:py-24 relative z-10 border-b border-brand-border">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="glass-panel rounded-3xl p-8 sm:p-12 border border-brand-borderLight relative overflow-hidden">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          <div class="lg:col-span-6 space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-brand-elevated border border-brand-border text-xs font-mono text-brand-green">
+              <span class="w-2 h-2 rounded-full bg-brand-green animate-pulse"></span>
+              <span>WEB AUDIO API AUTOCORRELATION</span>
+            </div>
+            
+            <h2 class="text-3xl sm:text-4xl font-extrabold text-brand-text tracking-tight">
+              A Studio Tuner in Your Browser. <br/>
+              <span class="text-brand-amber">Zero Plugs. Real-Time Pitch.</span>
+            </h2>
+            
+            <p class="text-base text-brand-muted leading-relaxed">
+              Equipped with browser-native microphone autocorrelation analysis, GuitarLab detects string vibration frequencies with ±0.1 Hz precision and real-time cent deviation gauges.
+            </p>
+
+            <ul class="space-y-3 text-sm text-brand-muted font-medium">
+              <li class="flex items-center gap-3">
+                <span class="w-5 h-5 rounded-full bg-brand-green/20 text-brand-green flex items-center justify-center text-xs">✓</span>
+                All 6 Standard Strings (E2, A2, D3, G3, B3, E4) calibrated to 440.0 Hz.
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="w-5 h-5 rounded-full bg-brand-green/20 text-brand-green flex items-center justify-center text-xs">✓</span>
+                Synthesized acoustic reference tones for tuning by ear.
+              </li>
+              <li class="flex items-center gap-3">
+                <span class="w-5 h-5 rounded-full bg-brand-green/20 text-brand-green flex items-center justify-center text-xs">✓</span>
+                Anti-backlash string tension tips for beginners.
+              </li>
+            </ul>
+
+            <div class="pt-2">
+              <a href="#tuner-demo" class="inline-flex items-center gap-2 text-sm font-semibold text-brand-amber hover:text-brand-amberHover transition-colors">
+                <span>Launch Tuner Module</span>
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Visual Tuner Dial Gauge Mockup -->
+          <div class="lg:col-span-6">
+            <div class="p-6 rounded-2xl bg-brand-elevated border border-brand-border shadow-2xl relative">
+              <div class="text-center space-y-1 mb-6">
+                <span class="text-xs font-mono text-brand-muted uppercase">Detected Pitch</span>
+                <div class="text-5xl font-mono font-extrabold text-brand-text">E<span class="text-2xl text-brand-amber">2</span></div>
+                <div class="text-xs font-mono text-brand-green font-semibold">82.4 Hz • In Tune (0.0 ¢)</div>
+              </div>
+
+              <!-- Meter Gauge Arc Visualizer -->
+              <div class="relative w-full max-w-xs mx-auto h-20 overflow-hidden flex items-end justify-center">
+                <!-- Semicircle scale -->
+                <div class="w-48 h-24 border-t-4 border-l-4 border-r-4 border-brand-border rounded-t-full relative flex justify-center">
+                  <!-- Center target mark -->
+                  <div class="absolute -top-3 w-1.5 h-6 bg-brand-green rounded-full shadow-[0_0_8px_#22C55E]"></div>
+                  <!-- Tuner Needle Indicator (Perfect Center) -->
+                  <div class="absolute bottom-0 w-1 h-20 bg-brand-text rounded-full origin-bottom transform rotate-0 transition-transform"></div>
+                </div>
+              </div>
+
+              <!-- String Buttons Row -->
+              <div class="grid grid-cols-6 gap-2 mt-6 pt-4 border-t border-brand-border/80">
+                <div class="p-2 rounded-lg bg-brand-green/20 border border-brand-green text-center">
+                  <span class="block text-xs font-bold text-brand-green">E</span>
+                  <span class="text-[9px] font-mono text-brand-muted">82.4</span>
+                </div>
+                <div class="p-2 rounded-lg bg-brand-surface border border-brand-border text-center">
+                  <span class="block text-xs font-bold text-brand-text">A</span>
+                  <span class="text-[9px] font-mono text-brand-muted">110.0</span>
+                </div>
+                <div class="p-2 rounded-lg bg-brand-surface border border-brand-border text-center">
+                  <span class="block text-xs font-bold text-brand-text">D</span>
+                  <span class="text-[9px] font-mono text-brand-muted">146.8</span>
+                </div>
+                <div class="p-2 rounded-lg bg-brand-surface border border-brand-border text-center">
+                  <span class="block text-xs font-bold text-brand-text">G</span>
+                  <span class="text-[9px] font-mono text-brand-muted">196.0</span>
+                </div>
+                <div class="p-2 rounded-lg bg-brand-surface border border-brand-border text-center">
+                  <span class="block text-xs font-bold text-brand-text">B</span>
+                  <span class="text-[9px] font-mono text-brand-muted">246.9</span>
+                </div>
+                <div class="p-2 rounded-lg bg-brand-surface border border-brand-border text-center">
+                  <span class="block text-xs font-bold text-brand-text">e</span>
+                  <span class="text-[9px] font-mono text-brand-muted">329.6</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. Social Proof, Metrics & Final CTA -->
+  <section class="py-20 lg:py-24 relative z-10">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      
+      <!-- Metrics Bar -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+        
+        <div class="p-6 rounded-2xl bg-brand-surface border border-brand-border text-center space-y-1">
+          <div class="text-4xl font-extrabold font-mono text-brand-amber">30</div>
+          <div class="text-sm font-bold text-brand-text">Core Curriculum Lessons</div>
+          <p class="text-xs text-brand-muted">From guitar anatomy to playing your first full song performance.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-brand-surface border border-brand-border text-center space-y-1">
+          <div class="text-4xl font-extrabold font-mono text-brand-green">10</div>
+          <div class="text-sm font-bold text-brand-text">Foundational Chords</div>
+          <p class="text-xs text-brand-muted">All essential Open Major, Minor, and Seventh grips with audio synthesis.</p>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-brand-surface border border-brand-border text-center space-y-1">
+          <div class="text-4xl font-extrabold font-mono text-brand-text">100%</div>
+          <div class="text-sm font-bold text-brand-text">Server-Authoritative Progress</div>
+          <p class="text-xs text-brand-muted">Anti-cheat practice verification, XP idempotency, and clean streaks.</p>
+        </div>
+
+      </div>
+
+      <!-- Final Call to Action Card -->
+      <div id="start" class="rounded-3xl bg-gradient-to-b from-brand-surface to-[#11141B] border border-brand-amber/40 p-8 sm:p-14 text-center max-w-4xl mx-auto shadow-2xl relative overflow-hidden">
+        <div class="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-amber/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="space-y-6 relative z-10">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-amber/15 text-brand-amber border border-brand-amber/30 text-xs font-mono font-medium">
+            READY TO STRUM YOUR FIRST CHORD?
+          </span>
+          
+          <h2 class="text-3xl sm:text-5xl font-black text-brand-text tracking-tight">
+            Stop Scrolling YouTube. <br/>
+            Start Playing Real Music.
+          </h2>
+
+          <p class="text-base sm:text-lg text-brand-muted max-w-xl mx-auto">
+            Create your free account, calibrate your instrument, and clear your first lesson in under 10 minutes.
+          </p>
+
+          <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="#register" class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-base text-brand-bg bg-brand-amber hover:bg-brand-amberHover transition-all shadow-[0_0_30px_rgba(245,158,11,0.4)] flex items-center justify-center gap-2 group active:scale-[0.98]">
+              <span>Get Started Free</span>
+              <svg class="w-5 h-5 text-brand-bg group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+            </a>
+            <a href="#curriculum" class="w-full sm:w-auto px-6 py-4 rounded-xl font-medium text-sm text-brand-muted hover:text-brand-text transition-colors">
+              Browse Full Course Syllabus →
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Minimalist Dark Footer -->
+  <footer class="border-t border-brand-border bg-[#0B0D11] relative z-10 py-12 text-sm text-brand-muted">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+        
+        <!-- Brand Info -->
+        <div class="col-span-2 space-y-3">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-brand-surface border border-brand-border flex items-center justify-center text-brand-amber">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l-2 15a4 4 0 0 1-4 4h0a4 4 0 0 1-4-4L6 3z"/></svg>
+            </div>
+            <span class="text-base font-bold text-brand-text">GuitarLab</span>
+          </div>
+          <p class="text-xs text-brand-muted max-w-xs leading-relaxed">
+            The structured, tactile web academy for beginner acoustic & electric guitarists.
+          </p>
+          <!-- System Status Badge -->
+          <div class="pt-1">
+            <span class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-brand-surface border border-brand-border text-[11px] font-mono text-brand-green">
+              <span class="w-2 h-2 rounded-full bg-brand-green animate-pulse"></span>
+              All Systems Operational
+            </span>
+          </div>
+        </div>
+
+        <!-- Col 1 -->
+        <div class="space-y-2">
+          <h4 class="text-xs font-mono font-semibold uppercase tracking-wider text-brand-text">Curriculum</h4>
+          <ul class="space-y-1.5 text-xs">
+            <li><a href="#fundamentals" class="hover:text-brand-text transition-colors">01. Fundamentals</a></li>
+            <li><a href="#chords" class="hover:text-brand-text transition-colors">02. Basic Chords</a></li>
+            <li><a href="#transitions" class="hover:text-brand-text transition-colors">03. Chord Transitions</a></li>
+            <li><a href="#strumming" class="hover:text-brand-text transition-colors">04. Rhythm & Strumming</a></li>
+            <li><a href="#theory" class="hover:text-brand-text transition-colors">05. Music Theory</a></li>
+            <li><a href="#firstsong" class="hover:text-brand-text transition-colors">06. First Song Capstone</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 2 -->
+        <div class="space-y-2">
+          <h4 class="text-xs font-mono font-semibold uppercase tracking-wider text-brand-text">Utilities</h4>
+          <ul class="space-y-1.5 text-xs">
+            <li><a href="#practice" class="hover:text-brand-text transition-colors">DSP Audio Metronome</a></li>
+            <li><a href="#tuner" class="hover:text-brand-text transition-colors">Microphone Tuner</a></li>
+            <li><a href="#library" class="hover:text-brand-text transition-colors">Interactive Fretboard</a></li>
+            <li><a href="#library" class="hover:text-brand-text transition-colors">Chord Library (SVG)</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3 -->
+        <div class="space-y-2">
+          <h4 class="text-xs font-mono font-semibold uppercase tracking-wider text-brand-text">Platform</h4>
+          <ul class="space-y-1.5 text-xs">
+            <li><a href="#login" class="hover:text-brand-text transition-colors">Learner Sign In</a></li>
+            <li><a href="#register" class="hover:text-brand-text transition-colors">Free Registration</a></li>
+            <li><a href="#privacy" class="hover:text-brand-text transition-colors">Privacy Policy</a></li>
+            <li><a href="#terms" class="hover:text-brand-text transition-colors">Terms of Service</a></li>
+            <li><a href="#help" class="hover:text-brand-text transition-colors">Help Center</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 border-t border-brand-border/70 flex flex-col sm:flex-row items-center justify-between text-xs text-brand-muted font-mono gap-4">
+        <div>
+          © 2025 GuitarLab Inc. Built with Next.js, Web Audio API & Tailwind CSS.
+        </div>
+        <div class="flex items-center gap-4">
+          <span class="hover:text-brand-text cursor-pointer">WCAG 2.2 AA Verified</span>
+          <span>•</span>
+          <span class="hover:text-brand-text cursor-pointer">PostgreSQL 18 Atomic Ledgers</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+</html>
