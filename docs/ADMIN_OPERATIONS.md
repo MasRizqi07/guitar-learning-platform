@@ -142,3 +142,19 @@ For complete documentation on executive metrics, cohort retention, feature flags
 - [`docs/OWNER_OPERATIONS.md`](OWNER_OPERATIONS.md)
 - [`docs/ANALYTICS_DEFINITIONS.md`](ANALYTICS_DEFINITIONS.md)
 
+---
+
+## 7. Support & Customer Care Operations (Phase F)
+
+Customer support agents (`SUPPORT`), administrators (`ADMIN`), and platform custodians (`OWNER`) manage learner requests via the live database support console at `/admin/support`:
+
+- **Live Database Queue**: Real-time filtering by status (`OPEN`, `IN_PROGRESS`, `WAITING_USER`, `RESOLVED`, `CLOSED`), priority, category, unassigned status, and search query.
+- **Assignment**: Staff can claim tickets ("Assign to Me") or unassign tickets with audit logging.
+- **Public Replies & First-Response Tracking**: Staff replies record `firstResponseAt` on the first public response and dispatch learner notifications/transactional emails.
+- **Segregated Internal Notes**: Staff internal notes are stored in a dedicated `SupportInternalNote` table, never accessible or leaked to learner API responses.
+- **Authoritative Priority & State Transitions**: Strictly enforced state machine transitions with automated audit trail logging.
+
+For complete documentation on support operations, state machines, and email outbox delivery, see:
+- [`docs/SUPPORT_OPERATIONS.md`](SUPPORT_OPERATIONS.md)
+- [`docs/NOTIFICATION_OPERATIONS.md`](NOTIFICATION_OPERATIONS.md)
+

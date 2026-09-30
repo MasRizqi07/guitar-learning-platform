@@ -142,7 +142,22 @@ Configured in `next.config.ts` for all application routes:
 
 ---
 
-## 12. Responsible Vulnerability Disclosure
+## 12. Support Operations & Notifications Security (Phase F)
+
+- **Truthful Cryptographic Guarantees:** User passwords are encrypted exclusively using server-side `bcrypt` (10 rounds). The frontend password strength meter on the security settings surface is documented accurately as a client-side complexity heuristic and does not misrepresent server cryptographic algorithms.
+- **Segregated Internal Notes Invariant:** Staff internal notes are partitioned into a physically separate table (`SupportInternalNote`). Invariant: Public learner ticket queries and serializers NEVER query or expose internal staff notes.
+- **Zero-Trust Support & Notification IDOR Protection:**
+  - Learner ticket access verifies `ticket.userId === session.id`.
+  - Notification queries and mark-as-read mutations verify `notification.userId === session.id`.
+  - Client-supplied user identifiers are completely ignored.
+- **Privacy-Preserving Diagnostic Telemetry:** Audio diagnostics are strictly bounded (user-agent, sample rate, AudioContext state, platform, viewport size). No raw audio recordings or fingerprinting coordinates are ever collected or stored.
+- **Non-Authoritative Outbox Delivery:** External email provider failures log non-fatal warnings and persist failure state in `NotificationDelivery` without rolling back tickets, replies, or user notifications.
+- **Support Message XSS Safety:** All support ticket subjects and message contents are rendered with standard React text escaping, mitigating script injection attacks.
+- **Private Attachment Policy:** Direct file attachments on support tickets remain disabled during Phase F to prevent inadvertent leakage into public curriculum asset buckets. Support attachments will only be enabled once private, isolated object storage with short-lived signed URLs is configured.
+
+---
+
+## 13. Responsible Vulnerability Disclosure
 
 If you discover a potential security vulnerability in this project, please report it privately:
 - **Email:** `security@yourdomain.com` (placeholder)

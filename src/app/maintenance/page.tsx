@@ -3,12 +3,11 @@
 import React from 'react';
 import Link from 'next/link';
 import {
-  Clock,
   ShieldCheck,
-  CheckCircle2,
-  RefreshCw,
   Database,
   ArrowRight,
+  AlertCircle,
+  LifeBuoy,
 } from 'lucide-react';
 
 import { Logo } from '@/components/ui/Logo';
@@ -20,12 +19,10 @@ export default function MaintenancePage() {
     <div className="min-h-screen bg-[#0E1014] text-slate-100 flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
       {/* Top Header */}
       <header className="h-16 px-4 sm:px-8 border-b border-[#2A303A] bg-[#121418]/90 backdrop-blur-xl flex items-center justify-between sticky top-0 z-50">
-        <Link href="/" className="flex items-center">
-          <Logo size="sm" subtitle="CORE PLATFORM" />
-        </Link>
+        <Logo size="sm" subtitle="CORE PLATFORM" href="/" />
         <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-mono">
           <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-          <span className="uppercase font-bold">Scheduled Maintenance Active</span>
+          <span className="uppercase font-bold">Maintenance Mode Active</span>
         </div>
       </header>
 
@@ -39,81 +36,58 @@ export default function MaintenancePage() {
         {/* Hero Cluster */}
         <div className="space-y-4">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#171A20] border border-[#2A303A] text-xs font-mono text-amber-400">
-            <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
-            <span>Infrastructure Upgrade in Progress • Migration Window v2.4</span>
+            <AlertCircle className="w-3.5 h-3.5" />
+            <span>Platform Maintenance in Progress</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl font-black text-slate-100 tracking-tight">
-            Platform Upgrades &amp; Database Tuning
+            System Maintenance &amp; Updates
           </h1>
           <p className="text-sm sm:text-base text-slate-400 max-w-2xl leading-relaxed">
-            FretFlow is undergoing scheduled multi-region database migration. Your practice streaks, lesson progress, and XP ledgers are safely persisted in cold storage.
+            FretFlow is temporarily undergoing maintenance or administrative configuration updates. 
+            All learning progress, practice streaks, and account profiles remain safely stored and preserved.
           </p>
         </div>
 
-        {/* Progress & Migration Steps Card */}
+        {/* Status Cards */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
           <Card className="md:col-span-8 p-6 bg-[#171A20] border-[#2A303A] shadow-xl space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div className="flex items-center gap-2 text-slate-200">
-                <Clock className="w-4 h-4 text-amber-400" />
-                <span className="text-sm font-bold">Estimated Completion: ~25 minutes</span>
-              </div>
-              <span className="font-mono text-sm font-bold text-amber-400">65% Complete</span>
+            <div className="space-y-2">
+              <h2 className="text-base font-bold text-slate-100 flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                <span>Service Status &amp; Data Integrity</span>
+              </h2>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                During maintenance windows, write operations on curriculum and practice records are paused to ensure full ACID compliance and prevent data desynchronization.
+              </p>
             </div>
 
-            {/* Progress Bar */}
-            <div className="w-full bg-[#0E1014] h-2.5 rounded-full overflow-hidden p-0.5 border border-[#2A303A]">
-              <div className="bg-gradient-to-r from-amber-500 to-emerald-400 h-full rounded-full w-[65%] transition-all duration-700 shadow-[0_0_12px_rgba(245,158,11,0.4)]" />
-            </div>
-
-            {/* Steps Checklist */}
-            <div className="space-y-2.5 pt-1 text-xs">
-              <div className="p-3 rounded-xl bg-[#0E1014] border border-[#2A303A] flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                  <div>
-                    <div className="font-semibold text-slate-200">1. Database Snapshot &amp; Cold Storage Backup</div>
-                    <div className="text-[10px] font-mono text-slate-500 uppercase">ACID-compliant state lock</div>
-                  </div>
+            <div className="space-y-3 pt-2 text-xs">
+              <div className="p-3.5 rounded-xl bg-[#0E1014] border border-[#2A303A] flex items-center justify-between gap-3">
+                <div className="space-y-1">
+                  <div className="font-semibold text-slate-200">Account &amp; Security Vault</div>
+                  <div className="text-[11px] text-slate-500">Authentication sessions and user credentials protected</div>
                 </div>
                 <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[10px] font-bold">
-                  Completed
+                  Protected
                 </span>
               </div>
 
-              <div className="p-3 rounded-xl bg-[#1A1E26] border border-amber-500/30 flex items-center justify-between gap-3 shadow-sm">
-                <div className="flex items-center gap-3">
-                  <RefreshCw className="w-4 h-4 text-amber-400 animate-spin shrink-0" />
-                  <div>
-                    <div className="font-semibold text-slate-100">2. Prisma Schema V2.4 Zero-Downtime Apply</div>
-                    <div className="text-[10px] font-mono text-amber-400/90 uppercase">Partitioning practice sessions table</div>
-                  </div>
+              <div className="p-3.5 rounded-xl bg-[#0E1014] border border-[#2A303A] flex items-center justify-between gap-3">
+                <div className="space-y-1">
+                  <div className="font-semibold text-slate-200">Help &amp; Support Operations</div>
+                  <div className="text-[11px] text-slate-500">Support desk and knowledge base remain accessible for assistance</div>
                 </div>
-                <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-mono text-[10px] font-bold">
-                  In Progress
-                </span>
-              </div>
-
-              <div className="p-3 rounded-xl bg-[#0E1014]/60 border border-[#2A303A]/60 flex items-center justify-between gap-3 opacity-60">
-                <div className="flex items-center gap-3">
-                  <div className="w-4 h-4 rounded-full border border-slate-600 shrink-0" />
-                  <div>
-                    <div className="font-semibold text-slate-400">3. Web Audio Edge CDN &amp; Asset Cache Warmup</div>
-                    <div className="text-[10px] font-mono text-slate-600 uppercase">Acoustic tone synthesizer buffers</div>
-                  </div>
-                </div>
-                <span className="px-2 py-0.5 rounded bg-[#171A20] text-slate-500 font-mono text-[10px]">
-                  Queued
+                <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 font-mono text-[10px] font-bold">
+                  Accessible
                 </span>
               </div>
             </div>
 
             <div className="p-3 rounded-lg bg-[#0E1014] border border-[#2A303A] flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-slate-400">
-              <span className="flex items-center gap-1.5 text-emerald-400">
-                <ShieldCheck className="w-4 h-4" /> Target Service Restoration: 19:30 UTC
+              <span className="flex items-center gap-1.5 text-slate-300">
+                <span className="w-2 h-2 rounded-full bg-amber-400" /> Services will resume immediately once maintenance completes
               </span>
-              <span className="text-slate-500">Monitored by Platform SRE Duty Engine</span>
             </div>
           </Card>
 
@@ -124,19 +98,19 @@ export default function MaintenancePage() {
                 <Database className="w-4 h-4" />
                 <span className="text-xs font-mono uppercase font-bold tracking-wider">Zero Data Loss</span>
               </div>
-              <h2 className="text-base font-bold text-slate-100">Telemetry Invariant Protection</h2>
+              <h2 className="text-base font-bold text-slate-100">Guaranteed Protections</h2>
               <ul className="space-y-3 text-xs text-slate-400">
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-400 font-bold">✓</span>
-                  <span>Daily streaks are automatically frozen and protected against expiration.</span>
+                  <span>Daily streaks are preserved during maintenance.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-400 font-bold">✓</span>
-                  <span>Completed lesson progress is cryptographically retained.</span>
+                  <span>Course completion records are durably persisted in PostgreSQL.</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-emerald-400 font-bold">✓</span>
-                  <span>Web Audio API client synthesis engine runs 100% locally.</span>
+                  <span>Client-side audio tuner and practice tools remain usable offline.</span>
                 </li>
               </ul>
             </div>
@@ -144,8 +118,9 @@ export default function MaintenancePage() {
             <div className="pt-4 border-t border-[#2A303A]">
               <Link href="/help" className="w-full">
                 <Button variant="outline" className="w-full text-xs font-mono border-[#2A303A] gap-2">
-                  <span>Student Support Desk</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
+                  <LifeBuoy className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Help &amp; Support Portal</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-slate-400 ml-auto" />
                 </Button>
               </Link>
             </div>
@@ -155,9 +130,9 @@ export default function MaintenancePage() {
 
       {/* Footer */}
       <footer className="h-14 border-t border-[#2A303A] bg-[#0E1014] px-4 sm:px-8 flex items-center justify-between text-xs text-slate-500 font-mono">
-        <span>FretFlow Platform Engine 2.4.0</span>
-        <span className="text-emerald-400 flex items-center gap-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> All systems nominal
+        <span>FretFlow Platform</span>
+        <span className="text-amber-400 flex items-center gap-1">
+          <span className="w-1.5 h-1.5 rounded-full bg-amber-400" /> Maintenance Mode
         </span>
       </footer>
     </div>

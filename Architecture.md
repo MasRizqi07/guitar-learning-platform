@@ -2593,5 +2593,25 @@ Client Browser            Next.js App Server         Object Storage
 - **Secrets Prohibition:** System secrets (`AUTH_SECRET`, database credentials, API keys) are strictly forbidden from `PlatformSetting`.
 - **Emergency Maintenance Mode:** When enabled, non-owner mutations return HTTP 503 `MAINTENANCE_MODE`. `OWNER` sessions bypass maintenance locks to ensure platform control and restoration.
 
+---
+
+# 23. Phase F — Support Operations, Help Center & Notification System
+
+### 23.1 Persistent Domain & Segregation
+- **Models:** `SupportTicket`, `SupportMessage`, `SupportInternalNote`, `Notification`, `NotificationDelivery`.
+- **Segregated Internal Notes:** Staff internal notes are partitioned into `SupportInternalNote` (separate table). Invariant: Learner ticket responses NEVER query or expose internal staff notes.
+- **Human-Readable Ticket Numbers:** Tickets feature human-readable reference sequences (e.g. `SUP-2026-000001`).
+
+### 23.2 Support State Machine & First-Response Tracking
+- **State Machine:** Explicit allowed transition matrix (`OPEN` -> `IN_PROGRESS` | `RESOLVED`, `IN_PROGRESS` -> `WAITING_USER` | `RESOLVED`, `WAITING_USER` -> `IN_PROGRESS` | `RESOLVED`, `RESOLVED` -> `CLOSED` | `OPEN`).
+- **First Response:** `firstResponseAt` is immutably set on the first public staff reply. Internal staff notes do not count towards first response time.
+- **Audit Trail:** Privileged staff mutations (assignment, priority change, status change, internal note addition, resolution) are recorded in `AdminAuditLog` without replicating message bodies.
+
+### 23.3 Notification Center & Non-Authoritative Email Delivery
+- **Durable Notification:** In-app notifications stored in `Notification` with unique compound index `[userId, dedupeKey]` to prevent duplication on retries.
+- **Zero-Trust IDOR:** Notification read mutations verify recipient ownership (`notification.userId === session.id`).
+- **Outbox Pattern:** External email delivery via `EmailService` is non-authoritative; email failures log delivery attempts to `NotificationDelivery` without rolling back primary database state.
+
+
 
 

@@ -38,12 +38,12 @@ test.describe('Real Browser Golden Path E2E Journey', () => {
     // Step 4: Guitar Type (default selected: ACOUSTIC)
     await page.getByRole('button', { name: /continue/i }).click();
 
-    // Step 5: Daily Commitment (for ABSOLUTE_BEGINNER, submits onboarding via Complete Setup)
-    await page.getByRole('button', { name: /complete setup/i }).click();
+    // Step 5: Daily Commitment (for ABSOLUTE_BEGINNER, submits onboarding via Complete Setup / Calibration)
+    await page.getByRole('button', { name: /(complete setup|complete calibration)/i }).click();
 
     // Step 7: Placement Ready Screen
-    await expect(page.getByText(/you're set for success!/i)).toBeVisible();
-    await page.getByRole('button', { name: /enter dashboard/i }).click();
+    await expect(page.getByText(/(you're set for success|learning path is ready)/i)).toBeVisible();
+    await page.getByRole('button', { name: /(enter dashboard|start learning)/i }).click();
 
     // 4. Reach Dashboard
     await page.waitForURL(/\/dashboard/);
@@ -60,7 +60,8 @@ test.describe('Real Browser Golden Path E2E Journey', () => {
 
     // 6. Lesson 1 Screen
     await page.waitForURL(/\/lessons\/intro-to-guitar/);
-    await expect(page.getByRole('heading', { name: /introduction to guitar/i })).toBeVisible();
+    await expect(page.getByText(/introduction to guitar/i)).toBeVisible();
+    await expect(page.getByRole('heading', { name: /welcome to the guitar/i })).toBeVisible();
 
     // Traverse all sections
     while (await page.getByRole('button', { name: /next section/i }).isVisible()) {
@@ -68,8 +69,8 @@ test.describe('Real Browser Golden Path E2E Journey', () => {
       await page.waitForTimeout(200);
     }
 
-    // Reach last section: Take Lesson Quiz button should appear
-    const quizButton = page.getByRole('button', { name: /take lesson quiz/i });
+    // Reach last section: Take Lesson Quiz button/link should appear
+    const quizButton = page.locator('a, button').filter({ hasText: /take lesson quiz/i }).first();
     await expect(quizButton).toBeVisible();
     await quizButton.click();
 

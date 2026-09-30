@@ -3,7 +3,7 @@ import { prisma } from '../../src/lib/db';
 import { hashPassword } from '../../src/lib/auth';
 import { UserRole, AccountStatus } from '@prisma/client';
 
-test.describe('Phase C Content Management System (CMS) E2E Flow', () => {
+test.describe.serial('Phase C Content Management System (CMS) E2E Flow', () => {
   const timestamp = Date.now();
   const editorUser = {
     name: 'E2E Content Editor',
@@ -283,7 +283,8 @@ test.describe('Phase C Content Management System (CMS) E2E Flow', () => {
 
     // Learner visits the published lesson directly by slug
     await page.goto(`/lessons/${testLessonSlug}`);
-    await expect(page.getByRole('heading', { name: new RegExp(`E2E Fingerpicking Intro ${timestamp}`, 'i') })).toBeVisible();
+    await expect(page.getByText(new RegExp(`E2E Fingerpicking Intro ${timestamp}`, 'i'))).toBeVisible();
+    await expect(page.getByRole('heading', { name: /Acoustic Picking Fundamentals/i })).toBeVisible();
     await expect(page.getByText('Welcome to the authoritative guitar picking guide for beginners.')).toBeVisible();
   });
 

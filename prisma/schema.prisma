@@ -184,8 +184,14 @@ model User {
   createdFeatureFlags     FeatureFlag[]            @relation("FeatureFlagCreatedBy")
   updatedFeatureFlags     FeatureFlag[]            @relation("FeatureFlagUpdatedBy")
   updatedPlatformSettings PlatformSetting[]        @relation("PlatformSettingUpdatedBy")
+  supportTickets          SupportTicket[]          @relation("UserSupportTickets")
+  assignedSupportTickets  SupportTicket[]          @relation("StaffAssignedTickets")
+  supportMessages         SupportMessage[]         @relation("UserSupportMessages")
+  supportInternalNotes    SupportInternalNote[]    @relation("UserSupportInternalNotes")
+  notifications           Notification[]           @relation("UserNotifications")
 
   @@index([email])
+
   @@index([role])
   @@index([status])
   @@index([analyticsExcluded])
@@ -745,5 +751,143 @@ model PlatformSetting {
 
   updatedBy User? @relation("PlatformSettingUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
 }
+
+enum SupportTicketStatus {
+  OPEN
+  IN_PROGRESS
+  WAITING_USER
+  RESOLVED
+  CLOSED
+}
+
+enum SupportTicketPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum SupportCategory {
+  AUDIO_TUNER
+  CURRICULUM
+  ACCOUNT_ACCESS
+  CONTENT_BUG
+  GENERAL
+}
+
+enum NotificationType {
+  SUPPORT
+  SECURITY
+  ACHIEVEMENT
+  SYSTEM
+  LEARNING
+}
+
+enum DeliveryStatus {
+  PENDING
+  PROCESSING
+  SENT
+  FAILED
+  CANCELLED
+}
+
+enum DeliveryChannel {
+  EMAIL
+  IN_APP
+}
+
+model SupportTicket {
+  id              String                @id @default(uuid())
+  ticketNumber    String                @unique
+  userId          String
+  category        SupportCategory       @default(GENERAL)
+  subject         String
+  status          SupportTicketStatus   @default(OPEN)
+  priority        SupportTicketPriority @default(NORMAL)
+  assignedToId    String?
+  firstResponseAt DateTime?
+  resolvedAt      DateTime?
+  closedAt        DateTime?
+  telemetry       Json?
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  user          User                  @relation("UserSupportTickets", fields: [userId], references: [id], onDelete: Cascade)
+  assignedTo    User?                 @relation("StaffAssignedTickets", fields: [assignedToId], references: [id], onDelete: SetNull)
+  messages      SupportMessage[]
+  internalNotes SupportInternalNote[]
+
+  @@index([userId, createdAt])
+  @@index([status, priority, createdAt])
+  @@index([assignedToId, status])
+  @@index([ticketNumber])
+}
+
+model SupportMessage {
+  id           String        @id @default(uuid())
+  ticketId     String
+  authorUserId String
+  body         String        @db.Text
+  createdAt    DateTime      @default(now())
+
+  ticket SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  author User          @relation("UserSupportMessages", fields: [authorUserId], references: [id], onDelete: Cascade)
+
+  @@index([ticketId, createdAt])
+  @@index([authorUserId])
+}
+
+model SupportInternalNote {
+  id           String        @id @default(uuid())
+  ticketId     String
+  authorUserId String
+  body         String        @db.Text
+  createdAt    DateTime      @default(now())
+
+  ticket SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  author User          @relation("UserSupportInternalNotes", fields: [authorUserId], references: [id], onDelete: Cascade)
+
+  @@index([ticketId, createdAt])
+  @@index([authorUserId])
+}
+
+model Notification {
+  id         String           @id @default(uuid())
+  userId     String
+  type       NotificationType
+  title      String
+  message    String           @db.Text
+  actionUrl  String?
+  dedupeKey  String?
+  readAt     DateTime?
+  createdAt  DateTime         @default(now())
+
+  user       User                   @relation("UserNotifications", fields: [userId], references: [id], onDelete: Cascade)
+  deliveries NotificationDelivery[]
+
+  @@unique([userId, dedupeKey])
+  @@index([userId, readAt, createdAt])
+  @@index([type])
+}
+
+model NotificationDelivery {
+  id             String          @id @default(uuid())
+  notificationId String?
+  channel        DeliveryChannel @default(EMAIL)
+  recipient      String
+  status         DeliveryStatus  @default(PENDING)
+  attemptCount   Int             @default(0)
+  lastAttemptAt  DateTime?
+  sentAt         DateTime?
+  errorReason    String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  notification Notification? @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@index([status, createdAt])
+  @@index([notificationId])
+}
+
 
 

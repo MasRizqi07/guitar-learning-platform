@@ -128,4 +128,107 @@ export class EmailService {
 
     return this.provider.sendEmail({ to, subject, text, html });
   }
+
+  /**
+   * Sends confirmation email when a learner creates a support ticket
+   */
+  /**
+   * Sends confirmation email when a learner creates a support ticket
+   */
+  static async sendSupportTicketCreatedEmail(
+    toOrOptions: string | { to: string; ticketNumber: string; subject: string; name?: string; viewUrl?: string },
+    ticketNumber?: string,
+    ticketSubject?: string
+  ): Promise<{ id: string }> {
+    const to = typeof toOrOptions === 'string' ? toOrOptions : toOrOptions.to;
+    const num = typeof toOrOptions === 'string' ? ticketNumber || 'SUP' : toOrOptions.ticketNumber;
+    const subj = typeof toOrOptions === 'string' ? ticketSubject || '' : toOrOptions.subject;
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const subject = `[${num}] Support Ticket Received: ${subj}`;
+    const text = `Hello,\n\nWe have received your support request "${subj}" (Reference: ${num}).\nOur audio coaching and engineering staff will review your inquiry shortly.\n\nYou can track updates and reply directly at: ${appUrl}/support\n\nThank you,\nFretFlow Support Desk`;
+    const html = `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h2 style="color: #f59e0b;">Support Ticket Received</h2>
+        <p>Reference: <strong>${num}</strong></p>
+        <p>Subject: <strong>${subj}</strong></p>
+        <p>Our audio coaching and engineering team will review your inquiry. You can review updates directly in your dashboard:</p>
+        <div style="margin: 20px 0;">
+          <a href="${appUrl}/support" style="background-color: #f59e0b; color: #000; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; display: inline-block;">
+            View Ticket Status
+          </a>
+        </div>
+        <p style="color: #64748b; font-size: 12px; margin-top: 20px;">FretFlow Support Desk</p>
+      </div>
+    `;
+
+    return this.provider.sendEmail({ to, subject, text, html });
+  }
+
+  /**
+   * Sends email when support staff posts a public reply
+   */
+  static async sendSupportReplyEmail(
+    toOrOptions: string | { to: string; ticketNumber: string; subject: string; replySnippet?: string; snippet?: string; name?: string; viewUrl?: string },
+    ticketNumber?: string,
+    ticketSubject?: string,
+    snippet?: string
+  ): Promise<{ id: string }> {
+    const to = typeof toOrOptions === 'string' ? toOrOptions : toOrOptions.to;
+    const num = typeof toOrOptions === 'string' ? ticketNumber || 'SUP' : toOrOptions.ticketNumber;
+    const subj = typeof toOrOptions === 'string' ? ticketSubject || '' : toOrOptions.subject;
+    const snip = typeof toOrOptions === 'string' ? snippet || '' : toOrOptions.replySnippet || toOrOptions.snippet || '';
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const subject = `[${num}] New Reply from Staff: ${subj}`;
+    const text = `Hello,\n\nA member of our support team has replied to your ticket "${subj}" (${num}):\n\n"${snip}"\n\nTo view the full message and continue the conversation, visit: ${appUrl}/support`;
+    const html = `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h2 style="color: #f59e0b;">Staff Reply Received</h2>
+        <p>Reference: <strong>${num}</strong></p>
+        <p style="background-color: #f8fafc; border-left: 4px solid #f59e0b; padding: 12px; margin: 16px 0; color: #1e293b;">
+          "${snip}"
+        </p>
+        <div style="margin: 20px 0;">
+          <a href="${appUrl}/support" style="background-color: #f59e0b; color: #000; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; display: inline-block;">
+            Open Support Portal
+          </a>
+        </div>
+      </div>
+    `;
+
+    return this.provider.sendEmail({ to, subject, text, html });
+  }
+
+  /**
+   * Sends email when support ticket is resolved
+   */
+  static async sendSupportResolvedEmail(
+    toOrOptions: string | { to: string; ticketNumber: string; subject: string; name?: string; viewUrl?: string },
+    ticketNumber?: string,
+    ticketSubject?: string
+  ): Promise<{ id: string }> {
+    const to = typeof toOrOptions === 'string' ? toOrOptions : toOrOptions.to;
+    const num = typeof toOrOptions === 'string' ? ticketNumber || 'SUP' : toOrOptions.ticketNumber;
+    const subj = typeof toOrOptions === 'string' ? ticketSubject || '' : toOrOptions.subject;
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const subject = `[${num}] Support Ticket Resolved: ${subj}`;
+    const text = `Hello,\n\nYour support ticket "${subj}" (${num}) has been marked as resolved.\nIf you still need assistance, you can reopen this ticket by replying at: ${appUrl}/support\n\nHappy practicing!\nFretFlow Support Team`;
+    const html = `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+        <h2 style="color: #22c55e;">Support Ticket Resolved</h2>
+        <p>Reference: <strong>${num}</strong></p>
+        <p>Your ticket has been marked as resolved by staff. If you have further questions or the issue persists, you may reply to reopen it.</p>
+        <div style="margin: 20px 0;">
+          <a href="${appUrl}/support" style="background-color: #22c55e; color: #ffffff; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; display: inline-block;">
+            Review Ticket
+          </a>
+        </div>
+      </div>
+    `;
+
+    return this.provider.sendEmail({ to, subject, text, html });
+  }
 }
+

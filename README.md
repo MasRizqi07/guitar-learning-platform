@@ -317,6 +317,8 @@ Refer to:
 - [`docs/RBAC.md`](docs/RBAC.md) — Comprehensive 5-role permission matrix, operational boundaries, and security invariants.
 - [`docs/ADMIN_OPERATIONS.md`](docs/ADMIN_OPERATIONS.md) — Operational runbook for user directory search, suspension lifecycles, and audit inspection.
 - [`docs/OWNER_OPERATIONS.md`](docs/OWNER_OPERATIONS.md) — Platform governance, executive analytics, deterministic feature flag rollouts, and maintenance mode.
+- [`docs/SUPPORT_OPERATIONS.md`](docs/SUPPORT_OPERATIONS.md) — Operational support ticket desk, state machine, segregated internal notes, and first-response metrics.
+- [`docs/NOTIFICATION_OPERATIONS.md`](docs/NOTIFICATION_OPERATIONS.md) — Durable in-app notification center, deduplication, and non-authoritative email delivery outbox.
 - [`docs/ANALYTICS_DEFINITIONS.md`](docs/ANALYTICS_DEFINITIONS.md) — Authoritative mathematical definitions, exclusions, and formulas for all product KPIs.
 - [`docs/CONTENT_OPERATIONS.md`](docs/CONTENT_OPERATIONS.md) — Operational guide for curriculum authoring, section editing, draft/review/publish lifecycles, revision restores, and safe quiz management.
 - [`docs/MEDIA_OPERATIONS.md`](docs/MEDIA_OPERATIONS.md) — Media storage architecture, direct signed upload pipeline, reference-safe deletion, and provider rotation runbooks.

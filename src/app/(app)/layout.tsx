@@ -14,6 +14,8 @@ import {
   LogOut,
   Shield,
   Flame,
+  Bell,
+  LifeBuoy,
 } from 'lucide-react';
 import { Logo } from '@/components/ui/Logo';
 
@@ -31,6 +33,8 @@ const NAV_ITEMS: NavItem[] = [
   { name: 'Tuner & Audio', href: '/tuner', icon: Radio },
   { name: 'Chord Vault', href: '/library', icon: Bookmark },
   { name: 'Progress Ledger', href: '/progress', icon: TrendingUp },
+  { name: 'Notifications', href: '/notifications', icon: Bell },
+  { name: 'Support & Help', href: '/support', icon: LifeBuoy },
   { name: 'Security & Sessions', href: '/settings/security', icon: Shield },
   { name: 'Profile', href: '/profile', icon: User },
 ];
@@ -41,10 +45,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const [userName, setUserName] = useState<string>('Learner');
   const [userXP, setUserXP] = useState<number>(0);
   const [streak, setStreak] = useState<number>(0);
+  const [unreadNotifs, setUnreadNotifs] = useState<number>(0);
   const practiceMinutes = 10;
   const dailyTargetMinutes = 15;
-
-
 
   useEffect(() => {
     fetch('/api/auth/me')
@@ -67,6 +70,16 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         }
       })
       .catch(() => null);
+
+    // Fetch unread notifications count
+    fetch('/api/notifications?pageSize=1')
+      .then((r) => r.json())
+      .then((d) => {
+        if (d?.data?.unreadCount !== undefined) {
+          setUnreadNotifs(d.data.unreadCount);
+        }
+      })
+      .catch(() => null);
   }, [pathname, router]);
 
   const handleLogout = async () => {
@@ -83,9 +96,9 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <aside className="hidden md:flex flex-col w-64 border-r border-[#2A303A] bg-[#121418] p-5 justify-between shrink-0 fixed inset-y-0 left-0 z-30">
         <div className="space-y-6">
           {/* Brand Header */}
-          <Link href="/dashboard" className="flex items-center px-1">
-            <Logo size="md" subtitle="Acoustic & Electric" />
-          </Link>
+          <div className="flex items-center px-1">
+            <Logo size="md" subtitle="Acoustic &amp; Electric" href="/dashboard" />
+          </div>
 
           {/* Navigation Engine Header */}
           <div className="px-1 pt-1">
@@ -114,6 +127,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                     <span className="truncate">{item.name}</span>
                   </div>
 
+                  {item.href === '/notifications' && unreadNotifs > 0 && (
+                    <span className="px-1.5 py-0.5 rounded-full bg-amber-500 text-slate-950 text-[10px] font-mono font-bold animate-pulse">
+                      {unreadNotifs}
+                    </span>
+                  )}
                   {item.href === '/dashboard' && streak > 0 && (
                     <span className="px-1.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 text-[10px] font-mono border border-amber-500/20">
                       🔥 {streak}d
@@ -196,8 +214,8 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           { name: 'Learn', href: '/learn', icon: GitBranch },
           { name: 'Practice', href: '/practice', icon: Timer },
           { name: 'Tuner', href: '/tuner', icon: Radio },
-          { name: 'Chords', href: '/library', icon: Bookmark },
-          { name: 'Security', href: '/settings/security', icon: Shield },
+          { name: 'Support', href: '/support', icon: LifeBuoy },
+          { name: 'Notifs', href: '/notifications', icon: Bell },
         ].map((item) => {
           const Icon = item.icon;
           const isActive = pathname.startsWith(item.href);

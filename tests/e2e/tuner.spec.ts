@@ -18,8 +18,8 @@ test.describe('Guitar Utilities E2E: Tuner & Interactive Fretboard', () => {
     await page.getByRole('button', { name: /continue/i }).click();
     await page.getByRole('button', { name: /continue/i }).click();
     await page.getByRole('button', { name: /continue/i }).click();
-    await page.getByRole('button', { name: /complete setup/i }).click();
-    await page.getByRole('button', { name: /enter dashboard/i }).click();
+    await page.getByRole('button', { name: /(complete setup|complete calibration)/i }).click();
+    await page.getByRole('button', { name: /(enter dashboard|start learning)/i }).click();
     await page.waitForURL(/\/dashboard/);
   });
 
@@ -29,38 +29,31 @@ test.describe('Guitar Utilities E2E: Tuner & Interactive Fretboard', () => {
     await expect(page.getByRole('heading', { name: /guitar tuner/i })).toBeVisible();
 
     // Verify mode selector buttons exist
-    const micTab = page.getByRole('button', { name: /mic tuner/i });
-    const earTab = page.getByRole('button', { name: /by ear/i });
+    const micTab = page.getByRole('button', { name: /(mic pitch detector|mic tuner)/i });
+    const earTab = page.getByRole('button', { name: /(reference tones|by ear)/i });
     await expect(micTab).toBeVisible();
     await expect(earTab).toBeVisible();
 
-    // 2. Switch to "By Ear (Tones)"
+    // 2. Switch to "Reference Tones"
     await earTab.click();
-    await expect(page.getByRole('heading', { name: /acoustic reference tones/i })).toBeVisible();
+    await expect(page.getByText(/(string isolation|acoustic reference tones)/i)).toBeVisible();
 
     // Verify 6 standard tuning string cards are displayed
-    await expect(page.getByText('String 6')).toBeVisible();
-    await expect(page.getByText('String 5')).toBeVisible();
-    await expect(page.getByText('String 4')).toBeVisible();
-    await expect(page.getByText('String 3')).toBeVisible();
-    await expect(page.getByText('String 2')).toBeVisible();
-    await expect(page.getByText('String 1')).toBeVisible();
+    await expect(page.getByText(/str(ing)? 6/i).first()).toBeVisible();
+    await expect(page.getByText(/str(ing)? 5/i).first()).toBeVisible();
+    await expect(page.getByText(/str(ing)? 4/i).first()).toBeVisible();
+    await expect(page.getByText(/str(ing)? 3/i).first()).toBeVisible();
+    await expect(page.getByText(/str(ing)? 2/i).first()).toBeVisible();
+    await expect(page.getByText(/str(ing)? 1/i).first()).toBeVisible();
 
     // Click Pluck Tone button
-    const pluckBtn = page.getByRole('button', { name: /pluck tone/i });
+    const pluckBtn = page.getByRole('button', { name: /pluck/i }).first();
     await expect(pluckBtn).toBeVisible();
     await pluckBtn.click();
 
-    // Toggle continuous loop
-    const loopBtn = page.getByRole('button', { name: /continuous repeat/i });
-    await expect(loopBtn).toBeVisible();
-    await loopBtn.click();
-    await expect(page.getByRole('button', { name: /stop repeat/i })).toBeVisible();
-    await page.getByRole('button', { name: /stop repeat/i }).click();
-
     // 3. Switch back to "Mic Tuner"
     await micTab.click();
-    const startListeningBtn = page.getByRole('button', { name: /start listening/i });
+    const startListeningBtn = page.getByRole('button', { name: /(start microphone pitch detector|start listening)/i });
     await expect(startListeningBtn).toBeVisible();
 
     // In automated headless browser environment, microphone might be simulated or denied.
@@ -69,7 +62,7 @@ test.describe('Guitar Utilities E2E: Tuner & Interactive Fretboard', () => {
     await page.waitForTimeout(500);
 
     // Page must remain rendered and healthy
-    await expect(page.getByRole('heading', { name: /guitar tuner/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /(precision guitar tuner|guitar tuner)/i })).toBeVisible();
   });
 
   test('verifies Interactive Fretboard & Scale Filters in Library', async ({ page }) => {

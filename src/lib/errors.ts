@@ -54,7 +54,11 @@ export type ErrorCode =
   | 'INVALID_PLATFORM_SETTING'
   | 'REGISTRATION_DISABLED'
   | 'MAINTENANCE_MODE'
+  | 'SUPPORT_TICKET_NOT_FOUND'
+  | 'INVALID_TICKET_STATUS_TRANSITION'
+  | 'NOTIFICATION_NOT_FOUND'
   | 'INTERNAL_SERVER_ERROR';
+
 
 export class AppError extends Error {
   public readonly code: ErrorCode;

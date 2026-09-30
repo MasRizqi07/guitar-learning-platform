@@ -156,8 +156,12 @@ test.describe('Owner Console, Analytics, Feature Flags & Governance E2E Flow', (
 
     // Update support email
     const emailInput = page.getByPlaceholder(/support@guitarlearning\.com/i);
-    await emailInput.fill(`test_support_${timestamp}@example.com`);
-    await page.getByRole('button', { name: /save email/i }).click();
+    await expect(emailInput).not.toHaveValue('');
+    const freshSupportEmail = `test_support_${Date.now()}_${Math.random().toString(36).substring(2, 7)}@example.com`;
+    await emailInput.fill(freshSupportEmail);
+    const saveEmailBtn = page.getByRole('button', { name: /save email/i });
+    await expect(saveEmailBtn).toBeEnabled();
+    await saveEmailBtn.click();
     await expect(page.getByText(/support email updated successfully/i)).toBeVisible();
 
     // 8. Navigate to Privileged Audit Logs

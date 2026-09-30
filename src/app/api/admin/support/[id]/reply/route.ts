@@ -3,8 +3,9 @@ import { SupportService } from '@/services/support.service';
 import { createMessageSchema } from '@/validations/support';
 import { apiSuccess, apiError } from '@/lib/api-response';
 import { getSessionUser } from '@/lib/auth';
-import { RateLimiter } from '@/lib/rate-limit';
 import { AppError } from '@/lib/errors';
+import { RateLimiter } from '@/lib/rate-limit';
+import { SupportTicketStatus } from '@prisma/client';
 
 export async function POST(
   req: NextRequest,
@@ -13,30 +14,28 @@ export async function POST(
   try {
     const session = await getSessionUser();
     if (!session?.id) {
-      throw AppError.unauthorized('Authentication required to reply to this ticket');
+      throw AppError.unauthorized('Authentication required to reply to support tickets');
     }
 
     const { id } = await params;
-
-    const ip = RateLimiter.extractClientIp(req.headers);
-    const rateLimit = await RateLimiter.check('support-reply', `${ip}:${session.id}`, {
-      maxRequests: 10,
-      windowSeconds: 60,
-    });
-
-    if (!rateLimit.success) {
-      throw AppError.rateLimit(
-        `Too many replies submitted. Please wait ${Math.max(
-          1,
-          rateLimit.reset - Math.floor(Date.now() / 1000)
-        )} seconds before replying again.`
-      );
-    }
-
     const body = await req.json();
     const validated = createMessageSchema.parse(body);
 
-    const message = await SupportService.addLearnerReply(id, session.id, validated.body);
+    const nextStatus = body.nextStatus && Object.values(SupportTicketStatus).includes(body.nextStatus)
+      ? (body.nextStatus as SupportTicketStatus)
+      : undefined;
+
+    const ip = RateLimiter.extractClientIp(req.headers);
+    const message = await SupportService.addStaffReply(
+      session,
+      id,
+      validated.body,
+      nextStatus,
+      {
+        ip,
+        userAgent: req.headers.get('user-agent'),
+      }
+    );
 
     return apiSuccess({ message }, 201);
   } catch (error) {

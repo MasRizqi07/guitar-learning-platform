@@ -252,7 +252,7 @@ export default function SecuritySettingsPage() {
           <span className="text-slate-600">/</span>
           <span className="text-amber-400 font-bold">Security &amp; Privacy</span>
           <span className="text-slate-600">/</span>
-          <span className="text-slate-500 font-mono text-[11px] lowercase opacity-80">sec_ctx_v2_argon2id</span>
+          <span className="text-slate-500 font-mono text-[11px] lowercase opacity-80">sec_ctx_v2_bcrypt</span>
         </div>
 
         <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#171A20] border border-[#2A303A] shadow-sm">
@@ -382,11 +382,11 @@ export default function SecuritySettingsPage() {
                 </div>
                 <div>
                   <h2 className="text-base font-bold text-slate-100">Update Master Password</h2>
-                  <p className="text-xs text-slate-400">Hardware-grade entropy enforcement</p>
+                  <p className="text-xs text-slate-400">Client-side complexity meter with bcrypt backend hashing</p>
                 </div>
               </div>
               <span className="text-xs font-mono px-2 py-1 rounded bg-[#0E1014] text-amber-400 border border-[#2A303A]">
-                Argon2id Hash
+                Bcrypt (Cost 12)
               </span>
             </div>
 
@@ -463,7 +463,7 @@ export default function SecuritySettingsPage() {
                 {newPassword.length > 0 && (
                   <div className="space-y-1.5 pt-1">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="font-mono text-slate-500 uppercase text-[10px]">Password Entropy</span>
+                      <span className="font-mono text-slate-500 uppercase text-[10px]">Password Strength (Client Heuristic)</span>
                       <span className={`font-mono text-xs font-bold ${
                         entropy.score >= 3 ? 'text-emerald-400' : entropy.score >= 2 ? 'text-amber-400' : 'text-red-400'
                       }`}>
@@ -599,7 +599,7 @@ export default function SecuritySettingsPage() {
                 </svg>
                 <div className="absolute flex flex-col items-center justify-center text-center">
                   <span className="text-3xl font-extrabold font-mono text-slate-100">95%</span>
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Vault Health</span>
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Security Status</span>
                 </div>
               </div>
             </div>

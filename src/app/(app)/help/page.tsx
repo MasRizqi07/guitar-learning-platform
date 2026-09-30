@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import {
   LifeBuoy,
   Search,
@@ -285,7 +286,7 @@ export default function StudentHelpPage() {
                 </div>
               </div>
               <span className="font-mono text-xs text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                SLA: &lt; 2h
+                Staff Queue: Active
               </span>
             </div>
 
@@ -296,14 +297,22 @@ export default function StudentHelpPage() {
                   <span>Ticket Logged Successfully: {submittedTicketId}</span>
                 </div>
                 <p className="text-slate-300">
-                  Our staff operations desk has received your ticket and client audio diagnostics. You can monitor replies in your session inbox.
+                  Our staff operations desk has received your ticket and diagnostics. You can monitor responses in your support portal.
                 </p>
-                <button
-                  onClick={() => setSubmittedTicketId(null)}
-                  className="font-mono underline text-emerald-300 hover:text-white"
-                >
-                  Submit another inquiry
-                </button>
+                <div className="pt-2 flex items-center gap-4 font-mono">
+                  <Link
+                    href={`/support/${submittedTicketId}`}
+                    className="font-bold underline text-amber-400 hover:text-amber-300"
+                  >
+                    View Ticket Thread &rarr;
+                  </Link>
+                  <button
+                    onClick={() => setSubmittedTicketId(null)}
+                    className="underline text-slate-400 hover:text-white"
+                  >
+                    Submit another inquiry
+                  </button>
+                </div>
               </div>
             )}
 
