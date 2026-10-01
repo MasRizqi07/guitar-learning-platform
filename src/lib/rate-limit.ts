@@ -128,7 +128,7 @@ export class RateLimiter {
       }
     }
 
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production' && process.env.ALLOW_LOCAL_RATE_LIMIT !== 'true') {
       logger.error('ProductionRateLimiterConfigurationError', {
         action,
         error: 'UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN are required in production. Process memory fallback is disabled.',
