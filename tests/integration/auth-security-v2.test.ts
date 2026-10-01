@@ -358,11 +358,13 @@ describe('Phase A — Production Account & Security Foundation', () => {
       const prevEnv = process.env.NODE_ENV;
       const prevUrl = process.env.UPSTASH_REDIS_REST_URL;
       const prevToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+      const prevAllow = process.env.ALLOW_LOCAL_RATE_LIMIT;
 
       try {
         (process.env as Record<string, string | undefined>).NODE_ENV = 'production';
         delete process.env.UPSTASH_REDIS_REST_URL;
         delete process.env.UPSTASH_REDIS_REST_TOKEN;
+        delete process.env.ALLOW_LOCAL_RATE_LIMIT;
 
         await expect(
           RateLimiter.check('test-action', 'fail-closed-ip', { maxRequests: 5, windowSeconds: 60 })
@@ -371,6 +373,7 @@ describe('Phase A — Production Account & Security Foundation', () => {
         (process.env as Record<string, string | undefined>).NODE_ENV = prevEnv;
         if (prevUrl) process.env.UPSTASH_REDIS_REST_URL = prevUrl;
         if (prevToken) process.env.UPSTASH_REDIS_REST_TOKEN = prevToken;
+        if (prevAllow) process.env.ALLOW_LOCAL_RATE_LIMIT = prevAllow;
       }
     });
   });

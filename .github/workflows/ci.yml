@@ -36,6 +36,8 @@ jobs:
       DATABASE_URL: postgresql://fretflow_ci:ci_secure_password_123@localhost:5432/guitar_learning_ci
       DIRECT_URL: postgresql://fretflow_ci:ci_secure_password_123@localhost:5432/guitar_learning_ci
       AUTH_SECRET: test_auth_secret_must_be_at_least_32_characters_long_for_security_12345
+      INTERNAL_OPS_TOKEN: fretflow-internal-ops-secret-token-v2
+      ALLOW_LOCAL_RATE_LIMIT: "true"
       NEXT_PUBLIC_APP_URL: http://localhost:3000
       CI: true
 
