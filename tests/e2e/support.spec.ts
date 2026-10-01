@@ -137,13 +137,13 @@ test.describe('Support Desk & Notifications E2E Journeys', () => {
     await page.goto('/admin/support');
     await expect(page.getByText(/student support ticket desk/i)).toBeVisible();
 
-    // Locate the ticket by subject
-    const ticketItem = page.locator('div', { hasText: testSubject }).first();
-    await expect(ticketItem).toBeVisible();
-    await ticketItem.click();
+    // Locate the ticket by subject in list
+    const ticketCard = page.locator('h3', { hasText: testSubject }).first();
+    await expect(ticketCard).toBeVisible();
+    await ticketCard.click();
 
-    // Verify detail is loaded
-    await expect(page.getByRole('heading', { name: testSubject })).toBeVisible();
+    // Verify detail is loaded in right pane
+    await expect(page.getByText(/conversation & internal notes/i)).toBeVisible();
 
     // Assign to self
     const assignBtn = page.getByRole('button', { name: /assign to me/i });

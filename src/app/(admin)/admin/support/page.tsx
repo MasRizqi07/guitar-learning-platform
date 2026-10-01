@@ -154,10 +154,12 @@ export default function AdminSupportInboxPage() {
   // Fetch ticket detail whenever selectedTicketId changes
   useEffect(() => {
     if (!selectedTicketId) {
+      setDetailLoading(false);
       return;
     }
 
     let ignore = false;
+    setDetailLoading(true);
     async function loadDetail() {
       try {
         setActionError(null);
@@ -394,8 +396,9 @@ export default function AdminSupportInboxPage() {
                   <div
                     key={ticket.id}
                     onClick={() => {
-                      setSelectedTicketId(ticket.id);
-                      setDetailLoading(true);
+                      if (selectedTicketId !== ticket.id) {
+                        setSelectedTicketId(ticket.id);
+                      }
                     }}
                     className={`p-4 rounded-xl cursor-pointer transition-all duration-150 border relative ${
                       isSelected
