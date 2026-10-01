@@ -1,0 +1,97 @@
+name: CI & Delivery Safety Pipeline
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-and-verification:
+    name: Lint, Typecheck, Database & Test Gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: fretflow_ci
+          POSTGRES_PASSWORD: ci_secure_password_123
+          POSTGRES_DB: guitar_learning_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgresql://fretflow_ci:ci_secure_password_123@localhost:5432/guitar_learning_ci
+      DIRECT_URL: postgresql://fretflow_ci:ci_secure_password_123@localhost:5432/guitar_learning_ci
+      AUTH_SECRET: test_auth_secret_must_be_at_least_32_characters_long_for_security_12345
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+      CI: true
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js (Pinned LTS 20)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies (Reproducible npm ci)
+        run: npm ci
+
+      - name: Static Analysis & Lint Gate
+        run: npm run lint
+
+      - name: TypeScript Compiler Gate
+        run: npx tsc --noEmit
+
+      - name: Prisma Schema Validation Gate
+        run: npx prisma validate
+
+      - name: Database Migration Gate (Disposable CI DB)
+        run: npx prisma migrate deploy
+
+      - name: Database Seed Idempotency Check (Run 1)
+        run: npm run prisma:seed
+
+      - name: Database Seed Idempotency Check (Run 2 - Verify No Duplicates)
+        run: npm run prisma:seed
+
+      - name: Vitest Unit & Integration Suites (200+ tests)
+        run: npm run test
+
+      - name: Production Build Gate (Turbopack)
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Install Playwright Chromium Browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Playwright E2E Suite (11 Browser Journeys)
+        run: npm run test:e2e
+        env:
+          PORT: 3000
+
+      - name: Upload Playwright Failure Artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-failure-artifacts
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

@@ -1,34 +1,21 @@
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/db';
 
+/**
+ * Public Liveness Health Probe
+ * Shallow check returning process liveness status.
+ * Intentionally omits database hostnames, uptime, environment variables,
+ * migration state, provider credentials, and internal service topology.
+ */
 export async function GET() {
-  try {
-    // Active database probe: ping PostgreSQL
-    await prisma.$queryRaw`SELECT 1`;
-
-    return NextResponse.json(
-      {
-        status: 'ok',
+  return NextResponse.json(
+    {
+      status: 'ok',
+    },
+    {
+      status: 200,
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
       },
-      {
-        status: 200,
-        headers: {
-          'Cache-Control': 'no-store, no-cache, must-revalidate',
-        },
-      }
-    );
-  } catch (error) {
-    console.error('Database health check probe failed:', error);
-    return NextResponse.json(
-      {
-        status: 'error',
-      },
-      {
-        status: 503,
-        headers: {
-          'Cache-Control': 'no-store, no-cache, must-revalidate',
-        },
-      }
-    );
-  }
+    }
+  );
 }

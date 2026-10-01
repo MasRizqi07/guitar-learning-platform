@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { logger } from './logger';
 
 export interface RateLimitResult {
   success: boolean;
@@ -106,8 +107,16 @@ export class RateLimiter {
           };
         }
       } catch (err) {
-        console.warn('[RateLimiter] Upstash Redis check failed, falling back to memory store:', err);
+        logger.error('UpstashRateLimiterFailure', {
+          action,
+          error: err instanceof Error ? err.message : String(err),
+        });
       }
+    } else if (process.env.NODE_ENV === 'production') {
+      logger.warn('ProductionRateLimiterUnconfigured', {
+        action,
+        warning: 'Upstash Redis credentials missing in production. Falling back to in-memory rate limiter.',
+      });
     }
 
     // Development / Local / Fallback path

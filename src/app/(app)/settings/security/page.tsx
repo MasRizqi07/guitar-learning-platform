@@ -785,6 +785,31 @@ export default function SecuritySettingsPage() {
           )}
         </Card>
 
+        {/* Data Privacy & Lifecycle Card */}
+        <Card className="p-6 border-slate-800 bg-slate-900/60 backdrop-blur-md space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 className="text-sm font-bold text-white flex items-center gap-1.5">
+                <HardDrive className="w-4 h-4 text-amber-400" />
+                <span>Personal Data & Account Lifecycle</span>
+              </h3>
+              <p className="text-xs text-slate-400 mt-1">
+                Download your complete learning history and audio statistics archive or manage account closure procedures.
+              </p>
+            </div>
+
+            <Link href="/settings/data">
+              <Button
+                variant="outline"
+                size="sm"
+                className="border-slate-700 hover:border-amber-500/50 hover:bg-amber-500/10 text-slate-200 hover:text-amber-400 whitespace-nowrap"
+              >
+                Manage Data & Privacy
+              </Button>
+            </Link>
+          </div>
+        </Card>
+
         {/* Master Revocation Card */}
         <Card className="p-6 border-red-500/30 bg-red-950/10 space-y-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

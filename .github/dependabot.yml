@@ -1,0 +1,31 @@
+version: 2
+updates:
+  # Maintain npm dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "MasRizqi07"
+    groups:
+      lint-and-types:
+        patterns:
+          - "eslint*"
+          - "@types/*"
+          - "typescript"
+      test-tools:
+        patterns:
+          - "vitest*"
+          - "@playwright/*"
+          - "@testing-library/*"
+
+  # Maintain GitHub Actions dependencies
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 3

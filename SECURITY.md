@@ -157,9 +157,24 @@ Configured in `next.config.ts` for all application routes:
 
 ---
 
-## 13. Responsible Vulnerability Disclosure
+## 14. Observability, CI/CD & Production Governance (Phase G)
+
+- **Automated Telemetry & Secret Scrubber:** `src/lib/scrubber.ts` intercepts all structured logs, diagnostic contexts, and error payloads, recursively redacting credentials, tokens, session hashes, database connection strings, bearer headers, and internal staff notes.
+- **Request Correlation ID (`x-request-id`):** Incoming request IDs are validated in `src/middleware.ts` against safe alphanumeric format (`/^[a-zA-Z0-9\-_]{8,64}$/`) or regenerated using `crypto.randomUUID()`. Propagated to downstream context, API error envelopes, and response headers without leaking secrets.
+- **Origin-Based CSRF Mitigation:** Authenticated mutating HTTP requests (`POST`, `PUT`, `PATCH`, `DELETE`) with session cookies are validated in `src/middleware.ts` against the request `host`. Cross-origin browser forgeries are rejected with HTTP 403 `CSRF_ORIGIN_MISMATCH`.
+- **Health vs Readiness Separation:**
+  - `GET /api/health`: Public shallow process liveness probe returning `{ status: "ok" }`. Completely eliminates information disclosure (no database hostnames, uptime, or topology).
+  - `GET /api/internal/readiness`: Protected deep operational probe verifying active PostgreSQL connectivity (`SELECT 1`), storage, and rate-limiting status. Strictly protected by internal authorization secret or admin credentials.
+- **User Data Portability & Deletion Lifecycle:**
+  - `/api/profile/export`: Self-service GDPR-compliant JSON personal data download. Explicitly strips password hashes, internal staff notes, and session tokens.
+  - `/api/profile/delete-request`: Rate-limited self-service account deletion request with password re-verification, transitioning account to `DELETION_PENDING`, revoking all active sessions, and logging an immutable security audit event.
+- **Production Rate Limiting Alerts:** Evaluates distributed limits via Upstash Redis REST. Missing Redis credentials in production trigger high-priority structured warning `ProductionRateLimiterUnconfigured`.
+
+---
+
+## 15. Responsible Vulnerability Disclosure
 
 If you discover a potential security vulnerability in this project, please report it privately:
-- **Email:** `security@yourdomain.com` (placeholder)
+- **Email:** `security@fretflow.com`
 - Please allow up to 48 hours for an acknowledgment before disclosing publicly.
 

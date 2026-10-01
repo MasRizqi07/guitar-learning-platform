@@ -1,10 +1,14 @@
-# 🎸 Guitar Learning Platform for Beginners
+# 🎸 FretFlow — Guitar Learning Platform (Production Platform v2)
 
-A full-stack, production-ready web application engineered to guide novice guitar players through a structured, progressive learning roadmap:
+> **Status:** `Production Platform v2 — Local & Staging Verified`  
+> **CI Pipeline:** `Automated Lint, Typecheck, Migrations, Seed Idempotency, Vitest (200+), Playwright (11/11)`  
+> **Next Step:** `Final Live Production Platform v2 Certification` (Deploying to cloud Vercel + Neon + R2 + Upstash + Resend)
+
+A full-stack, enterprise-grade web application engineered to guide novice guitar players through a structured, progressive learning roadmap:
 
 $$\text{Learn} \longrightarrow \text{Practice} \longrightarrow \text{Quiz} \longrightarrow \text{Progress} \longrightarrow \text{Continue}$$
 
-Built with a **Modular Monolith** architecture using **Next.js 16 (App Router)**, **TypeScript (Strict Mode)**, **Tailwind CSS v4**, **PostgreSQL 18**, **Prisma 6**, and **Web Audio API acoustic guitar string tone synthesis**.
+Built with a **Modular Monolith** architecture using **Next.js 16 (App Router)**, **TypeScript (Strict Mode)**, **Tailwind CSS v4**, **PostgreSQL 16+**, **Prisma 6**, **Web Audio API synthesis**, **Automated Secret Scrubbing**, and **Request Correlation Telemetry**.
 
 ---
 
