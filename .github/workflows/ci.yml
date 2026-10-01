@@ -43,7 +43,7 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js (Pinned LTS 24)
         uses: actions/setup-node@v4
