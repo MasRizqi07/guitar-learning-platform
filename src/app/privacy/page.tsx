@@ -53,7 +53,7 @@ export default function PrivacyPolicyPage() {
             <Card className="p-5 border-slate-800 bg-slate-900/40 space-y-2">
               <h3 className="text-sm font-semibold text-amber-400">Account Credentials</h3>
               <p className="text-xs text-slate-400 leading-relaxed">
-                Your name, email address, and an irreversibly hashed password (using industry-standard bcrypt with salt). We never store or transmit plain text passwords.
+                Your name, email address, and account credentials. Passwords are salted and hashed using bcrypt with cost factor 10. Plaintext passwords are never persisted.
               </p>
             </Card>
 

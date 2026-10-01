@@ -386,7 +386,7 @@ export default function SecuritySettingsPage() {
                 </div>
               </div>
               <span className="text-xs font-mono px-2 py-1 rounded bg-[#0E1014] text-amber-400 border border-[#2A303A]">
-                Bcrypt (Cost 12)
+                Bcrypt (Cost 10)
               </span>
             </div>
 

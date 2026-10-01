@@ -50,7 +50,7 @@ This guide provides step-by-step instructions for deploying the **Guitar Learnin
 2. Neon provides two connection strings:
    - **Pooled Connection String** (recommended for serverless queries):
      ```text
-     postgresql://user:password@ep-xyz-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require&pgbouncer=true
+     postgresql://user:password@ep-xyz-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require
      ```
    - **Direct Connection String** (required for running migrations):
      ```text
@@ -71,11 +71,25 @@ Configure the following variables in the **Vercel Project Settings -> Environmen
 
 | Variable | Description | Example / Generation |
 |---|---|---|
-| `DATABASE_URL` | Pooled PostgreSQL connection string (runtime) | `postgresql://...neon.tech/neondb?sslmode=require&pgbouncer=true` |
+| `DATABASE_URL` | Pooled PostgreSQL connection string (runtime) | `postgresql://...neon.tech/neondb?sslmode=require` |
 | `DIRECT_URL` | Direct PostgreSQL connection string (migrations) | `postgresql://...neon.tech/neondb?sslmode=require` |
 | `AUTH_SECRET` | 32+ character random secret for HMAC SHA-256 session token signing | Generate via `openssl rand -base64 32` |
 | `AUTH_URL` | Canonical production URL (HTTPS) | `https://guitar.yourdomain.com` (or `https://your-project.vercel.app`) |
 | `NEXT_PUBLIC_APP_URL`| Public canonical URL for browser links | `https://guitar.yourdomain.com` |
+| `INTERNAL_OPS_TOKEN` | Dedicated secret token for `/api/internal/readiness` probe | Generate via `openssl rand -hex 32` |
+| `UPSTASH_REDIS_REST_URL` | Production Upstash Redis REST URL for distributed rate limiting | `https://your-instance.upstash.io` |
+| `UPSTASH_REDIS_REST_TOKEN` | Production Upstash Redis REST Token | Upstash Console Secret Token |
+| `STORAGE_PROVIDER` | Cloud media storage provider (`r2` or `s3`) | `r2` |
+| `STORAGE_BUCKET` | Production bucket name | `guitar-platform-prod` |
+| `STORAGE_REGION` | Cloud storage region | `auto` (for Cloudflare R2) |
+| `STORAGE_ENDPOINT` | Cloud storage S3-compatible API endpoint | `https://<account_id>.r2.cloudflarestorage.com` |
+| `STORAGE_ACCESS_KEY_ID` | Storage access key ID | Production S3/R2 Access Key |
+| `STORAGE_SECRET_ACCESS_KEY`| Storage secret access key | Production S3/R2 Secret Key |
+| `STORAGE_PUBLIC_BASE_URL` | Public CDN base URL for serving media assets | `https://media.yourdomain.com` |
+| `RESEND_API_KEY` | Transactional email provider API key | `re_...` from resend.com |
+| `EMAIL_FROM` | Sender address for transactional emails | `FretFlow <notifications@yourdomain.com>` |
+| `SENTRY_DSN` | Sentry server-side error tracking DSN | `https://...@sentry.io/...` |
+| `NEXT_PUBLIC_SENTRY_DSN` | Sentry client-side error tracking DSN | `https://...@sentry.io/...` |
 
 > [!WARNING]
 > Never set `AUTH_URL` or `NEXT_PUBLIC_APP_URL` to `http://localhost:3000` in your production environment.
@@ -157,13 +171,33 @@ Expected response (HTTP 200 without exposing internal infrastructure details):
 }
 ```
 
-### 7.2 Run Automated Production E2E
+### 7.2 Protected Operational Readiness Probe
+Verify that database connectivity, storage configuration, and rate limiting subsystems are operational:
+```bash
+curl -i -H "x-internal-secret: $INTERNAL_OPS_TOKEN" https://your-production-url.vercel.app/api/internal/readiness
+```
+Expected response (HTTP 200 OK):
+```json
+{
+  "status": "ready",
+  "timestamp": "2026-10-01T12:00:00.000Z",
+  "checks": {
+    "database": "healthy",
+    "storage": "s3-configured",
+    "rateLimiter": "upstash-redis",
+    "environment": "production"
+  }
+}
+```
+*Note: The readiness probe strictly requires the exact header `x-internal-secret: $INTERNAL_OPS_TOKEN`. Unauthorized calls or attempts to supply `AUTH_SECRET` return HTTP 401.*
+
+### 7.3 Run Automated Production E2E
 Execute the Playwright Golden Path and Guitar Utilities test suite directly against your live production domain:
 ```bash
 PLAYWRIGHT_TEST_BASE_URL=https://your-production-url.vercel.app npm run test:e2e:prod
 ```
 
-### 7.3 Manual Golden Path Check
+### 7.4 Manual Golden Path Check
 1. Open `https://your-production-url.vercel.app/`
 2. Register a new user account.
 3. Complete onboarding stepper (Steps 1–7).

@@ -31,7 +31,7 @@ Database Transaction Boundary (`prisma.$transaction`)
 
 ## 2. Authentication & Session Security
 
-- **Password Hashing:** Passwords are never stored in plaintext. They are hashed using `bcrypt` with a work factor of 10 salt rounds (`bcrypt.hash(password, 10)`).
+- **Password Hashing:** Passwords are salted and hashed using bcrypt with cost factor 10 (`bcrypt.hash(password, 10)`). Plaintext passwords are never persisted.
 - **Session Tokens:** Sessions use HMAC SHA-256 cryptographic signatures generated via the Web Crypto API (`crypto.subtle`). The payload includes `sub` (User ID), `iat` (issued at), and `exp` (30-day expiration).
 - **Cookie Attributes:**
   - `httpOnly`: `true` (Inaccessible to client JavaScript, mitigating XSS session theft).
