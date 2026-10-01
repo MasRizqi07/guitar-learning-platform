@@ -26,7 +26,7 @@ This document defines the authoritative production infrastructure topology, sele
 
 ### B. Distributed Rate Limiter
 - **Status:** `LOCAL MOCK ONLY`
-- **Details:** `RateLimiter` (`src/lib/rate-limit.ts`) evaluates against Upstash REST API if credentials exist. When unconfigured in development/test, it uses `MemoryRateLimiter`. In production, missing credentials trigger structured warning `ProductionRateLimiterUnconfigured`.
+- **Details:** `RateLimiter` (`src/lib/rate-limit.ts`) evaluates against Upstash REST API if credentials exist. When unconfigured in development/test, it uses `MemoryRateLimiter`. In production, missing Upstash credentials strictly fail closed with `Production rate limiter misconfigured: Upstash Redis is required in production`, completely blocking silent process-memory fallback on multi-instance serverless deployments.
 
 ### C. Object Storage
 - **Status:** `LOCAL MOCK ONLY`

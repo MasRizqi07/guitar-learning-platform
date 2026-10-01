@@ -56,8 +56,12 @@ class MemoryRateLimiter {
 }
 
 export class RateLimiter {
-  private static upstashUrl = process.env.UPSTASH_REDIS_REST_URL;
-  private static upstashToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+  private static getUpstashConfig() {
+    return {
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    };
+  }
 
   /**
    * Hashes identifier into safe key suffix
@@ -75,15 +79,16 @@ export class RateLimiter {
     config: RateLimitConfig = { maxRequests: 5, windowSeconds: 60 }
   ): Promise<RateLimitResult> {
     const key = `ratelimit:${action}:${this.hashKey(identifier)}`;
+    const { url, token } = this.getUpstashConfig();
 
-    if (this.upstashUrl && this.upstashToken) {
+    if (url && token) {
       try {
         // Execute INCR and EXPIRE using Upstash Redis pipeline REST API
-        const pipelineUrl = `${this.upstashUrl}/pipeline`;
+        const pipelineUrl = `${url}/pipeline`;
         const res = await fetch(pipelineUrl, {
           method: 'POST',
           headers: {
-            Authorization: `Bearer ${this.upstashToken}`,
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify([
@@ -111,15 +116,27 @@ export class RateLimiter {
           action,
           error: err instanceof Error ? err.message : String(err),
         });
+        if (process.env.NODE_ENV === 'production') {
+          // Fail closed in production to prevent bypass during distributed store outages
+          return {
+            success: false,
+            limit: config.maxRequests,
+            remaining: 0,
+            reset: Math.floor(Date.now() / 1000) + config.windowSeconds,
+          };
+        }
       }
-    } else if (process.env.NODE_ENV === 'production') {
-      logger.warn('ProductionRateLimiterUnconfigured', {
-        action,
-        warning: 'Upstash Redis credentials missing in production. Falling back to in-memory rate limiter.',
-      });
     }
 
-    // Development / Local / Fallback path
+    if (process.env.NODE_ENV === 'production') {
+      logger.error('ProductionRateLimiterConfigurationError', {
+        action,
+        error: 'UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN are required in production. Process memory fallback is disabled.',
+      });
+      throw new Error('Production rate limiter misconfigured: Upstash Redis is required in production.');
+    }
+
+    // Development / Local / Test fallback path
     return MemoryRateLimiter.limit(key, config);
   }
 

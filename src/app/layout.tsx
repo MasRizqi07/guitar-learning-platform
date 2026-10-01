@@ -17,7 +17,11 @@ export const metadata: Metadata = {
   description: "A structured, beginner-friendly guitar learning platform with progressive lessons, focus practice room, metronome, chord library, and instant quizzes.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html
       lang="en"

@@ -353,6 +353,26 @@ describe('Phase A — Production Account & Security Foundation', () => {
       expect(r4.success).toBe(false);
       expect(r4.remaining).toBe(0);
     });
+
+    it('fails closed in production mode when Upstash Redis is not configured', async () => {
+      const prevEnv = process.env.NODE_ENV;
+      const prevUrl = process.env.UPSTASH_REDIS_REST_URL;
+      const prevToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+      try {
+        (process.env as Record<string, string | undefined>).NODE_ENV = 'production';
+        delete process.env.UPSTASH_REDIS_REST_URL;
+        delete process.env.UPSTASH_REDIS_REST_TOKEN;
+
+        await expect(
+          RateLimiter.check('test-action', 'fail-closed-ip', { maxRequests: 5, windowSeconds: 60 })
+        ).rejects.toThrow('Production rate limiter misconfigured: Upstash Redis is required in production.');
+      } finally {
+        (process.env as Record<string, string | undefined>).NODE_ENV = prevEnv;
+        if (prevUrl) process.env.UPSTASH_REDIS_REST_URL = prevUrl;
+        if (prevToken) process.env.UPSTASH_REDIS_REST_TOKEN = prevToken;
+      }
+    });
   });
 
   describe('7. Security Events & Secret Sanitization', () => {

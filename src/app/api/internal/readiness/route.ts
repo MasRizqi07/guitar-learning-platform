@@ -8,16 +8,17 @@ import { env, checkProviderConfig } from '@/lib/env';
  * Deep Operational Readiness Probe
  * Protected endpoint for orchestration platforms, load balancers, and operations.
  * Requires either:
- * 1. x-internal-secret header matching INTERNAL_OPS_TOKEN or AUTH_SECRET
+ * 1. x-internal-secret header matching dedicated INTERNAL_OPS_TOKEN (AUTH_SECRET is strictly forbidden)
  * 2. Authenticated ADMIN / OWNER user session
  */
 export async function GET(req: NextRequest) {
   const secretHeader = req.headers.get('x-internal-secret');
-  const validSecret = env.INTERNAL_OPS_TOKEN || env.AUTH_SECRET;
+  const internalOpsToken = process.env.INTERNAL_OPS_TOKEN || env.INTERNAL_OPS_TOKEN;
 
   let isAuthorized = false;
 
-  if (secretHeader && validSecret && secretHeader === validSecret) {
+  // Strict check: only accept dedicated INTERNAL_OPS_TOKEN (AUTH_SECRET must never be accepted)
+  if (secretHeader && internalOpsToken && secretHeader === internalOpsToken) {
     isAuthorized = true;
   } else {
     try {

@@ -6,10 +6,14 @@ This document defines disaster recovery targets, database backup strategies, log
 
 ## 1. Recovery Objectives (RPO & RTO)
 
-| Metric | Target | Rationale |
-| :--- | :--- | :--- |
-| **Recovery Point Objective (RPO)** | **< 1 Hour** | Maximum acceptable data loss window in the event of catastrophic primary cluster corruption. Managed PostgreSQL continuous WAL archiving provides sub-5-minute point-in-time recovery capability. |
-| **Recovery Time Objective (RTO)** | **< 30 Minutes** | Maximum acceptable downtime from incident declaration to traffic restoration on an alternate restored database branch. |
+> [!IMPORTANT]
+> **Operational Classification:** `TARGET DEFINED` (Policy Target, Not Live-Verified Guarantee).
+> The recovery objectives below represent architectural policy targets. Until an actual live cloud restore drill is executed on provisioned managed PostgreSQL infrastructure, these metrics remain operational targets rather than proven guarantees.
+
+| Metric | Target | Classification | Rationale & Policy |
+| :--- | :--- | :--- | :--- |
+| **Recovery Point Objective (RPO)** | **< 1 Hour** | `TARGET DEFINED` | Maximum acceptable data loss window in the event of catastrophic primary cluster corruption. Managed PostgreSQL continuous WAL archiving provides theoretical sub-5-minute point-in-time recovery capability. |
+| **Recovery Time Objective (RTO)** | **< 30 Minutes** | `TARGET DEFINED` | Maximum acceptable downtime from incident declaration to traffic restoration on an alternate restored database branch. |
 
 ---
 
@@ -88,6 +92,7 @@ When a catastrophic database incident (e.g. accidental drop, data corruption, ra
 ---
 
 ## 5. Live Restoration Drill Status
-
-- **Status:** `PRODUCTION BACKUP RESTORE: NOT LIVE-VERIFIED`
-- **Assessment:** Local SQLite / local Postgres restoration drills pass cleanly. Live cloud restoration drill will be executed upon provisioning production managed database credentials in the Final Production Certification phase.
+ 
+- **Operational Classification:** `POLICY / TARGET DEFINED`
+- **Restore Capability:** `NOT LIVE-VERIFIED (PENDING CLOUD PROVISIONING)`
+- **Assessment:** Local PostgreSQL / SQLite restoration drills and dump exports pass cleanly. Real-world continuous PITR restoration against managed cloud infrastructure (Neon/Supabase) is pending production environment provisioning. RPO/RTO metrics remain architectural targets.

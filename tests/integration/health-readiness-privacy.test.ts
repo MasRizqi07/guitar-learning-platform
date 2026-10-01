@@ -87,11 +87,42 @@ describe('Phase G — Health, Readiness, and Data Privacy Integration Tests', ()
       expect(body.error.code).toBe('UNAUTHORIZED');
     });
 
-    it('protected readiness probe verifies active database connectivity when presented with internal secret', async () => {
-      const validSecret = process.env.INTERNAL_OPS_TOKEN || process.env.AUTH_SECRET || 'secret';
+    it('protected readiness probe strictly rejects AUTH_SECRET as authorization (separation of duties)', async () => {
+      process.env.INTERNAL_OPS_TOKEN = 'dedicated-test-ops-token-12345';
+      const authSecret = process.env.AUTH_SECRET || 'test-auth-secret-1234567890';
       const req = new NextRequest('http://localhost:3000/api/internal/readiness', {
         headers: {
-          'x-internal-secret': validSecret,
+          'x-internal-secret': authSecret,
+        },
+      });
+
+      const res = await readinessGet(req);
+      // Since AUTH_SECRET is not INTERNAL_OPS_TOKEN, it must be rejected with 401
+      expect(res.status).toBe(401);
+      const body = await res.json();
+      expect(body.error.code).toBe('UNAUTHORIZED');
+    });
+
+    it('protected readiness probe strictly rejects invalid or mismatched tokens with 401', async () => {
+      process.env.INTERNAL_OPS_TOKEN = 'dedicated-test-ops-token-12345';
+      const req = new NextRequest('http://localhost:3000/api/internal/readiness', {
+        headers: {
+          'x-internal-secret': 'invalid-bogus-token-123',
+        },
+      });
+
+      const res = await readinessGet(req);
+      expect(res.status).toBe(401);
+      const body = await res.json();
+      expect(body.error.code).toBe('UNAUTHORIZED');
+    });
+
+    it('protected readiness probe verifies active database connectivity when presented with dedicated INTERNAL_OPS_TOKEN', async () => {
+      const opsToken = 'dedicated-test-ops-token-12345';
+      process.env.INTERNAL_OPS_TOKEN = opsToken;
+      const req = new NextRequest('http://localhost:3000/api/internal/readiness', {
+        headers: {
+          'x-internal-secret': opsToken,
         },
       });
 
