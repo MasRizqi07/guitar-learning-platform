@@ -164,11 +164,11 @@ Configured in `next.config.ts` for all application routes:
 - **Origin-Based CSRF Mitigation:** Authenticated mutating HTTP requests (`POST`, `PUT`, `PATCH`, `DELETE`) with session cookies are validated in `src/middleware.ts` against the request `host`. Cross-origin browser forgeries are rejected with HTTP 403 `CSRF_ORIGIN_MISMATCH`.
 - **Health vs Readiness Separation:**
   - `GET /api/health`: Public shallow process liveness probe returning `{ status: "ok" }`. Completely eliminates information disclosure (no database hostnames, uptime, or topology).
-  - `GET /api/internal/readiness`: Protected deep operational probe verifying active PostgreSQL connectivity (`SELECT 1`), storage, and rate-limiting status. Strictly protected by internal authorization secret or admin credentials.
+  - `GET /api/internal/readiness`: Protected deep operational probe verifying active PostgreSQL connectivity (`SELECT 1`), storage, and rate-limiting status. Strictly protected by dedicated `INTERNAL_OPS_TOKEN` or authenticated `ADMIN`/`OWNER` session (`AUTH_SECRET` is strictly rejected to preserve separation of duties).
 - **User Data Portability & Deletion Lifecycle:**
   - `/api/profile/export`: Self-service GDPR-compliant JSON personal data download. Explicitly strips password hashes, internal staff notes, and session tokens.
   - `/api/profile/delete-request`: Rate-limited self-service account deletion request with password re-verification, transitioning account to `DELETION_PENDING`, revoking all active sessions, and logging an immutable security audit event.
-- **Production Rate Limiting Alerts:** Evaluates distributed limits via Upstash Redis REST. Missing Redis credentials in production trigger high-priority structured warning `ProductionRateLimiterUnconfigured`.
+- **Production Rate Limiting Fail-Closed:** Evaluates distributed limits via Upstash Redis REST. In production (`NODE_ENV=production`), missing Redis credentials fail closed with a configuration blocker, preventing silent fallback to process memory on multi-instance serverless deployments.
 
 ---
 
