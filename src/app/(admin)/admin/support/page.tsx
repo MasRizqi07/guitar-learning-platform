@@ -88,7 +88,6 @@ export default function AdminSupportInboxPage() {
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(null);
   const [ticketDetail, setTicketDetail] = useState<AdminTicketDetail | null>(null);
   const [loading, setLoading] = useState(true);
-  const [detailLoading, setDetailLoading] = useState(false);
   const [filterTag, setFilterTag] = useState<'ALL' | 'UNASSIGNED' | 'AUDIO_DSP' | 'HIGH_PRIORITY'>('ALL');
   const [searchFilter, setSearchFilter] = useState('');
 
@@ -151,15 +150,14 @@ export default function AdminSupportInboxPage() {
     };
   }, [filterTag, searchFilter, selectedTicketId, refreshKey]);
 
+  // Derived loading state: true when a ticket is selected but its full detail has not loaded yet
+  const detailLoading = Boolean(selectedTicketId && (!ticketDetail || ticketDetail.id !== selectedTicketId));
+
   // Fetch ticket detail whenever selectedTicketId changes
   useEffect(() => {
-    if (!selectedTicketId) {
-      setDetailLoading(false);
-      return;
-    }
+    if (!selectedTicketId) return;
 
     let ignore = false;
-    setDetailLoading(true);
     async function loadDetail() {
       try {
         setActionError(null);
@@ -170,8 +168,6 @@ export default function AdminSupportInboxPage() {
         }
       } catch (err) {
         console.error('Failed to load ticket detail', err);
-      } finally {
-        if (!ignore) setDetailLoading(false);
       }
     }
     loadDetail();
